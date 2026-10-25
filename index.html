@@ -59,7 +59,101 @@ th{background:#f4f7fb;color:#42556e;font-size:11px;text-transform:uppercase;lett
 @media(min-width:620px){header{padding:28px max(22px,calc((100vw - 1080px)/2)) 24px}header h1{font-size:30px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:22px 20px 35px}.card{padding:22px}.card h2{font-size:21px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(min-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.card{padding:24px}nav{padding-left:max(20px,calc((100vw - 1080px)/2));padding-right:max(20px,calc((100vw - 1080px)/2))}}
 @media(max-width:360px){header h1{font-size:21px}.stats{gap:7px}.stat{padding:10px}.stat strong{font-size:18px}.btn{padding:10px 11px}}
-@page{size:A4 portrait;margin:12mm}
+
+/* Premium transport documents */
+.printdoc{color:#17283f;font-family:Arial,Helvetica,sans-serif;font-size:10.5pt;line-height:1.42}
+.printdoc .doc-top{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#102544;color:#fff;padding:16px 18px;border-radius:8px 8px 0 0;border-bottom:5px solid #4f83d5}
+.printdoc .doc-brand{display:flex;align-items:center;gap:12px;min-width:0}
+.printdoc .doc-mark{width:54px;height:54px;flex:0 0 54px;border:2px solid #d8e6ff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17pt;letter-spacing:-1px}
+.printdoc .doc-brand h1{font-size:20pt;color:#fff;margin:0;text-align:left;letter-spacing:.2px}
+.printdoc .doc-brand p{font-size:8.5pt;color:#dce8fb;margin:4px 0 0;text-align:left}
+.printdoc .doc-label{text-align:right;min-width:130px}
+.printdoc .doc-label strong{display:block;font-size:12pt;letter-spacing:.6px}
+.printdoc .doc-label span{display:block;font-size:8pt;color:#dce8fb;margin-top:4px}
+.printdoc .doc-body{border:1px solid #cbd7e6;border-top:0;padding:14px 16px 12px;border-radius:0 0 8px 8px}
+.printdoc .doc-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
+.printdoc .meta-box{border:1px solid #d6e0ec;background:#f7f9fc;border-radius:6px;padding:8px 10px;min-width:0}
+.printdoc .meta-box small{display:block;text-transform:uppercase;font-size:7.5pt;letter-spacing:.5px;color:#62748c;font-weight:700;margin-bottom:3px}
+.printdoc .meta-box strong{display:block;font-size:10.5pt;color:#102544;overflow-wrap:anywhere}
+.printdoc .doc-section{margin-top:12px}
+.printdoc .doc-section-title{background:#eaf0f8;border-left:4px solid #2f67c8;padding:7px 9px;font-size:8.5pt;font-weight:800;text-transform:uppercase;letter-spacing:.45px;color:#18385f;margin-bottom:0}
+.printdoc table{width:100%;border-collapse:collapse;table-layout:fixed;margin:0}
+.printdoc th,.printdoc td{padding:8px 9px;border:1px solid #d4dce7;vertical-align:top;overflow-wrap:anywhere;white-space:normal}
+.printdoc th{background:#f0f4f9;color:#42556e;font-size:7.5pt;text-transform:uppercase;letter-spacing:.3px;font-weight:800}
+.printdoc td{font-size:9.5pt}
+.printdoc .doc-route{display:grid;grid-template-columns:1fr 34px 1fr;align-items:stretch;gap:6px;margin-top:12px}
+.printdoc .route-card{border:1px solid #d4dce7;border-radius:7px;padding:9px 11px;background:#fff}
+.printdoc .route-card small{display:block;color:#6a7a90;text-transform:uppercase;font-size:7.5pt;font-weight:800;letter-spacing:.4px}
+.printdoc .route-card strong{display:block;color:#102544;font-size:12pt;margin-top:4px;overflow-wrap:anywhere}
+.printdoc .route-arrow{display:flex;align-items:center;justify-content:center;font-size:18pt;color:#2f67c8;font-weight:800}
+.printdoc .doc-finance{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.printdoc .finance-card{border:1px solid #d4dce7;border-radius:7px;padding:9px 11px}
+.printdoc .finance-card small{display:block;color:#66758b;font-size:7.5pt;text-transform:uppercase;letter-spacing:.4px;font-weight:800}
+.printdoc .finance-card strong{display:block;font-size:15pt;color:#102544;margin-top:3px}
+.printdoc .doc-note{background:#f7f9fc;border:1px dashed #b8c6d8;border-radius:6px;padding:8px 10px;font-size:8.5pt;margin-top:12px}
+.printdoc .doc-footer{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #d4dce7;margin-top:14px;padding-top:9px;font-size:8pt;color:#53657d}
+.printdoc .sign-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:26px}
+.printdoc .sign-box{border-top:1px solid #66758b;padding-top:6px;min-height:34px;font-size:8pt;color:#43546a}
+.printdoc .sign-box:last-child{text-align:right}
+@media print{
+  .printdoc{font-size:10pt}
+  .printdoc .doc-top{border-radius:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .printdoc .doc-body{border-radius:0;padding:11px 12px 10px}
+  .printdoc .doc-section-title,.printdoc th,.printdoc .meta-box,.printdoc .route-card,.printdoc .finance-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .printdoc .doc-top,.printdoc .doc-body,.printdoc .doc-section,.printdoc .doc-meta,.printdoc .doc-route,.printdoc .doc-finance,.printdoc .sign-grid{break-inside:avoid;page-break-inside:avoid}
+}
+
+
+/* Consignment-note layout inspired by formal enterprise transporter documents */
+.billing-page-break{display:block;height:0}
+@media print{.billing-page-break{break-before:page;page-break-before:always}}
+.bilty-pro{font-family:Arial,Helvetica,sans-serif;color:#151c27;font-size:8.2pt;line-height:1.22}
+.bilty-pro .bp-top{display:grid;grid-template-columns:66px 1fr 145px;gap:10px;align-items:center;border:1.5px solid #26384f;padding:9px 10px;background:#f7f9fc}
+.bilty-pro .bp-logo{height:54px;border:2px solid #24446b;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18pt;font-weight:900;color:#17345b;letter-spacing:-1px}
+.bilty-pro .bp-company h1{font-size:16pt;line-height:1.1;margin:0 0 4px;text-align:left;color:#102544}
+.bilty-pro .bp-company b{font-size:10pt;letter-spacing:.35px}
+.bilty-pro .bp-company p{font-size:7.5pt;margin:4px 0 0;color:#344256}
+.bilty-pro .bp-copy{text-align:center;border-left:1px solid #b6c1cf;padding-left:8px}
+.bilty-pro .bp-copy strong{display:block;font-size:9pt}
+.bilty-pro .bp-copy span{display:block;font-size:7.5pt;margin-top:3px}
+.bilty-pro table{margin:0;border-collapse:collapse;table-layout:fixed;width:100%}
+.bilty-pro th,.bilty-pro td{border:1px solid #9ea9b6;padding:5px 6px;vertical-align:middle;overflow-wrap:anywhere;white-space:normal}
+.bilty-pro th{background:#eaf0f6;color:#243a55;font-size:7.2pt;text-transform:uppercase;letter-spacing:.15px}
+.bilty-pro td{font-size:8pt}
+.bilty-pro .bp-headgrid{margin-top:5px}
+.bilty-pro .bp-headgrid th{width:12%}
+.bilty-pro .bp-route{margin-top:5px}
+.bilty-pro .bp-route td{height:27px}
+.bilty-pro .bp-party-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:5px}
+.bilty-pro .bp-party-grid table:first-child{margin-right:-1px}
+.bilty-pro .bp-party-grid th[colspan="2"]{text-align:left;background:#dfe7f1;font-size:8pt}
+.bilty-pro .bp-party-grid td{height:24px}
+.bilty-pro .bp-goods,.bilty-pro .bp-docs{margin-top:5px}
+.bilty-pro .bp-goods th,.bilty-pro .bp-docs th{text-align:left}
+.bilty-pro .bp-bottom{display:grid;grid-template-columns:1.45fr 1fr;gap:6px;margin-top:5px}
+.bilty-pro .bp-terms,.bilty-pro .bp-freight{border:1px solid #9ea9b6;padding:7px}
+.bilty-pro .bp-terms p{margin:5px 0;font-size:7.5pt}
+.bilty-pro .bp-checkboxes{border-top:1px solid #c4ccd6;padding-top:5px;font-size:7.4pt}
+.bilty-pro .bp-freight>b{display:block;background:#eaf0f6;margin:-7px -7px 5px;padding:6px}
+.bilty-pro .bp-moneyrow{display:flex;justify-content:space-between;gap:8px;padding:3px 0;border-bottom:1px solid #e2e7ed}
+.bilty-pro .bp-profit{color:#102544;font-weight:800;background:#f2f5f9;padding:5px}
+.bilty-pro .bp-freight small{display:block;font-size:6.5pt;color:#53657b;margin-top:4px}
+.bilty-pro .bp-signatures{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:17px}
+.bilty-pro .bp-signatures>div{border-top:1px solid #5f6d7e;padding-top:5px;min-height:32px;font-size:7.2pt}
+.bilty-pro .bp-signatures b{font-size:7.5pt}
+.bilty-pro .bp-footer{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #c7d0db;margin-top:8px;padding-top:5px;font-size:6.5pt;color:#58687a}
+@media print{
+ @page{size:A4 landscape;margin:6mm}
+ .bilty-pro{font-size:7.6pt}
+ .bilty-pro .bp-top,.bilty-pro th,.bilty-pro .bp-profit,.bilty-pro .bp-freight>b{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .bilty-pro .bp-top{padding:6px 8px}
+ .bilty-pro .bp-logo{height:45px}
+ .bilty-pro th,.bilty-pro td{padding:3.5px 5px}
+ .bilty-pro .bp-route td,.bilty-pro .bp-party-grid td{height:20px}
+ .bilty-pro .bp-signatures{margin-top:12px}
+}
+
+@page{size:A4 landscape;margin:6mm}
 @media print{
   html,body{background:#fff!important;margin:0!important;padding:0!important;width:100%!important;min-height:0!important}
   body.printing>header,body.printing>nav,body.printing>footer{display:none!important}
@@ -116,7 +210,24 @@ th{background:#f4f7fb;color:#42556e;font-size:11px;text-transform:uppercase;lett
 <div class="field"><label for="otherCost">Other Trip Costs (â¹)</label><input id="otherCost" type="number" min="0" step="0.01" value="0"></div>
 <div class="field"><label for="tripStatus">Trip Status</label><select id="tripStatus"><option>Booked</option><option>Loaded</option><option>In Transit</option><option>Delivered</option><option>Unloading Pending</option><option>Cancelled</option></select></div>
 <div class="field"><label for="invoiceNo">Party Invoice No.</label><input id="invoiceNo"></div>
-<div class="field full"><label for="tripNotes">Remarks / E-way bill / LR reference</label><textarea id="tripNotes" placeholder="Optional notes"></textarea></div>
+<div class="field"><label for="ewayBillNo">E-Way Bill No.</label><input id="ewayBillNo" inputmode="numeric" placeholder="E-way bill number"></div>
+<div class="field"><label for="partyInvoiceDate">Invoice Date</label><input id="partyInvoiceDate" type="date"></div>
+<div class="field"><label for="consigneeName">Consignee / Delivery Party</label><input id="consigneeName" placeholder="If different from booking party"></div>
+<div class="field"><label for="consigneeGst">Consignee GSTIN</label><input id="consigneeGst" placeholder="Optional GSTIN"></div>
+<div class="field"><label for="consignorAddress">Consignor Address</label><input id="consignorAddress" placeholder="Optional address"></div>
+<div class="field"><label for="consignorGst">Consignor GSTIN</label><input id="consignorGst" placeholder="Optional GSTIN"></div>
+<div class="field"><label for="consigneeAddress">Consignee Address</label><input id="consigneeAddress" placeholder="Optional address"></div>
+<div class="field"><label for="packageCount">No. of Packages</label><input id="packageCount" type="number" min="0" step="1" placeholder="e.g. 4005"></div>
+<div class="field"><label for="packingType">Packing</label><input id="packingType" placeholder="Box / bag / loose"></div>
+<div class="field"><label for="goodsValue">Declared Goods Value (â¹)</label><input id="goodsValue" type="number" min="0" step="0.01" placeholder="Optional"></div>
+<div class="field"><label for="workOrderNo">Work Order / PO No.</label><input id="workOrderNo" placeholder="Optional reference"></div>
+<div class="field"><label for="deliveryNo">Customer Delivery No.</label><input id="deliveryNo" placeholder="Optional delivery reference"></div>
+<div class="field"><label for="loadType">Load Type</label><select id="loadType"><option value="">Select load type</option><option>Full Truck Load</option><option>Part Load</option><option>Bulk</option><option>Container</option><option>Other</option></select></div>
+<div class="field"><label for="transitDays">Transit Days</label><input id="transitDays" type="number" min="0" step="1" placeholder="Expected days"></div>
+<div class="field"><label for="distanceKm">Distance (km)</label><input id="distanceKm" type="number" min="0" step="1" placeholder="Optional"></div>
+<div class="field"><label for="tpNumber">TP / Permit No.</label><input id="tpNumber" placeholder="Optional"></div>
+<div class="field"><label for="insuranceBy">Transit Insurance By</label><select id="insuranceBy"><option value="">Not specified</option><option>Customer</option><option>Transporter</option><option>Consignor</option><option>Consignee</option></select></div>
+<div class="field full"><label for="tripNotes">Remarks / Instructions</label><textarea id="tripNotes" placeholder="Detention, special instructions, reference details, etc."></textarea></div>
 </div>
 <div class="stat" style="margin-bottom:12px"><small>Estimated trip profit (before tax and overheads)</small><strong id="profitPreview">â¹0</strong></div>
 <div class="actions"><button class="btn" type="submit">Save Trip</button><button class="btn secondary" type="button" id="resetTrip">Clear Form</button></div>
@@ -217,8 +328,8 @@ document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()
 function resetTrip(){ $('tripForm').reset();$('tripId').value='';$('tripDate').value=today();$('otherCost').value='0';$('tripFormTitle').textContent='Add New Trip / Bilty';$('profitPreview').textContent='â¹0';}
 ['partyRate','vehicleRate','otherCost'].forEach(id=>$(id).addEventListener('input',()=>$('profitPreview').textContent=money(num('partyRate')-num('vehicleRate')-num('otherCost'))));
 $('resetTrip').addEventListener('click',resetTrip);
-$('tripForm').addEventListener('submit',e=>{e.preventDefault();const id=val('tripId')||uid();let t={id,date:val('tripDate'),biltyNo:val('biltyNo')||('JRC-'+Date.now().toString().slice(-6)),vehicleNo:val('vehicleNo').toUpperCase(),driverName:val('driverName'),driverPhone:val('driverPhone'),partyName:val('partyName'),from:val('fromLocation'),to:val('toLocation'),material:val('material'),weight:num('weight'),partyRate:num('partyRate'),vehicleRate:num('vehicleRate'),otherCost:num('otherCost'),status:val('tripStatus'),invoiceNo:val('invoiceNo'),notes:val('tripNotes')};const i=db.trips.findIndex(x=>x.id===id);if(i>=0)db.trips[i]=t;else db.trips.unshift(t);save();resetTrip();show('trips');alert('Trip saved. Bilty No: '+t.biltyNo);});
-function editTrip(id){const t=db.trips.find(x=>x.id===id);if(!t)return;const map={tripId:'id',tripDate:'date',biltyNo:'biltyNo',vehicleNo:'vehicleNo',driverName:'driverName',driverPhone:'driverPhone',partyName:'partyName',fromLocation:'from',toLocation:'to',material:'material',weight:'weight',partyRate:'partyRate',vehicleRate:'vehicleRate',otherCost:'otherCost',tripStatus:'status',invoiceNo:'invoiceNo',tripNotes:'notes'};Object.entries(map).forEach(([a,b])=>$(a).value=t[b]??'');$('tripFormTitle').textContent='Edit Trip / Bilty';$('profitPreview').textContent=money(tripProfit(t));show('trips');$('tripForm').scrollIntoView({behavior:'smooth'});}
+$('tripForm').addEventListener('submit',e=>{e.preventDefault();const id=val('tripId')||uid();let t={id,date:val('tripDate'),biltyNo:val('biltyNo')||('JRC-'+Date.now().toString().slice(-6)),vehicleNo:val('vehicleNo').toUpperCase(),driverName:val('driverName'),driverPhone:val('driverPhone'),partyName:val('partyName'),from:val('fromLocation'),to:val('toLocation'),material:val('material'),weight:num('weight'),partyRate:num('partyRate'),vehicleRate:num('vehicleRate'),otherCost:num('otherCost'),status:val('tripStatus'),invoiceNo:val('invoiceNo'),notes:val('tripNotes'),ewayBillNo:val('ewayBillNo'),partyInvoiceDate:val('partyInvoiceDate'),consignee:val('consigneeName'),consigneeGst:val('consigneeGst').toUpperCase(),consignorAddress:val('consignorAddress'),consignorGst:val('consignorGst').toUpperCase(),consigneeAddress:val('consigneeAddress'),packageCount:val('packageCount'),packingType:val('packingType'),goodsValue:num('goodsValue'),workOrderNo:val('workOrderNo'),deliveryNo:val('deliveryNo'),loadType:val('loadType'),transitDays:val('transitDays'),distanceKm:val('distanceKm'),tpNumber:val('tpNumber'),insuranceBy:val('insuranceBy')};const i=db.trips.findIndex(x=>x.id===id);if(i>=0)db.trips[i]=t;else db.trips.unshift(t);save();resetTrip();show('trips');alert('Trip saved. Bilty No: '+t.biltyNo);});
+function editTrip(id){const t=db.trips.find(x=>x.id===id);if(!t)return;const map={tripId:'id',tripDate:'date',biltyNo:'biltyNo',vehicleNo:'vehicleNo',driverName:'driverName',driverPhone:'driverPhone',partyName:'partyName',fromLocation:'from',toLocation:'to',material:'material',weight:'weight',partyRate:'partyRate',vehicleRate:'vehicleRate',otherCost:'otherCost',tripStatus:'status',invoiceNo:'invoiceNo',tripNotes:'notes',ewayBillNo:'ewayBillNo',partyInvoiceDate:'partyInvoiceDate',consigneeName:'consignee',consigneeGst:'consigneeGst',consignorAddress:'consignorAddress',consignorGst:'consignorGst',consigneeAddress:'consigneeAddress',packageCount:'packageCount',packingType:'packingType',goodsValue:'goodsValue',workOrderNo:'workOrderNo',deliveryNo:'deliveryNo',loadType:'loadType',transitDays:'transitDays',distanceKm:'distanceKm',tpNumber:'tpNumber',insuranceBy:'insuranceBy'};Object.entries(map).forEach(([a,b])=>$(a).value=t[b]??'');$('tripFormTitle').textContent='Edit Trip / Bilty';$('profitPreview').textContent=money(tripProfit(t));show('trips');$('tripForm').scrollIntoView({behavior:'smooth'});}
 function removeTrip(id){if(!confirm('Delete this trip? Related payments will remain in the ledger.'))return;db.trips=db.trips.filter(t=>t.id!==id);save();}
 function tripCard(t){return `<div class="listitem"><strong>${esc(t.biltyNo)} &middot; ${esc(t.vehicleNo)}</strong><div class="meta">${esc(t.date)} &middot; ${esc(t.partyName)}<br>${esc(t.from)} &rarr; ${esc(t.to)} &middot; ${esc(t.weight||0)} MT<br>Party freight: ${money(t.partyRate)} &middot; Vehicle freight: ${money(t.vehicleRate)} &middot; Other: ${money(t.otherCost)}<br><b>Profit: ${money(tripProfit(t))}</b><br>Party due: ${money(Number(t.partyRate)-received(t))} &middot; Vehicle payable: ${money(Number(t.vehicleRate)-paid(t))}<br>Status: <span class="pill">${esc(t.status)}</span></div><div class="actions"><button class="btn secondary" onclick="JRC.bilty('${t.id}')">Print Bilty / LR</button><button class="btn secondary" onclick="JRC.invoice('${t.id}')">Print Freight Bill</button><button class="btn secondary" onclick="JRC.editTrip('${t.id}')">Edit</button><button class="btn danger" onclick="JRC.removeTrip('${t.id}')">Delete</button></div></div>`}
 function renderTrips(){const q=val('tripSearch').toLowerCase();const arr=db.trips.filter(t=>JSON.stringify(t).toLowerCase().includes(q));$('tripList').innerHTML=arr.length?arr.map(tripCard).join(''):'<div class="empty">No trips found. Add your first trip above.</div>';}
@@ -239,7 +350,7 @@ function runReport(){const from=val('reportFrom'),to=val('reportTo'),party=val('
 $('runReport').addEventListener('click',runReport);
 function csv(rows){return rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n')}
 function download(name,content,type){const a=document.createElement('a'),url=URL.createObjectURL(new Blob([content],{type}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
-$('exportCsv').addEventListener('click',()=>download('JRC-trips-'+today()+'.csv',csv([['Date','Bilty No','Vehicle','Driver','Driver Mobile','Party','From','Destination','Material','Weight MT','Party Freight','Vehicle Freight','Other Cost','Profit','Party Received','Vehicle Paid','Status','Invoice No','Notes'],...db.trips.map(t=>[t.date,t.biltyNo,t.vehicleNo,t.driverName,t.driverPhone,t.partyName,t.from,t.to,t.material,t.weight,t.partyRate,t.vehicleRate,t.otherCost,tripProfit(t),received(t),paid(t),t.status,t.invoiceNo,t.notes])]),'text/csv;charset=utf-8'));
+$('exportCsv').addEventListener('click',()=>download('JRC-trips-'+today()+'.csv',csv([['Date','Bilty No','Vehicle','Driver','Driver Mobile','Party','From','Destination','Material','Weight MT','Party Freight','Vehicle Freight','Other Cost','Profit','Party Received','Vehicle Paid','Status','Invoice No','E-Way Bill No','Invoice Date','Consignee','Consignee GSTIN','Consignor Address','Consignor GSTIN','Consignee Address','Packages','Packing','Goods Value','Work Order No','Delivery No','Load Type','Transit Days','Distance KM','TP Number','Insurance By','Notes'],...db.trips.map(t=>[t.date,t.biltyNo,t.vehicleNo,t.driverName,t.driverPhone,t.partyName,t.from,t.to,t.material,t.weight,t.partyRate,t.vehicleRate,t.otherCost,tripProfit(t),received(t),paid(t),t.status,t.invoiceNo,t.ewayBillNo,t.partyInvoiceDate,t.consignee,t.consigneeGst,t.consignorAddress,t.consignorGst,t.consigneeAddress,t.packageCount,t.packingType,t.goodsValue,t.workOrderNo,t.deliveryNo,t.loadType,t.transitDays,t.distanceKm,t.tpNumber,t.insuranceBy,t.notes])]),'text/csv;charset=utf-8'));
 $('exportPayments').addEventListener('click',()=>download('JRC-payments-'+today()+'.csv',csv([['Date','Type','Party/Payee','Bilty','Amount','Mode','Reference','Remarks'],...db.payments.map(p=>[p.date,paymentLabel(p.type),p.party,(db.trips.find(t=>t.id===p.tripId)||{}).biltyNo,p.amount,p.mode,p.ref,p.notes])]),'text/csv;charset=utf-8'));
 $('exportBackup').addEventListener('click',()=>download('JRC-backup-'+today()+'.json',JSON.stringify(db,null,2),'application/json'));
 $('importBackup').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!d||!Array.isArray(d.trips)||!Array.isArray(d.payments))throw new Error('Invalid backup');if(!confirm('Restore backup and replace current local data? Export current backup first if needed.'))return;db={trips:[],payments:[],parties:[],vehicles:[],settings:{},...d};save();loadSettings();alert('Backup restored.');}catch(err){alert('Backup could not be restored: '+err.message)}e.target.value='';});
@@ -248,8 +359,110 @@ function loadSettings(){const s=db.settings||{};['firmName','firmGst','firmPhone
 $('settingsForm').addEventListener('submit',e=>{e.preventDefault();db.settings={};['firmName','firmGst','firmPhone','firmEmail','firmAddress','bankName','bankAccount','bankIfsc','defaultGst'].forEach(id=>db.settings[id]=val(id));save();alert('Firm details saved.');});
 function firm(){return {...{firmName:'JRC Global Logistics',firmGst:'08EVLPA0794M1Z3',firmPhone:'9896393477',firmAddress:'H.N 162 Sansera Road Dariba, Railmagra Rajsamand RJ 313211'},...db.settings}}
 function printDoc(content){const area=$('printArea');area.innerHTML=content;area.classList.remove('hidden');document.body.classList.add('printing');const cleanup=()=>{document.body.classList.remove('printing');area.classList.add('hidden');window.removeEventListener('afterprint',cleanup)};window.addEventListener('afterprint',cleanup,{once:true});requestAnimationFrame(()=>setTimeout(()=>window.print(),150));setTimeout(cleanup,30000)}
-function bilty(id){const t=db.trips.find(x=>x.id===id);if(!t)return;const f=firm();printDoc(`<div class="printdoc"><h1>${esc(f.firmName)}</h1><p style="text-align:center">${esc(f.firmAddress)}<br>Mobile: ${esc(f.firmPhone)} &middot; GSTIN: ${esc(f.firmGst)}</p><h2>GOODS CONSIGNMENT NOTE / BILTY (LR)</h2><div class="boxline"><b>Bilty / LR No.:</b> ${esc(t.biltyNo)} &nbsp;&nbsp; <b>Date:</b> ${esc(t.date)}<br><b>Vehicle No.:</b> ${esc(t.vehicleNo)} &nbsp;&nbsp; <b>Driver:</b> ${esc(t.driverName)} (${esc(t.driverPhone)})</div><table><tr><th>Consignor / Party</th><td>${esc(t.partyName)}</td></tr><tr><th>Loading From</th><td>${esc(t.from)}</td></tr><tr><th>Consignee / Destination</th><td>${esc(t.to)}</td></tr><tr><th>Material / Goods</th><td>${esc(t.material||'â')}</td></tr><tr><th>Weight</th><td>${esc(t.weight||'â')} MT</td></tr><tr><th>Invoice / E-way bill ref.</th><td>${esc(t.invoiceNo||t.notes||'â')}</td></tr></table><p><b>Freight:</b> ${money(t.partyRate)} (as entered in trip register; confirm agreed payer/terms)</p><p>Goods received for transportation subject to agreed terms. Shipper/consignee to ensure goods description, quantity, tax and statutory documents are correct.</p><p><b>Remarks:</b> ${esc(t.notes||'â')}</p><div class="signature"><span>Consignor signature</span><span>Driver signature</span><span>For ${esc(f.firmName)}<br>Authorised Signatory</span></div></div>`)}
-function invoice(id){const t=db.trips.find(x=>x.id===id);if(!t)return;const f=firm(),gst=Number(f.defaultGst)||0,tax=t.partyRate*gst/100;printDoc(`<div class="printdoc"><h1>${esc(f.firmName)}</h1><p style="text-align:center">${esc(f.firmAddress)}<br>Mobile: ${esc(f.firmPhone)} &middot; GSTIN: ${esc(f.firmGst)}</p><h2>FREIGHT BILL / TAX INVOICE DRAFT</h2><div class="boxline"><b>Bill No.:</b> ${esc(t.invoiceNo||t.biltyNo)} &nbsp; <b>Date:</b> ${esc(t.date)}<br><b>Bill To:</b> ${esc(t.partyName)}<br><b>Vehicle:</b> ${esc(t.vehicleNo)} &nbsp; <b>Bilty/LR:</b> ${esc(t.biltyNo)}</div><table><thead><tr><th>Description</th><th>Route</th><th>Weight MT</th><th>Amount (â¹)</th></tr></thead><tbody><tr><td>Transportation freight â ${esc(t.material||'Goods')}</td><td>${esc(t.from)} to ${esc(t.to)}</td><td>${esc(t.weight||'â')}</td><td>${Number(t.partyRate).toFixed(2)}</td></tr></tbody><tfoot><tr><th colspan="3">Freight subtotal</th><td>${Number(t.partyRate).toFixed(2)}</td></tr><tr><th colspan="3">Illustrative GST (${gst}%)</th><td>${tax.toFixed(2)}</td></tr><tr><th colspan="3">Total (draft)</th><td>${(t.partyRate+tax).toFixed(2)}</td></tr></tfoot></table><p><b>Bank:</b> ${esc(f.bankName||'â')} &nbsp; <b>A/c:</b> ${esc(f.bankAccount||'â')} &nbsp; <b>IFSC:</b> ${esc(f.bankIfsc||'â')}</p><p class="hint">DRAFT TEMPLATE ONLY â Verify GST applicability, SAC/HSN, tax rate, place of supply, reverse-charge treatment and invoice particulars with your accountant before issuing as a legal tax invoice.</p><div class="signature"><span>Customer acknowledgement</span><span>For ${esc(f.firmName)}<br>Authorised Signatory</span></div></div>`)}
+function bilty(id){
+ const t=db.trips.find(x=>x.id===id);if(!t)return;const f=firm();
+ const v=x=>esc((x===undefined||x===null||x==='')?'â':x);
+ const d=v(t.date),no=v(t.biltyNo),veh=v(t.vehicleNo);
+ printDoc(`<div class="printdoc bilty-pro">
+ <div class="bp-top">
+  <div class="bp-logo">JRC</div>
+  <div class="bp-company"><h1>${v(f.firmName)}</h1><b>GOODS CONSIGNMENT NOTE / BILTY (LR)</b><p>${v(f.firmAddress)} &nbsp; | &nbsp; Mobile: ${v(f.firmPhone)} &nbsp; | &nbsp; GSTIN: ${v(f.firmGst)}</p></div>
+  <div class="bp-copy"><strong>CONSIGNMENT NOTE</strong><span>TRANSPORT COPY</span><span>Duplicate Copy</span></div>
+ </div>
+ <table class="bp-headgrid"><tbody>
+ <tr><th>Bilty / LR No.</th><td><b>${no}</b></td><th>Consignment Date</th><td>${d}</td><th>Vehicle No.</th><td><b>${veh}</b></td></tr>
+ <tr><th>Party / Booking By</th><td colspan="2">${v(t.partyName)}</td><th>Work Order / PO</th><td colspan="2">${v(t.workOrderNo)}</td></tr>
+ <tr><th>Customer Delivery No.</th><td>${v(t.deliveryNo)}</td><th>Invoice No.</th><td>${v(t.invoiceNo)}</td><th>Invoice Date</th><td>${v(t.partyInvoiceDate)}</td></tr>
+ </tbody></table>
+ <table class="bp-route"><tbody>
+ <tr><th>Loading Station</th><th>Distance (KM)</th><th>Vehicle / Driver</th><th>Load Type</th></tr>
+ <tr><td><b>${v(t.from)}</b></td><td>${v(t.distanceKm)}</td><td>${veh} / ${v(t.driverName)} (${v(t.driverPhone)})</td><td>${v(t.loadType)}</td></tr>
+ <tr><th>Delivery Station</th><th>Transit Days</th><th>TP / Permit No.</th><th>Trip Status</th></tr>
+ <tr><td><b>${v(t.to)}</b></td><td>${v(t.transitDays)}</td><td>${v(t.tpNumber)}</td><td>${v(t.status)}</td></tr>
+ </tbody></table>
+ <div class="bp-party-grid">
+  <table><tbody><tr><th colspan="2">Consignor Details</th></tr><tr><th>Name</th><td>${v(t.partyName)}</td></tr><tr><th>Address</th><td>${v(t.consignorAddress)}</td></tr><tr><th>GSTIN</th><td>${v(t.consignorGst)}</td></tr></tbody></table>
+  <table><tbody><tr><th colspan="2">Consignee Details</th></tr><tr><th>Name</th><td>${v(t.consignee||t.partyName)}</td></tr><tr><th>Address</th><td>${v(t.consigneeAddress)}</td></tr><tr><th>GSTIN</th><td>${v(t.consigneeGst)}</td></tr></tbody></table>
+ </div>
+ <table class="bp-goods"><tbody>
+  <tr><th colspan="4">Said to Contain / Goods Description</th><th colspan="2">Weight in MT</th></tr>
+  <tr><th>Product / Material</th><th>No. of Packages</th><th>Packing</th><th>Declared Goods Value (â¹)</th><th>Net Weight</th><th>Gross Weight</th></tr>
+  <tr><td><b>${v(t.material)}</b></td><td>${v(t.packageCount)}</td><td>${v(t.packingType)}</td><td>${t.goodsValue?money(t.goodsValue):'â'}</td><td>${v(t.weight)} MT</td><td>${v(t.weight)} MT</td></tr>
+  <tr><td colspan="4">Received goods for transportation subject to agreed terms and applicable statutory documents.</td><th>Minimum Guarantee Weight</th><td>As per booking</td></tr>
+ </tbody></table>
+ <table class="bp-docs"><tbody>
+  <tr><th colspan="4">Party Document Details</th><th colspan="2">Transport / Loading Details</th></tr>
+  <tr><th>Document Type</th><th>Document No.</th><th>Date</th><th>Reference</th><th>Detail</th><th>Entry</th></tr>
+  <tr><td>E-Way Bill</td><td>${v(t.ewayBillNo)}</td><td>${v(t.partyInvoiceDate)}</td><td>${v(t.invoiceNo)}</td><td>Insurance By</td><td>${v(t.insuranceBy)}</td></tr>
+  <tr><td>Party Invoice</td><td>${v(t.invoiceNo)}</td><td>${v(t.partyInvoiceDate)}</td><td>${v(t.deliveryNo)}</td><td>Loading / Detention</td><td>${v(t.notes)}</td></tr>
+ </tbody></table>
+ <div class="bp-bottom">
+  <div class="bp-terms"><b>Transport Declaration</b><p>Consignor / consignee is responsible for the correctness of goods description, quantity, declared value, GSTIN and statutory documents. The transporter is responsible for transportation as per agreed booking terms. Any detention, shortage, damage, insurance or special condition must be recorded and acknowledged by the concerned parties.</p><div class="bp-checkboxes">GST / Tax responsibility: &nbsp; â¡ Consignor &nbsp; â¡ Consignee &nbsp; â¡ GTA / As per contract</div></div>
+  <div class="bp-freight"><b>Freight / Booking Basis</b><div class="bp-moneyrow"><span>Party Freight</span><strong>${money(t.partyRate)}</strong></div><div class="bp-moneyrow"><span>Vehicle Freight (internal)</span><strong>${money(t.vehicleRate)}</strong></div><div class="bp-moneyrow"><span>Other Cost</span><strong>${money(t.otherCost)}</strong></div><div class="bp-moneyrow bp-profit"><span>Estimated Trip Margin*</span><strong>${money(tripProfit(t))}</strong></div><small>*Internal estimate; not a customer-facing charge.</small></div>
+ </div>
+ <div class="bp-signatures"><div>Consignor / Customer Representative<br><b>Name & Signature</b></div><div>Loading / Plant Supervisor<br><b>Name & Signature</b></div><div>Driver Acknowledgement<br><b>Name & Signature</b></div><div>For JRC Global Logistics<br><b>Authorised Signatory & Seal</b></div></div>
+ <div class="bp-footer"><span>Computer-generated transport record Â· Verify all details before dispatch</span><span>LR ${no} Â· ${d}</span></div>
+ </div>`);
+}
+function invoice(id){
+ const t=db.trips.find(x=>x.id===id);if(!t)return;const f=firm(),gst=Number(f.defaultGst)||0,tax=Number(t.partyRate||0)*gst/100,total=Number(t.partyRate||0)+tax;
+ const ref=esc(t.invoiceNo||t.biltyNo||'â'),date=esc(t.date||'â');
+ const freightDoc=`<div class="printdoc">
+  <div class="doc-top">
+   <div class="doc-brand"><div class="doc-mark">JRC</div><div><h1>${esc(f.firmName)}</h1><p>${esc(f.firmAddress)}<br>Mobile: ${esc(f.firmPhone)} &nbsp; | &nbsp; GSTIN: ${esc(f.firmGst)}</p></div></div>
+   <div class="doc-label"><strong>FREIGHT BILL</strong><span>INVOICE DRAFT</span><span>FOR REVIEW BEFORE ISSUE</span></div>
+  </div>
+  <div class="doc-body">
+   <div class="doc-meta">
+    <div class="meta-box"><small>Bill / Invoice Reference</small><strong>${ref}</strong></div>
+    <div class="meta-box"><small>Bill Date</small><strong>${date}</strong></div>
+    <div class="meta-box"><small>Bill To / Customer</small><strong>${esc(t.partyName||'â')}</strong></div>
+    <div class="meta-box"><small>Vehicle / Bilty</small><strong>${esc(t.vehicleNo||'â')} Â· ${esc(t.biltyNo||'â')}</strong></div>
+   </div>
+   <div class="doc-route">
+    <div class="route-card"><small>Loading From</small><strong>${esc(t.from||'â')}</strong></div>
+    <div class="route-arrow">âº</div>
+    <div class="route-card"><small>Delivered To</small><strong>${esc(t.to||'â')}</strong></div>
+   </div>
+   <div class="doc-section">
+    <div class="doc-section-title">Freight calculation</div>
+    <table><thead><tr><th style="width:34%">Description</th><th>Material / Goods</th><th>Weight (MT)</th><th>Amount (INR)</th></tr></thead>
+    <tbody><tr><td>Transportation freight</td><td>${esc(t.material||'Goods')}</td><td>${esc(t.weight||'â')}</td><td style="text-align:right">${Number(t.partyRate||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr></tbody>
+    <tfoot><tr><th colspan="3" style="text-align:right">Freight subtotal</th><td style="text-align:right">${Number(t.partyRate||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>
+    <tr><th colspan="3" style="text-align:right">Illustrative GST (${gst}%) â verify applicability</th><td style="text-align:right">${tax.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>
+    <tr><th colspan="3" style="text-align:right">Total draft amount</th><td style="text-align:right"><b>${total.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</b></td></tr></tfoot></table>
+   </div>
+   <div class="doc-section"><div class="doc-section-title">Bank details</div>
+    <table><tbody><tr><th>Bank</th><td>${esc(f.bankName||'Not provided')}</td><th>Account</th><td>${esc(f.bankAccount||'Not provided')}</td></tr><tr><th>IFSC</th><td colspan="3">${esc(f.bankIfsc||'Not provided')}</td></tr></tbody></table>
+   </div>
+   <div class="doc-note"><b>Draft only:</b> Do not issue this as a final tax invoice without verifying GST applicability, SAC/HSN, tax rate, place of supply, reverse-charge treatment, invoice numbering and all statutory particulars with your accountant.</div>
+   <div class="sign-grid"><div class="sign-box">Customer acknowledgement</div><div class="sign-box">Accounts / Billing review</div><div class="sign-box">For ${esc(f.firmName)}<br><b>Authorised Signatory</b></div></div>
+   <div class="doc-footer"><span>JRC Global Logistics Â· Freight billing draft</span><span>Reference: ${ref}</span></div>
+  </div>
+ </div>`;
+ const cover=`<div class="printdoc billing-cover">
+  <div class="doc-top"><div class="doc-brand"><div class="doc-mark">JRC</div><div><h1>${esc(f.firmName)}</h1><p>${esc(f.firmAddress)}<br>Mobile: ${esc(f.firmPhone)} &nbsp; | &nbsp; GSTIN: ${esc(f.firmGst)}</p></div></div><div class="doc-label"><strong>BILL SUBMISSION</strong><span>COVERING LETTER</span></div></div>
+  <div class="doc-body">
+   <div style="display:flex;justify-content:space-between;gap:20px;margin:8px 0 20px"><b>To,<br>${esc(t.partyName||'Accounts Department')}</b><b>Date: ${date}<br>Reference: ${ref}</b></div>
+   <h2 style="text-align:center;font-size:16pt;margin:16px 0 22px;color:#102544">SUBMISSION OF TRANSPORT FREIGHT BILL</h2>
+   <p>Dear Sir / Madam,</p>
+   <p>Please find below the transport consignment details and the accompanying freight bill for your verification and processing. Kindly arrange payment as per the agreed work order and payment terms.</p>
+   <div class="doc-section"><div class="doc-section-title">Consignment summary</div><table><tbody>
+    <tr><th style="width:28%">Bilty / LR No.</th><td>${esc(t.biltyNo||'â')}</td><th style="width:20%">Vehicle No.</th><td>${esc(t.vehicleNo||'â')}</td></tr>
+    <tr><th>Loading From</th><td>${esc(t.from||'â')}</td><th>Destination</th><td>${esc(t.to||'â')}</td></tr>
+    <tr><th>Material</th><td>${esc(t.material||'â')}</td><th>Weight</th><td>${esc(t.weight||'â')} MT</td></tr>
+    <tr><th>Party Invoice / E-Way Ref.</th><td>${esc(t.invoiceNo||'â')} / ${esc(t.ewayBillNo||'â')}</td><th>Trip Date</th><td>${date}</td></tr>
+   </tbody></table></div>
+   <div class="doc-finance"><div class="finance-card"><small>Freight amount (draft)</small><strong>${money(t.partyRate)}</strong></div><div class="finance-card"><small>Draft total incl. illustrative GST</small><strong>${money(total)}</strong></div></div>
+   <p style="margin-top:22px">We request you to verify the enclosed details and process the bill in accordance with the agreed terms. Please contact us if any clarification or supporting document is required.</p>
+   <p>Thank you for your business.</p>
+   <div class="sign-grid"><div class="sign-box">Enclosures: Bilty / LR and supporting documents</div><div class="sign-box"></div><div class="sign-box">For ${esc(f.firmName)}<br><b>Authorised Signatory</b></div></div>
+   <div class="doc-note"><b>Office check:</b> This is a covering-letter template. Verify customer name, work order, invoice references, payment terms and statutory requirements before submission.</div>
+   <div class="doc-footer"><span>JRC Global Logistics Â· Billing submission pack</span><span>${ref}</span></div>
+  </div>
+ </div>`;
+ printDoc(`<div class="billing-pack">${cover}<div class="billing-page-break"></div>${freightDoc}</div>`);
+}
 window.JRC={editTrip,removeTrip,removePayment,bilty,invoice};
 function renderAll(){fillOptions();renderDashboard();renderTrips();renderPayments();renderParties();renderVehicles();renderOutstanding();if($('reportOutput').innerHTML)runReport();}
 load();loadSettings();$('tripDate').value=today();$('payDate').value=today();renderAll();
