@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JRC Global Logistics</title>
+<style>
+body{margin:0;font-family:Arial;background:#f1f5f9;color:#172b4d}
+header{background:#102b4e;color:white;padding:22px}
+header h2{margin:0}
+nav{display:flex;gap:8px;overflow:auto;padding:12px;background:white}
+button{padding:11px 15px;border:0;border-radius:7px;background:#1769d2;color:white}
+main{padding:15px;max-width:900px;margin:auto}
+.card{background:white;padding:18px;border-radius:12px;margin:12px 0;box-shadow:0 2px 8px #0001}
+input,select{width:100%;padding:12px;margin:7px 0;box-sizing:border-box;border:1px solid #ccd5e1;border-radius:7px}
+.stat{display:inline-block;background:#e7f0ff;padding:12px;border-radius:8px;margin:4px}
+</style>
+</head>
+<body>
+<header>
+<h2>JRC Global Logistics</h2>
+<p>Transport Management System</p>
+</header>
+<nav>
+<button onclick="show('dashboard')">Dashboard</button>
+<button onclick="show('trips')">Trips</button>
+<button onclick="show('payments')">Payments</button>
+</nav>
+<main>
+<section id="dashboard" class="card">
+<h2>Business Dashboard</h2>
+<div class="stat">Total Trips: <b id="count">0</b></div>
+<div class="stat">Freight: ₹<b id="total">0</b></div>
+<p>JRC Global Logistics — Dariba, Rajasthan</p>
+</section>
+<section id="trips" class="card" hidden>
+<h2>Add New Trip</h2>
+<form id="tripForm">
+<input name="vehicle" placeholder="Vehicle Number" required>
+<input name="party" placeholder="Party Name" required>
+<input name="from" placeholder="Loading Location" required>
+<input name="to" placeholder="Destination" required>
+<input name="freight" type="number" placeholder="Freight Amount ₹" required>
+<button>Save Trip</button>
+</form>
+<div id="tripList"></div>
+</section>
+<section id="payments" class="card" hidden>
+<h2>Payment Register</h2>
+<input id="payName" placeholder="Party / Transporter Name">
+<input id="payAmount" type="number" placeholder="Amount ₹">
+<button onclick="addPayment()">Save Payment</button>
+<div id="paymentList"></div>
+</section>
+</main>
+<script>
+let trips=JSON.parse(localStorage.getItem('jrcTrips')||'[]');
+let payments=JSON.parse(localStorage.getItem('jrcPayments')||'[]');
+function show(id){
+document.querySelectorAll('main section').forEach(s=>s.hidden=s.id!==id);
+}
+function render(){
+document.getElementById('count').textContent=trips.length;
+document.getElementById('total').textContent=trips.reduce((s,t)=>s+Number(t.freight),0).toLocaleString('en-IN');
+document.getElementById('tripList').innerHTML=trips.map(t=>`<p>${t.vehicle} — ${t.party}: ${t.from} to ${t.to}, ₹${t.freight}</p>`).join('');
+document.getElementById('paymentList').innerHTML=payments.map(p=>`<p>${p.name}: ₹${p.amount}</p>`).join('');
+}
+document.getElementById('tripForm').addEventListener('submit',e=>{
+e.preventDefault();
+trips.push(Object.fromEntries(new FormData(e.target)));
+localStorage.setItem('jrcTrips',JSON.stringify(trips));
+e.target.reset();render();alert('Trip saved on this device');
+});
+function addPayment(){
+let name=document.getElementById('payName').value;
+let amount=document.getElementById('payAmount').value;
+if(!name||!amount)return alert('Enter name and amount');
+payments.push({name,amount});
+localStorage.setItem('jrcPayments',JSON.stringify(payments));
+document.getElementById('payName').value='';
+document.getElementById('payAmount').value='';
+render();alert('Payment saved on this device');
+}
+render();
+</script>
+</body>
+</html>
