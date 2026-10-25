@@ -1,108 +1,493 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#08111f">
-<title>JRC Global Logistics | TMS</title>
+<meta name="theme-color" content="#0a0f1c">
+<title>JRC Global Logistics · TMS</title>
 <style>
 :root {
-  --bg:#08111f;--panel:#111c2e;--panel2:#17243a;
-  --border:#263650;--text:#f3f6fc;--muted:#94a3b8;
-  --blue:#3b82f6;--cyan:#22d3ee;--green:#22c55e;
-  --red:#ef4444;--orange:#f59e0b;
+  --bg: #0a0f1c;
+  --panel: #111827;
+  --panel2: #1a2332;
+  --border: #1e293b;
+  --border-hover: #334155;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --blue: #3b82f6;
+  --cyan: #22d3ee;
+  --green: #22c55e;
+  --red: #ef4444;
+  --orange: #f59e0b;
+  --purple: #a78bfa;
+  --radius: 14px;
+  --shadow: 0 10px 40px -10px rgba(0,0,0,.5);
+  --glass: rgba(17,24,39,.75);
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--cyan)}
-.topbar{position:sticky;top:0;z-index:10;background:#0b1525;
-border-bottom:1px solid var(--border);padding:14px 18px;
-display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{height:44px;width:44px;border-radius:12px;display:grid;place-items:center;
-background:linear-gradient(135deg,#2563eb,#06b6d4);font-weight:900;font-size:18px}
-.brand h1{font-size:17px;margin:0}
-.brand p{font-size:10px;color:var(--muted);margin:4px 0 0;letter-spacing:1px}
-.layout{display:flex;min-height:calc(100vh - 72px)}
-.sidebar{width:220px;flex-shrink:0;background:#0b1525;
-border-right:1px solid var(--border);padding:16px 10px}
-.nav-title{font-size:10px;letter-spacing:1px;color:#64748b;margin:17px 10px 8px}
-.nav-btn{width:100%;display:flex;gap:10px;align-items:center;text-align:left;
-border:0;border-radius:9px;padding:12px;background:transparent;color:#bdc9db;margin:3px 0}
-.nav-btn:hover,.nav-btn.active{background:#1a2d49;color:white}
-.nav-btn.active{box-shadow:inset 3px 0 var(--cyan)}
-.main{flex:1;min-width:0;padding:22px}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;
-gap:12px;margin-bottom:20px}
-h2{font-size:24px;margin:0 0 7px}
-h3{font-size:16px;margin:0}
-p{line-height:1.5}
-.muted{color:var(--muted)}
-.notice{padding:12px 14px;border:1px solid #164e63;background:#102c43;
-border-radius:10px;color:#bae6fd;margin-bottom:20px;line-height:1.6}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
-.stat-card,.card{background:var(--panel);border:1px solid var(--border);border-radius:15px}
-.stat-card{padding:16px}
-.stat-label{font-size:12px;color:var(--muted)}
-.stat-value{font-size:24px;font-weight:800;margin:13px 0 5px;overflow-wrap:anywhere}
-.stat-foot{font-size:11px;color:var(--muted)}
-.card{padding:18px;margin-bottom:18px}
-.card-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
-.actions,.form-actions,.toolbar{display:flex;flex-wrap:wrap;gap:9px}
-.btn{border:1px solid var(--border);border-radius:9px;padding:10px 13px;
-color:var(--text);background:var(--panel2)}
-.btn-primary{background:var(--blue);border-color:var(--blue);color:white}
-.btn-danger{background:#7f1d1d;border-color:#991b1b}
-.btn-small{padding:6px 9px;font-size:12px}
-.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.field{display:flex;flex-direction:column;gap:7px;min-width:0}
-.field label{font-size:12px;color:#bdc9db;font-weight:600}
-.field input,.field select,.field textarea,.toolbar input,.toolbar select{
-  width:100%;min-width:0;padding:11px;border-radius:9px;
-  border:1px solid var(--border);background:#0b1525;color:var(--text)}
-.field textarea{min-height:75px;resize:vertical}
-.field-full{grid-column:1/-1}
-.form-actions{margin-top:18px}
-.table-wrap{overflow-x:auto;width:100%}
-table{border-collapse:collapse;width:100%;min-width:680px}
-th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
-th{font-size:10px;text-transform:uppercase;letter-spacing:.5px;background:#142137;color:#a8bad2}
-td{font-size:12px}
-tbody tr:hover{background:#152238}
-.toolbar input{flex:1;min-width:160px}
-.status{display:inline-block;padding:5px 8px;border-radius:20px;background:#263449;font-size:10px}
-.status.done{background:#143b2a;color:#86efac}
-.status.pending{background:#493819;color:#fcd34d}
-.profit{color:#4ade80;font-weight:700}
-.loss{color:#f87171;font-weight:700}
-.hidden{display:none!important}
-.empty{text-align:center;padding:25px;color:var(--muted)}
-.footer{text-align:center;padding:20px;color:#64748b;font-size:11px}
-.rate-chips{display:flex;gap:8px;flex-wrap:wrap}
-.rate-chip{border:1px solid var(--border);background:#142137;color:#dbeafe;border-radius:9px;padding:9px}
-@media(max-width:950px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:700px){
- .topbar{padding:11px}.brand h1{font-size:14px}.logo{width:38px;height:38px}
- .layout{display:block}.sidebar{position:sticky;top:64px;z-index:9;width:100%;
- display:flex;overflow-x:auto;padding:7px;gap:4px;border-right:0;border-bottom:1px solid var(--border)}
- .nav-title{display:none}.nav-btn{width:auto;min-width:max-content;margin:0;padding:10px;font-size:12px}
- .nav-btn.active{box-shadow:inset 0 -3px var(--cyan)}.main{padding:13px}
- .page-header{flex-direction:column}.page-header .actions{width:100%}
- .stats{gap:8px}.stat-card{padding:12px}.stat-value{font-size:20px}
- .form-grid,.grid-2,.grid-3{grid-template-columns:1fr}.field-full{grid-column:auto}
- .card{padding:13px}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.5 "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
-@media print{
- body{background:white;color:black}.topbar,.sidebar,.no-print,.footer,.notice{display:none!important}
- .layout,.main{display:block;padding:0}.page.hidden{display:none!important}
- .card,.stat-card{background:white;color:black;border:1px solid #ccc}
- th{background:#eee;color:black}td,th{color:black}
+
+/* Subtle background pattern */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 50% at 20% -20%, rgba(59,130,246,.12), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(34,211,238,.08), transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; border: none; background: none; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+/* ===== TOPBAR ===== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.5px;
+  box-shadow: 0 4px 20px rgba(37,99,235,.4);
+}
+.brand-text h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+.brand-text p { font-size: 10px; color: var(--muted); letter-spacing: 1.2px; margin-top: 2px; text-transform: uppercase; }
+
+.top-actions { display: flex; gap: 8px; align-items: center; }
+
+/* ===== LAYOUT ===== */
+.layout { display: flex; min-height: calc(100vh - 69px); }
+
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid var(--border);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.nav-group { margin-bottom: 18px; }
+.nav-label {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  color: #64748b;
+  padding: 0 12px 8px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.nav-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  color: #94a3b8;
+  font-weight: 500;
+  transition: all .2s ease;
+  text-align: left;
+}
+.nav-btn:hover { background: rgba(30,41,59,.6); color: #e2e8f0; }
+.nav-btn.active {
+  background: linear-gradient(90deg, rgba(34,211,238,.15), rgba(59,130,246,.08));
+  color: #fff;
+  box-shadow: inset 3px 0 0 var(--cyan);
+}
+.nav-btn svg { width: 18px; height: 18px; opacity: .85; flex-shrink: 0; }
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 28px 32px 40px;
+}
+
+/* ===== PAGE ===== */
+.page { display: none; animation: fadeIn .35s ease; }
+.page.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.page-header h2 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.page-header p { color: var(--muted); margin-top: 4px; font-size: 14px; }
+
+/* ===== CARDS & STATS ===== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s, transform .2s;
+}
+.stat-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+.stat-card::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 80px; height: 80px;
+  background: radial-gradient(circle, rgba(59,130,246,.12), transparent 70%);
+  pointer-events: none;
+}
+.stat-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+.stat-value {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 10px 0 4px;
+  font-variant-numeric: tabular-nums;
+}
+.stat-foot { font-size: 11px; color: #64748b; }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.card-header h3 { font-size: 16px; font-weight: 600; }
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: var(--text);
+  font-weight: 500;
+  transition: all .18s ease;
+}
+.btn:hover { background: #243044; border-color: var(--border-hover); }
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(37,99,235,.35);
+}
+.btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.btn-danger {
+  background: rgba(127,29,29,.4);
+  border-color: #991b1b;
+  color: #fca5a5;
+}
+.btn-danger:hover { background: rgba(153,27,27,.5); }
+.btn-ghost { background: transparent; }
+.btn-sm { padding: 6px 11px; font-size: 12px; border-radius: 8px; }
+.btn-icon { padding: 8px; }
+
+/* ===== FORMS ===== */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+.field input, .field select, .field textarea,
+.toolbar input, .toolbar select {
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #0c1322;
+  color: var(--text);
+  transition: border-color .2s;
+}
+.field input:focus, .field select:focus, .field textarea:focus,
+.toolbar input:focus, .toolbar select:focus {
+  border-color: var(--cyan);
+}
+.field textarea { min-height: 80px; resize: vertical; }
+.field-full { grid-column: 1 / -1; }
+.form-actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+
+/* Live calc panel */
+.calc-panel {
+  background: linear-gradient(135deg, #0c1322, #111c2e);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-top: 20px;
+}
+.calc-panel h3 { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
+.calc-values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.calc-item span { font-size: 12px; color: var(--muted); display: block; }
+.calc-item strong {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 4px;
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+.profit { color: #4ade80; }
+.loss { color: #f87171; }
+
+/* ===== TABLE ===== */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.toolbar input { flex: 1; min-width: 180px; }
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  background: #0f172a;
+  color: #94a3b8;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+td { font-size: 13px; }
+tbody tr { transition: background .15s; }
+tbody tr:hover { background: rgba(30,41,59,.45); }
+tbody tr:last-child td { border-bottom: none; }
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #1e293b;
+  color: #cbd5e1;
+}
+.status.done { background: rgba(34,197,94,.15); color: #86efac; }
+.status.pending { background: rgba(245,158,11,.15); color: #fcd34d; }
+.status.transit { background: rgba(59,130,246,.15); color: #93c5fd; }
+
+.empty {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--muted);
+}
+.empty svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: .4; }
+
+/* ===== TOAST ===== */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+.toast {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  min-width: 280px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: toastIn .35s ease;
+  pointer-events: auto;
+}
+.toast.success { border-left: 3px solid var(--green); }
+.toast.error { border-left: 3px solid var(--red); }
+.toast.info { border-left: 3px solid var(--blue); }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(16px) scale(.96); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ===== MODAL ===== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-backdrop.show { display: flex; }
+.modal {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,.5);
+  animation: modalIn .3s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(.94) translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.modal h3 { font-size: 18px; margin-bottom: 8px; }
+.modal p { color: var(--muted); margin-bottom: 24px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* ===== NOTICE ===== */
+.notice {
+  background: linear-gradient(90deg, rgba(6,182,212,.08), rgba(59,130,246,.06));
+  border: 1px solid rgba(34,211,238,.25);
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: #a5f3fc;
+  margin-bottom: 24px;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 24px;
+  color: #475569;
+  font-size: 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* ===== PRINT ===== */
+@media print {
+  body { background: #fff; color: #000; }
+  .topbar, .sidebar, .no-print, .footer, .notice, #toast-container, .modal-backdrop { display: none !important; }
+  .layout, .main { display: block; padding: 0; }
+  .page { display: none !important; }
+  .page.active { display: block !important; }
+  .card, .stat-card { background: #fff; border: 1px solid #ddd; box-shadow: none; color: #000; }
+  th { background: #f1f5f9; color: #000; }
+  td, th { color: #000; border-color: #e2e8f0; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1100px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .form-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .topbar { padding: 10px 14px; }
+  .brand-text h1 { font-size: 15px; }
+  .logo { width: 38px; height: 38px; font-size: 14px; }
+  .layout { flex-direction: column; }
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 8px;
+    gap: 4px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-group { display: flex; gap: 4px; margin: 0; }
+  .nav-label { display: none; }
+  .nav-btn {
+    width: auto;
+    white-space: nowrap;
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+  .nav-btn.active { box-shadow: inset 0 -3px 0 var(--cyan); }
+  .main { padding: 18px 14px 32px; }
+  .page-header { flex-direction: column; }
+  .stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat-value { font-size: 22px; }
+  .form-grid, .grid-2, .grid-3, .calc-values { grid-template-columns: 1fr; }
+  .field-full { grid-column: auto; }
 }
 </style>
 </head>
@@ -110,488 +495,1083 @@ tbody tr:hover{background:#152238}
 <header class="topbar">
   <div class="brand">
     <div class="logo">JRC</div>
-    <div><h1>JRC Global Logistics</h1><p>TRANSPORT MANAGEMENT SYSTEM</p></div>
+    <div class="brand-text">
+      <h1>JRC Global Logistics</h1>
+      <p>Transport Management System</p>
+    </div>
   </div>
-  <button class="btn btn-small no-print" onclick="window.print()">🖨 Print</button>
+  <div class="top-actions no-print">
+    <button class="btn btn-sm" onclick="window.print()" title="Print current page">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+      Print
+    </button>
+  </div>
 </header>
 
 <div class="layout">
-<aside class="sidebar no-print">
-  <div class="nav-title">OPERATIONS</div>
-  <button class="nav-btn active" data-page="dashboard">📊 Dashboard</button>
-  <button class="nav-btn" data-page="trips">🚛 Trip Register</button>
-  <button class="nav-btn" data-page="newtrip">➕ New Trip</button>
-  <button class="nav-btn" data-page="rates">💰 Rate Master</button>
-  <div class="nav-title">DOCUMENTS</div>
-  <button class="nav-btn" data-page="invoice">🧾 Invoice</button>
-  <button class="nav-btn" data-page="bilty">📄 Bilty</button>
-  <div class="nav-title">MANAGEMENT</div>
-  <button class="nav-btn" data-page="reports">📈 Reports</button>
-  <button class="nav-btn" data-page="backup">💾 Backup</button>
-  <button class="nav-btn" data-page="settings">⚙️ Settings</button>
-</aside>
-
-<main class="main">
-<div class="notice"><strong>JRC Operations:</strong> Trip records, party billing, vehicle freight and estimated margin in one workspace. Export backups regularly.</div>
-
-<!-- DASHBOARD -->
-<section id="page-dashboard" class="page">
-  <div class="page-header">
-    <div><h2>Dashboard</h2><p class="muted">Your transport business at a glance.</p></div>
-    <button class="btn btn-primary" onclick="showPage('newtrip')">＋ Add Trip</button>
-  </div>
-  <div class="stats">
-    <div class="stat-card"><div class="stat-label">Total Trips</div><div class="stat-value" id="statTrips">0</div><div class="stat-foot">Recorded trips</div></div>
-    <div class="stat-card"><div class="stat-label">Party Billing</div><div class="stat-value" id="statBilling">₹0</div><div class="stat-foot">Total trip revenue</div></div>
-    <div class="stat-card"><div class="stat-label">Vehicle Freight</div><div class="stat-value" id="statFreight">₹0</div><div class="stat-foot">Freight payable</div></div>
-    <div class="stat-card"><div class="stat-label">Estimated Margin</div><div class="stat-value" id="statProfit">₹0</div><div class="stat-foot">After recorded expenses</div></div>
-  </div>
-  <div class="card">
-    <div class="card-header"><h3>Recent Trips</h3><button class="btn btn-small" onclick="showPage('trips')">View All →</button></div>
-    <div class="table-wrap"><table>
-      <thead><tr><th>Date</th><th>Trip No.</th><th>Vehicle</th><th>Destination</th><th>Billing</th><th>Margin</th><th>Status</th></tr></thead>
-      <tbody id="recentTrips"></tbody>
-    </table></div>
-  </div>
-</section>
-
-<!-- TRIP REGISTER -->
-<section id="page-trips" class="page hidden">
-  <div class="page-header"><div><h2>Trip Register</h2><p class="muted">Search, edit and manage trip records.</p></div><button class="btn btn-primary" onclick="resetTripForm();showPage('newtrip')">＋ New Trip</button></div>
-  <div class="card">
-    <div class="toolbar">
-      <input id="tripSearch" placeholder="Search vehicle, driver, trip..." oninput="renderTrips()">
-      <select id="tripStatusFilter" onchange="renderTrips()"><option value="">All Statuses</option><option>Booked</option><option>Loaded</option><option>In Transit</option><option>Delivered</option><option>Payment Pending</option></select>
+  <aside class="sidebar no-print">
+    <div class="nav-group">
+      <div class="nav-label">Operations</div>
+      <button class="nav-btn active" data-page="dashboard">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-btn" data-page="trips">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+        Trip Register
+      </button>
+      <button class="nav-btn" data-page="newtrip">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        New Trip
+      </button>
+      <button class="nav-btn" data-page="rates">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Rate Master
+      </button>
     </div>
-    <div class="table-wrap"><table>
-      <thead><tr><th>Date</th><th>Trip No.</th><th>Vehicle</th><th>Driver</th><th>Destination</th><th>MT</th><th>Billing</th><th>Freight</th><th>Margin</th><th>Status</th><th>Actions</th></tr></thead>
-      <tbody id="tripRows"></tbody>
-    </table></div>
-    <div id="tripEmpty" class="empty hidden">No trips found.</div>
-  </div>
-</section>
+    <div class="nav-group">
+      <div class="nav-label">Documents</div>
+      <button class="nav-btn" data-page="invoice">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        Invoice
+      </button>
+      <button class="nav-btn" data-page="bilty">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+        Bilty
+      </button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Management</div>
+      <button class="nav-btn" data-page="reports">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        Reports
+      </button>
+      <button class="nav-btn" data-page="backup">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+        Backup
+      </button>
+      <button class="nav-btn" data-page="settings">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        Settings
+      </button>
+    </div>
+  </aside>
 
-<!-- NEW TRIP -->
-<section id="page-newtrip" class="page hidden">
-  <div class="page-header"><div><h2 id="tripFormTitle">Create New Trip</h2><p class="muted">Enter details and calculate margin automatically.</p></div></div>
-  <form id="tripForm" class="card">
-    <input type="hidden" id="editTripId">
-    <div class="form-grid">
-      <div class="field"><label for="tripDate">Trip Date *</label><input id="tripDate" type="date" required></div>
-      <div class="field"><label for="vehicleNo">Vehicle Number *</label><input id="vehicleNo" placeholder="RJ 06 XX 1234" required></div>
-      <div class="field"><label for="driverName">Driver Name</label><input id="driverName" placeholder="Driver name"></div>
-      <div class="field"><label for="driverPhone">Driver Mobile</label><input id="driverPhone" type="tel" placeholder="Mobile number"></div>
-      <div class="field"><label for="partyName">Party / Client</label><input id="partyName" value="MRPL Bhilwara"></div>
-      <div class="field"><label for="loadingPoint">Loading Point *</label><input id="loadingPoint" value="MRPL Bhilwara" required></div>
-      <div class="field"><label for="destination">Destination *</label>
-        <select id="destination" required><option value="">Select destination</option><option value="Agucha">Rampura Agucha</option><option value="SK">S.K. Mine</option><option value="RD">R.D. Mine</option><option value="Zawar">Zawar</option><option value="Kayad">Kayad</option><option value="Other">Other</option></select>
+  <main class="main">
+    <div class="notice no-print">
+      <strong>JRC Operations Hub</strong> — Track trips, party billing, vehicle freight and estimated margin in one workspace. Export backups regularly.
+    </div>
+
+    <!-- DASHBOARD -->
+    <section id="page-dashboard" class="page active">
+      <div class="page-header">
+        <div>
+          <h2>Dashboard</h2>
+          <p>Your transport business at a glance</p>
+        </div>
+        <button class="btn btn-primary" data-goto="newtrip">+ Add Trip</button>
       </div>
-      <div class="field"><label for="tripStatus">Trip Status</label><select id="tripStatus"><option>Booked</option><option>Loaded</option><option>In Transit</option><option>Delivered</option><option>Payment Pending</option></select></div>
-      <div class="field"><label for="weightMT">Weight (MT) *</label><input id="weightMT" type="number" min="0.01" step="0.01" value="11" required></div>
-      <div class="field"><label for="partyRate">Party Rate (₹/MT) *</label><input id="partyRate" type="number" min="0" step="0.01" required></div>
-      <div class="field"><label for="vehicleFreight">Vehicle Freight (₹) *</label><input id="vehicleFreight" type="number" min="0" step="0.01" required></div>
-      <div class="field"><label for="otherExpense">Other Expense (₹)</label><input id="otherExpense" type="number" min="0" step="0.01" value="0"></div>
-      <div class="field field-full"><label for="tripNotes">Remarks / LR Number</label><textarea id="tripNotes" placeholder="Enter remarks, LR number or detention details"></textarea></div>
-    </div>
-    <div class="card" style="margin-top:18px;background:#0b1525">
-      <h3>Live Calculation</h3>
-      <div class="grid-3" style="margin-top:16px">
-        <div><span class="muted">Party Billing</span><h2 id="calcBilling">₹0</h2></div>
-        <div><span class="muted">Total Cost</span><h2 id="calcCost">₹0</h2></div>
-        <div><span class="muted">Estimated Margin</span><h2 id="calcProfit" class="profit">₹0</h2></div>
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-label">Total Trips</div>
+          <div class="stat-value" id="statTrips">0</div>
+          <div class="stat-foot">All recorded trips</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Party Billing</div>
+          <div class="stat-value" id="statBilling">₹0</div>
+          <div class="stat-foot">Total revenue</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Vehicle Freight</div>
+          <div class="stat-value" id="statFreight">₹0</div>
+          <div class="stat-foot">Freight payable</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Estimated Margin</div>
+          <div class="stat-value" id="statProfit">₹0</div>
+          <div class="stat-foot">After expenses</div>
+        </div>
       </div>
-      <p class="muted">Billing = MT × rate. Margin = billing − freight − other expenses.</p>
-    </div>
-    <div class="form-actions"><button class="btn btn-primary" type="submit">💾 Save Trip</button><button class="btn" type="button" onclick="resetTripForm()">Clear Form</button><button class="btn" type="button" onclick="showPage('trips')">Cancel</button></div>
-  </form>
-</section>
+      <div class="card">
+        <div class="card-header">
+          <h3>Recent Trips</h3>
+          <button class="btn btn-sm" data-goto="trips">View All →</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th><th>Trip No.</th><th>Vehicle</th><th>Destination</th>
+                <th>Billing</th><th>Margin</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="recentTrips"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
 
-<!-- RATE MASTER -->
-<section id="page-rates" class="page hidden">
-  <div class="page-header"><div><h2>Rate Master</h2><p class="muted">Party billing rates per metric tonne.</p></div></div>
-  <div class="card"><div class="card-header"><h3>Destination Rates</h3></div>
-    <div class="table-wrap"><table><thead><tr><th>Destination</th><th>Rate / MT</th><th>Action</th></tr></thead><tbody id="rateRows"></tbody></table></div>
-    <p class="muted">Verify these rates against your current contract before invoicing.</p>
-  </div>
-  <div class="card"><h3>Update Rate</h3>
-    <form id="rateForm" class="form-grid" style="margin-top:15px">
-      <div class="field"><label for="rateDestination">Destination</label><select id="rateDestination"><option value="Agucha">Rampura Agucha</option><option value="SK">S.K. Mine</option><option value="RD">R.D. Mine</option><option value="Zawar">Zawar</option><option value="Kayad">Kayad</option></select></div>
-      <div class="field"><label for="rateValue">Rate (₹/MT)</label><input id="rateValue" type="number" min="0" step="0.01" required></div>
-      <div class="field" style="justify-content:end"><button class="btn btn-primary">Save Rate</button></div>
-    </form>
-  </div>
-</section>
+    <!-- TRIP REGISTER -->
+    <section id="page-trips" class="page">
+      <div class="page-header">
+        <div>
+          <h2>Trip Register</h2>
+          <p>Search, filter, edit and manage all trips</p>
+        </div>
+        <button class="btn btn-primary" data-goto="newtrip" onclick="App.resetTripForm()">+ New Trip</button>
+      </div>
+      <div class="card">
+        <div class="toolbar">
+          <input id="tripSearch" placeholder="Search vehicle, driver, trip no, party…" autocomplete="off">
+          <select id="tripStatusFilter">
+            <option value="">All Statuses</option>
+            <option>Booked</option>
+            <option>Loaded</option>
+            <option>In Transit</option>
+            <option>Delivered</option>
+            <option>Payment Pending</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th><th>Trip No.</th><th>Vehicle</th><th>Driver</th><th>Destination</th>
+                <th>MT</th><th>Billing</th><th>Freight</th><th>Margin</th><th>Status</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tripRows"></tbody>
+          </table>
+        </div>
+        <div id="tripEmpty" class="empty" style="display:none">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <div>No trips found</div>
+        </div>
+      </div>
+    </section>
 
-<!-- INVOICE -->
-<section id="page-invoice" class="page hidden">
-  <div class="page-header"><div><h2>Party Invoice</h2><p class="muted">Generate a summary of delivered trips.</p></div><button class="btn btn-primary no-print" onclick="window.print()">🖨 Print</button></div>
-  <div class="card no-print">
-    <div class="form-grid">
-      <div class="field"><label for="invoiceParty">Party Name</label><input id="invoiceParty" value="MRPL Bhilwara"></div>
-      <div class="field"><label for="invoiceFrom">From Date</label><input id="invoiceFrom" type="date"></div>
-      <div class="field"><label for="invoiceTo">To Date</label><input id="invoiceTo" type="date"></div>
-    </div>
-    <button class="btn btn-primary" style="margin-top:14px" onclick="renderInvoice()">Generate Invoice</button>
-  </div>
-  <div id="invoicePaper" class="card">
-    <div style="text-align:center;border-bottom:2px solid #64748b;padding-bottom:14px">
-      <h2 id="invoiceCompanyName">JRC GLOBAL LOGISTICS</h2>
-      <p id="invoiceAddress">H.N. 162, Sansera Road, Dariba, Railmagra, Rajsamand, Rajasthan 313211</p>
-      <p id="invoiceGST">GSTIN: 08EVLPA0794M1Z3</p><h3>FREIGHT BILL / INVOICE</h3>
-    </div>
-    <div class="grid-2" style="margin-top:15px"><div><b>Bill To:</b><p id="invoiceBillTo">MRPL Bhilwara</p></div><div><b>Invoice Date:</b><p id="invoiceDate"></p></div></div>
-    <div class="table-wrap"><table><thead><tr><th>Date</th><th>Trip No.</th><th>Vehicle</th><th>Destination</th><th>MT</th><th>Rate</th><th>Amount</th></tr></thead><tbody id="invoiceRows"></tbody><tfoot><tr><th colspan="4">Total</th><th id="invoiceTotalMT">0</th><th></th><th id="invoiceTotalAmount">₹0</th></tr></tfoot></table></div>
-    <div style="text-align:right;margin-top:35px"><b>For JRC Global Logistics</b><p style="margin-top:45px">Authorised Signature</p></div>
-    <p class="muted">Confirm applicable tax details and invoice numbering with your accountant before issuing.</p>
-  </div>
-</section>
+    <!-- NEW / EDIT TRIP -->
+    <section id="page-newtrip" class="page">
+      <div class="page-header">
+        <div>
+          <h2 id="tripFormTitle">Create New Trip</h2>
+          <p>Enter details — margin calculates automatically</p>
+        </div>
+      </div>
+      <form id="tripForm" class="card">
+        <input type="hidden" id="editTripId">
+        <div class="form-grid">
+          <div class="field">
+            <label for="tripDate">Trip Date *</label>
+            <input id="tripDate" type="date" required>
+          </div>
+          <div class="field">
+            <label for="vehicleNo">Vehicle Number *</label>
+            <input id="vehicleNo" placeholder="RJ 06 XX 1234" required autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="driverName">Driver Name</label>
+            <input id="driverName" placeholder="Driver full name" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="driverPhone">Driver Mobile</label>
+            <input id="driverPhone" type="tel" placeholder="10-digit mobile" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="partyName">Party / Client</label>
+            <input id="partyName" value="MRPL Bhilwara">
+          </div>
+          <div class="field">
+            <label for="loadingPoint">Loading Point *</label>
+            <input id="loadingPoint" value="MRPL Bhilwara" required>
+          </div>
+          <div class="field">
+            <label for="destination">Destination *</label>
+            <select id="destination" required>
+              <option value="">Select destination</option>
+              <option value="Agucha">Rampura Agucha</option>
+              <option value="SK">S.K. Mine</option>
+              <option value="RD">R.D. Mine</option>
+              <option value="Zawar">Zawar</option>
+              <option value="Kayad">Kayad</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="tripStatus">Trip Status</label>
+            <select id="tripStatus">
+              <option>Booked</option>
+              <option>Loaded</option>
+              <option>In Transit</option>
+              <option>Delivered</option>
+              <option>Payment Pending</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="weightMT">Weight (MT) *</label>
+            <input id="weightMT" type="number" min="0.01" step="0.01" value="11" required>
+          </div>
+          <div class="field">
+            <label for="partyRate">Party Rate (₹/MT) *</label>
+            <input id="partyRate" type="number" min="0" step="0.01" required>
+          </div>
+          <div class="field">
+            <label for="vehicleFreight">Vehicle Freight (₹) *</label>
+            <input id="vehicleFreight" type="number" min="0" step="0.01" required>
+          </div>
+          <div class="field">
+            <label for="otherExpense">Other Expense (₹)</label>
+            <input id="otherExpense" type="number" min="0" step="0.01" value="0">
+          </div>
+          <div class="field field-full">
+            <label for="tripNotes">Remarks / LR Number</label>
+            <textarea id="tripNotes" placeholder="LR number, detention, special notes…"></textarea>
+          </div>
+        </div>
 
-<!-- BILTY -->
-<section id="page-bilty" class="page hidden">
-  <div class="page-header"><div><h2>Transport Bilty</h2><p class="muted">Prepare a printable goods receipt.</p></div><button class="btn btn-primary no-print" onclick="window.print()">🖨 Print Bilty</button></div>
-  <div class="card no-print">
-    <div class="form-grid">
-      <div class="field"><label for="biltyNo">Bilty / LR Number</label><input id="biltyNo" placeholder="LR number"></div>
-      <div class="field"><label for="biltyDate">Date</label><input id="biltyDate" type="date"></div>
-      <div class="field"><label for="biltyVehicle">Vehicle Number</label><input id="biltyVehicle" placeholder="RJ 06 XX 1234"></div>
-      <div class="field"><label for="biltyConsignor">Consignor</label><input id="biltyConsignor" value="MRPL Bhilwara"></div>
-      <div class="field"><label for="biltyConsignee">Consignee</label><input id="biltyConsignee" placeholder="Consignee name"></div>
-      <div class="field"><label for="biltyDestination">Destination</label><input id="biltyDestination" placeholder="Delivery destination"></div>
-      <div class="field"><label for="biltyMaterial">Material</label><input id="biltyMaterial" placeholder="Material description"></div>
-      <div class="field"><label for="biltyWeight">Weight (MT)</label><input id="biltyWeight" type="number" min="0" step="0.01"></div>
-      <div class="field"><label for="biltyDriver">Driver Name</label><input id="biltyDriver" placeholder="Driver name"></div>
-    </div>
-    <button class="btn btn-primary" style="margin-top:14px" onclick="updateBilty()">Update Preview</button>
-  </div>
-  <div class="card" id="biltyPaper">
-    <div style="text-align:center;border-bottom:2px solid #64748b;padding-bottom:12px"><h2>JRC GLOBAL LOGISTICS</h2><p>H.N. 162, Sansera Road, Dariba, Railmagra, Rajsamand, Rajasthan 313211</p><p>Mobile: 9896393477 | GSTIN: 08EVLPA0794M1Z3</p><h3>GOODS CONSIGNMENT NOTE / BILTY</h3></div>
-    <div class="grid-2" style="margin-top:18px">
-      <p><b>Bilty No.:</b> <span id="pBiltyNo">____________</span></p><p><b>Date:</b> <span id="pBiltyDate">____________</span></p>
-      <p><b>Vehicle:</b> <span id="pBiltyVehicle">____________</span></p><p><b>Driver:</b> <span id="pBiltyDriver">____________</span></p>
-      <p><b>Consignor:</b> <span id="pConsignor">____________</span></p><p><b>Consignee:</b> <span id="pConsignee">____________</span></p>
-      <p><b>Loading:</b> MRPL Bhilwara</p><p><b>Destination:</b> <span id="pBiltyDestination">____________</span></p>
-    </div>
-    <div class="table-wrap"><table><thead><tr><th>Material</th><th>Weight MT</th></tr></thead><tbody><tr><td id="pBiltyMaterial">____________</td><td id="pBiltyWeight">________</td></tr></tbody></table></div>
-    <p style="margin-top:25px">Goods received for transportation subject to agreed terms and conditions.</p>
-    <div class="grid-2" style="margin-top:45px"><p>Consignor Signature: ____________</p><p>Transporter Signature: ____________</p></div>
-  </div>
-</section>
+        <div class="calc-panel">
+          <h3>Live Calculation</h3>
+          <div class="calc-values">
+            <div class="calc-item">
+              <span>Party Billing</span>
+              <strong id="calcBilling">₹0</strong>
+            </div>
+            <div class="calc-item">
+              <span>Total Cost</span>
+              <strong id="calcCost">₹0</strong>
+            </div>
+            <div class="calc-item">
+              <span>Estimated Margin</span>
+              <strong id="calcProfit" class="profit">₹0</strong>
+            </div>
+          </div>
+          <p style="margin-top:12px;font-size:12px;color:var(--muted)">Billing = MT × Rate · Margin = Billing − Freight − Other Expenses</p>
+        </div>
 
-<!-- REPORTS -->
-<section id="page-reports" class="page hidden">
-  <div class="page-header"><div><h2>Reports</h2><p class="muted">Business performance and destination summary.</p></div><button class="btn btn-primary" onclick="exportCSV()">⬇ Export CSV</button></div>
-  <div class="stats">
-    <div class="stat-card"><div class="stat-label">Total Weight</div><div class="stat-value" id="reportMT">0 MT</div></div>
-    <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-value" id="reportRevenue">₹0</div></div>
-    <div class="stat-card"><div class="stat-label">Total Cost</div><div class="stat-value" id="reportCost">₹0</div></div>
-    <div class="stat-card"><div class="stat-label">Margin</div><div class="stat-value" id="reportMargin">₹0</div></div>
-  </div>
-  <div class="card"><h3 style="margin-bottom:15px">Destination-wise Performance</h3><div class="table-wrap"><table><thead><tr><th>Destination</th><th>Trips</th><th>MT</th><th>Billing</th><th>Freight</th><th>Margin</th></tr></thead><tbody id="reportDestinationRows"></tbody></table></div></div>
-</section>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Save Trip</button>
+          <button class="btn" type="button" onclick="App.resetTripForm()">Clear Form</button>
+          <button class="btn btn-ghost" type="button" data-goto="trips">Cancel</button>
+        </div>
+      </form>
+    </section>
 
-<!-- BACKUP -->
-<section id="page-backup" class="page hidden">
-  <div class="page-header"><div><h2>Backup & Restore</h2><p class="muted">Protect your business records.</p></div></div>
-  <div class="grid-2">
-    <div class="card"><h3>📥 Export Backup</h3><p class="muted">Download trips, rates and settings as a JSON file.</p><button class="btn btn-primary" onclick="downloadBackup()">Download Backup</button></div>
-    <div class="card"><h3>📤 Restore Backup</h3><p class="muted">Restoring replaces the records currently saved in this browser.</p><div class="field"><label for="backupFile">Select JSON Backup</label><input id="backupFile" type="file" accept=".json,application/json"></div><button class="btn btn-danger" style="margin-top:12px" onclick="restoreBackup()">Restore Backup</button></div>
-  </div>
-  <div class="card"><h3>Data Summary</h3><p>Saved trips: <b id="backupTripCount">0</b></p><p>Destination rates: <b id="backupRateCount">0</b></p><p class="muted">Keep a separate backup copy in a safe location.</p></div>
-</section>
+    <!-- RATE MASTER -->
+    <section id="page-rates" class="page">
+      <div class="page-header">
+        <div>
+          <h2>Rate Master</h2>
+          <p>Party billing rates per metric tonne</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Current Destination Rates</h3></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Destination</th><th>Rate / MT</th><th>Action</th></tr></thead>
+            <tbody id="rateRows"></tbody>
+          </table>
+        </div>
+        <p style="margin-top:14px;font-size:13px;color:var(--muted)">Always verify rates against the current contract before generating invoices.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:16px">Update Rate</h3>
+        <form id="rateForm" class="form-grid">
+          <div class="field">
+            <label for="rateDestination">Destination</label>
+            <select id="rateDestination">
+              <option value="Agucha">Rampura Agucha</option>
+              <option value="SK">S.K. Mine</option>
+              <option value="RD">R.D. Mine</option>
+              <option value="Zawar">Zawar</option>
+              <option value="Kayad">Kayad</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="rateValue">Rate (₹/MT)</label>
+            <input id="rateValue" type="number" min="0" step="0.01" required>
+          </div>
+          <div class="field" style="justify-content:flex-end">
+            <button class="btn btn-primary" type="submit">Save Rate</button>
+          </div>
+        </form>
+      </div>
+    </section>
 
-<!-- COMPANY SETTINGS -->
-<section id="page-settings" class="page hidden">
-  <div class="page-header"><div><h2>Company Settings</h2><p class="muted">Update your firm information.</p></div></div>
-  <form id="settingsForm" class="card">
-    <div class="form-grid">
-      <div class="field"><label for="companyName">Firm Name</label><input id="companyName" required></div>
-      <div class="field"><label for="companyGST">GSTIN</label><input id="companyGST"></div>
-      <div class="field"><label for="companyPhone">Mobile</label><input id="companyPhone"></div>
-      <div class="field field-full"><label for="companyAddress">Address</label><textarea id="companyAddress"></textarea></div>
-      <div class="field"><label for="defaultParty">Default Party</label><input id="defaultParty"></div>
-      <div class="field"><label for="defaultLoading">Default Loading Point</label><input id="defaultLoading"></div>
-    </div>
-    <div class="form-actions"><button class="btn btn-primary">Save Settings</button></div>
-  </form>
-</section>
+    <!-- INVOICE -->
+    <section id="page-invoice" class="page">
+      <div class="page-header">
+        <div>
+          <h2>Party Invoice</h2>
+          <p>Generate freight bill for delivered trips</p>
+        </div>
+        <button class="btn btn-primary no-print" onclick="window.print()">Print Invoice</button>
+      </div>
+      <div class="card no-print">
+        <div class="form-grid">
+          <div class="field">
+            <label for="invoiceParty">Party Name</label>
+            <input id="invoiceParty" value="MRPL Bhilwara">
+          </div>
+          <div class="field">
+            <label for="invoiceFrom">From Date</label>
+            <input id="invoiceFrom" type="date">
+          </div>
+          <div class="field">
+            <label for="invoiceTo">To Date</label>
+            <input id="invoiceTo" type="date">
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:16px" id="btnGenerateInvoice">Generate Invoice</button>
+      </div>
+      <div id="invoicePaper" class="card">
+        <div style="text-align:center;border-bottom:2px solid #334155;padding-bottom:16px;margin-bottom:18px">
+          <h2 id="invoiceCompanyName" style="font-size:22px;letter-spacing:-0.3px">JRC GLOBAL LOGISTICS</h2>
+          <p id="invoiceAddress" style="color:var(--muted);margin:6px 0;font-size:13px"></p>
+          <p id="invoiceGST" style="font-size:13px"></p>
+          <h3 style="margin-top:12px;font-size:15px;letter-spacing:1px">FREIGHT BILL / INVOICE</h3>
+        </div>
+        <div class="grid-2" style="margin-bottom:18px">
+          <div><strong>Bill To:</strong><p id="invoiceBillTo" style="margin-top:4px"></p></div>
+          <div style="text-align:right"><strong>Invoice Date:</strong><p id="invoiceDate" style="margin-top:4px"></p></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Date</th><th>Trip No.</th><th>Vehicle</th><th>Destination</th><th>MT</th><th>Rate</th><th>Amount</th></tr>
+            </thead>
+            <tbody id="invoiceRows"></tbody>
+            <tfoot>
+              <tr>
+                <th colspan="4" style="text-align:right">Total</th>
+                <th id="invoiceTotalMT">0</th>
+                <th></th>
+                <th id="invoiceTotalAmount">₹0</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div style="text-align:right;margin-top:40px">
+          <strong>For JRC Global Logistics</strong>
+          <p style="margin-top:48px;color:var(--muted)">Authorised Signature</p>
+        </div>
+        <p style="margin-top:24px;font-size:12px;color:var(--muted)">Confirm applicable tax details and invoice numbering with your accountant before issuing.</p>
+      </div>
+    </section>
 
-</main>
+    <!-- BILTY -->
+    <section id="page-bilty" class="page">
+      <div class="page-header">
+        <div>
+          <h2>Transport Bilty</h2>
+          <p>Prepare printable goods consignment note</p>
+        </div>
+        <button class="btn btn-primary no-print" onclick="window.print()">Print Bilty</button>
+      </div>
+      <div class="card no-print">
+        <div class="form-grid">
+          <div class="field"><label for="biltyNo">Bilty / LR Number</label><input id="biltyNo" placeholder="LR number"></div>
+          <div class="field"><label for="biltyDate">Date</label><input id="biltyDate" type="date"></div>
+          <div class="field"><label for="biltyVehicle">Vehicle Number</label><input id="biltyVehicle" placeholder="RJ 06 XX 1234"></div>
+          <div class="field"><label for="biltyConsignor">Consignor</label><input id="biltyConsignor" value="MRPL Bhilwara"></div>
+          <div class="field"><label for="biltyConsignee">Consignee</label><input id="biltyConsignee" placeholder="Consignee name"></div>
+          <div class="field"><label for="biltyDestination">Destination</label><input id="biltyDestination" placeholder="Delivery destination"></div>
+          <div class="field"><label for="biltyMaterial">Material</label><input id="biltyMaterial" placeholder="Material description"></div>
+          <div class="field"><label for="biltyWeight">Weight (MT)</label><input id="biltyWeight" type="number" min="0" step="0.01"></div>
+          <div class="field"><label for="biltyDriver">Driver Name</label><input id="biltyDriver" placeholder="Driver name"></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:16px" id="btnUpdateBilty">Update Preview</button>
+      </div>
+      <div class="card" id="biltyPaper">
+        <div style="text-align:center;border-bottom:2px solid #334155;padding-bottom:14px">
+          <h2 style="font-size:20px">JRC GLOBAL LOGISTICS</h2>
+          <p style="color:var(--muted);font-size:13px;margin:6px 0">H.N. 162, Sansera Road, Dariba, Railmagra, Rajsamand, Rajasthan 313211</p>
+          <p style="font-size:13px">Mobile: 9896393477 · GSTIN: 08EVLPA0794M1Z3</p>
+          <h3 style="margin-top:12px;letter-spacing:1px;font-size:14px">GOODS CONSIGNMENT NOTE / BILTY</h3>
+        </div>
+        <div class="grid-2" style="margin-top:20px;gap:12px">
+          <p><strong>Bilty No.:</strong> <span id="pBiltyNo">____________</span></p>
+          <p><strong>Date:</strong> <span id="pBiltyDate">____________</span></p>
+          <p><strong>Vehicle:</strong> <span id="pBiltyVehicle">____________</span></p>
+          <p><strong>Driver:</strong> <span id="pBiltyDriver">____________</span></p>
+          <p><strong>Consignor:</strong> <span id="pConsignor">____________</span></p>
+          <p><strong>Consignee:</strong> <span id="pConsignee">____________</span></p>
+          <p><strong>Loading:</strong> MRPL Bhilwara</p>
+          <p><strong>Destination:</strong> <span id="pBiltyDestination">____________</span></p>
+        </div>
+        <div class="table-wrap" style="margin-top:20px">
+          <table>
+            <thead><tr><th>Material</th><th>Weight (MT)</th></tr></thead>
+            <tbody><tr><td id="pBiltyMaterial">____________</td><td id="pBiltyWeight">________</td></tr></tbody>
+          </table>
+        </div>
+        <p style="margin-top:28px;font-size:13px">Goods received for transportation subject to agreed terms and conditions.</p>
+        <div class="grid-2" style="margin-top:48px">
+          <p>Consignor Signature: ____________</p>
+          <p>Transporter Signature: ____________</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- REPORTS -->
+    <section id="page-reports" class="page">
+      <div class="page-header">
+        <div>
+          <h2>Reports</h2>
+          <p>Business performance & destination summary</p>
+        </div>
+        <button class="btn btn-primary" id="btnExportCSV">↓ Export CSV</button>
+      </div>
+      <div class="stats">
+        <div class="stat-card"><div class="stat-label">Total Weight</div><div class="stat-value" id="reportMT">0 MT</div></div>
+        <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-value" id="reportRevenue">₹0</div></div>
+        <div class="stat-card"><div class="stat-label">Total Cost</div><div class="stat-value" id="reportCost">₹0</div></div>
+        <div class="stat-card"><div class="stat-label">Margin</div><div class="stat-value" id="reportMargin">₹0</div></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:16px">Destination-wise Performance</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Destination</th><th>Trips</th><th>MT</th><th>Billing</th><th>Freight</th><th>Margin</th></tr>
+            </thead>
+            <tbody id="reportDestinationRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- BACKUP -->
+    <section id="page-backup" class="page">
+      <div class="page-header">
+        <div>
+          <h2>Backup & Restore</h2>
+          <p>Protect your business records</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin-bottom:8px">Export Backup</h3>
+          <p style="color:var(--muted);margin-bottom:18px;font-size:13px">Download trips, rates and settings as a JSON file.</p>
+          <button class="btn btn-primary" id="btnDownloadBackup">Download Backup</button>
+        </div>
+        <div class="card">
+          <h3 style="margin-bottom:8px">Restore Backup</h3>
+          <p style="color:var(--muted);margin-bottom:14px;font-size:13px">Restoring replaces all current data in this browser.</p>
+          <div class="field">
+            <label for="backupFile">Select JSON Backup</label>
+            <input id="backupFile" type="file" accept=".json,application/json">
+          </div>
+          <button class="btn btn-danger" style="margin-top:14px" id="btnRestoreBackup">Restore Backup</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:12px">Data Summary</h3>
+        <p>Saved trips: <strong id="backupTripCount">0</strong></p>
+        <p style="margin-top:6px">Destination rates: <strong id="backupRateCount">0</strong></p>
+        <p style="margin-top:12px;font-size:13px;color:var(--muted)">Always keep a separate copy of your backup in a safe location.</p>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="page-settings" class="page">
+      <div class="page-header">
+        <div>
+          <h2>Company Settings</h2>
+          <p>Update your firm information</p>
+        </div>
+      </div>
+      <form id="settingsForm" class="card">
+        <div class="form-grid">
+          <div class="field"><label for="companyName">Firm Name</label><input id="companyName" required></div>
+          <div class="field"><label for="companyGST">GSTIN</label><input id="companyGST"></div>
+          <div class="field"><label for="companyPhone">Mobile</label><input id="companyPhone"></div>
+          <div class="field field-full"><label for="companyAddress">Address</label><textarea id="companyAddress"></textarea></div>
+          <div class="field"><label for="defaultParty">Default Party</label><input id="defaultParty"></div>
+          <div class="field"><label for="defaultLoading">Default Loading Point</label><input id="defaultLoading"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Save Settings</button>
+        </div>
+      </form>
+    </section>
+  </main>
 </div>
-<footer class="footer">JRC Global Logistics · Transport Management System</footer>
+
+<footer class="footer">JRC Global Logistics · Transport Management System · Data stored locally in your browser</footer>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<!-- Confirm Modal -->
+<div class="modal-backdrop" id="confirmModal">
+  <div class="modal">
+    <h3 id="confirmTitle">Confirm</h3>
+    <p id="confirmMessage">Are you sure?</p>
+    <div class="modal-actions">
+      <button class="btn" id="confirmCancel">Cancel</button>
+      <button class="btn btn-danger" id="confirmOk">Delete</button>
+    </div>
+  </div>
+</div>
 
 <script>
 "use strict";
 
-const KEY = "jrc_tms_corrected_v1";
-const DEFAULT_RATES = {Agucha:1058,SK:1070,RD:1080,Zawar:1510,Kayad:1320};
-const DEST = {Agucha:"Rampura Agucha",SK:"S.K. Mine",RD:"R.D. Mine",Zawar:"Zawar",Kayad:"Kayad",Other:"Other"};
-let trips = [];
-let rates = {...DEFAULT_RATES};
-let company = {
-  name:"JRC Global Logistics",
-  gst:"08EVLPA0794M1Z3",
-  phone:"9896393477",
-  address:"H.N. 162, Sansera Road, Dariba, Railmagra, Rajsamand, Rajasthan 313211",
-  party:"MRPL Bhilwara",
-  loading:"MRPL Bhilwara"
-};
+const App = (() => {
+  const KEY = "jrc_tms_pro_v2";
+  const DEFAULT_RATES = { Agucha: 1058, SK: 1070, RD: 1080, Zawar: 1510, Kayad: 1320 };
+  const DEST = {
+    Agucha: "Rampura Agucha",
+    SK: "S.K. Mine",
+    RD: "R.D. Mine",
+    Zawar: "Zawar",
+    Kayad: "Kayad",
+    Other: "Other"
+  };
 
-const $ = id => document.getElementById(id);
-const num = value => Number.isFinite(Number(value)) ? Number(value) : 0;
-const cash = value => new Intl.NumberFormat("en-IN",{
-  style:"currency",currency:"INR",maximumFractionDigits:2
-}).format(num(value));
-const safe = value => String(value ?? "").replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-})[c]);
-function today(){
-  const d=new Date();
-  return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);
-}
+  let trips = [];
+  let rates = { ...DEFAULT_RATES };
+  let company = {
+    name: "JRC Global Logistics",
+    gst: "08EVLPA0794M1Z3",
+    phone: "9896393477",
+    address: "H.N. 162, Sansera Road, Dariba, Railmagra, Rajsamand, Rajasthan 313211",
+    party: "MRPL Bhilwara",
+    loading: "MRPL Bhilwara"
+  };
 
-function loadData(){
-  try{
-    const data=JSON.parse(localStorage.getItem(KEY)||"{}");
-    if(Array.isArray(data.trips))trips=data.trips;
-    if(data.rates && typeof data.rates==="object")rates={...DEFAULT_RATES,...data.rates};
-    if(data.company && typeof data.company==="object")company={...company,...data.company};
-  }catch(e){alert("Saved data could not be read. Please check your backup.");}
-}
-function saveData(){
-  try{
-    localStorage.setItem(KEY,JSON.stringify({version:1,trips,rates,company}));
+  // ---------- Helpers ----------
+  const $ = id => document.getElementById(id);
+  const num = v => {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  };
+  const cash = v => new Intl.NumberFormat("en-IN", {
+    style: "currency", currency: "INR", maximumFractionDigits: 2
+  }).format(num(v));
+  const escapeHtml = str => String(str ?? "").replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[c]);
+  const today = () => {
+    const d = new Date();
+    return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  };
+
+  // ---------- Toast ----------
+  function toast(message, type = "info") {
+    const el = document.createElement("div");
+    el.className = `toast ${type}`;
+    el.textContent = message;
+    $("toast-container").appendChild(el);
+    setTimeout(() => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(8px)";
+      setTimeout(() => el.remove(), 300);
+    }, 3200);
+  }
+
+  // ---------- Confirm Modal ----------
+  let confirmResolve = null;
+  function confirm(title, message) {
+    return new Promise(resolve => {
+      confirmResolve = resolve;
+      $("confirmTitle").textContent = title;
+      $("confirmMessage").textContent = message;
+      $("confirmModal").classList.add("show");
+    });
+  }
+  $("confirmCancel").onclick = () => {
+    $("confirmModal").classList.remove("show");
+    if (confirmResolve) confirmResolve(false);
+  };
+  $("confirmOk").onclick = () => {
+    $("confirmModal").classList.remove("show");
+    if (confirmResolve) confirmResolve(true);
+  };
+
+  // ---------- Persistence ----------
+  function loadData() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      if (Array.isArray(data.trips)) trips = data.trips;
+      if (data.rates && typeof data.rates === "object") rates = { ...DEFAULT_RATES, ...data.rates };
+      if (data.company && typeof data.company === "object") company = { ...company, ...data.company };
+    } catch (e) {
+      toast("Could not read saved data. Check your backup.", "error");
+    }
+  }
+  function saveData() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({ version: 2, trips, rates, company }));
+      updateBackupSummary();
+      return true;
+    } catch (e) {
+      toast("Could not save. Storage may be full. Export a backup.", "error");
+      return false;
+    }
+  }
+
+  // ---------- Navigation ----------
+  function showPage(name) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    const page = $(`page-${name}`);
+    if (page) page.classList.add("active");
+    document.querySelectorAll(".nav-btn").forEach(b => {
+      b.classList.toggle("active", b.dataset.page === name);
+    });
+    if (name === "dashboard") renderDashboard();
+    if (name === "trips") renderTrips();
+    if (name === "rates") renderRates();
+    if (name === "reports") renderReports();
+    if (name === "invoice") renderInvoice();
+    if (name === "settings") loadSettingsForm();
+    if (name === "backup") updateBackupSummary();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // ---------- Trip Calculation ----------
+  function calculateTrip() {
+    const dest = $("destination").value;
+    const weight = num($("weightMT").value);
+    const rate = $("partyRate").value === "" ? num(rates[dest]) : num($("partyRate").value);
+    const freight = num($("vehicleFreight").value);
+    const expense = num($("otherExpense").value);
+    const billing = weight * rate;
+    const cost = freight + expense;
+    const profit = billing - cost;
+
+    $("calcBilling").textContent = cash(billing);
+    $("calcCost").textContent = cash(cost);
+    const profitEl = $("calcProfit");
+    profitEl.textContent = cash(profit);
+    profitEl.className = profit >= 0 ? "profit" : "loss";
+  }
+
+  function resetTripForm() {
+    $("tripForm").reset();
+    $("editTripId").value = "";
+    $("tripFormTitle").textContent = "Create New Trip";
+    $("tripDate").value = today();
+    $("partyName").value = company.party;
+    $("loadingPoint").value = company.loading;
+    $("weightMT").value = "11";
+    $("otherExpense").value = "0";
+    calculateTrip();
+  }
+
+  // ---------- Trip CRUD ----------
+  function saveTrip(e) {
+    e.preventDefault();
+    const id = $("editTripId").value || `JRC-${Date.now()}`;
+    const destination = $("destination").value;
+    const weight = num($("weightMT").value);
+    const partyRate = num($("partyRate").value);
+    const freight = num($("vehicleFreight").value);
+    const otherExpense = num($("otherExpense").value);
+
+    if (!destination || weight <= 0 || partyRate < 0 || freight < 0 || otherExpense < 0) {
+      toast("Please enter valid trip details.", "error");
+      return;
+    }
+
+    const trip = {
+      id,
+      date: $("tripDate").value,
+      vehicle: $("vehicleNo").value.trim().toUpperCase(),
+      driver: $("driverName").value.trim(),
+      driverPhone: $("driverPhone").value.trim(),
+      party: $("partyName").value.trim(),
+      loading: $("loadingPoint").value.trim(),
+      destination,
+      weight,
+      partyRate,
+      freight,
+      otherExpense,
+      status: $("tripStatus").value,
+      notes: $("tripNotes").value.trim(),
+      billing: weight * partyRate,
+      cost: freight + otherExpense,
+      profit: weight * partyRate - freight - otherExpense
+    };
+
+    if (!trip.vehicle || !trip.date) {
+      toast("Date and vehicle number are required.", "error");
+      return;
+    }
+
+    const idx = trips.findIndex(t => t.id === id);
+    if (idx >= 0) trips[idx] = trip;
+    else trips.unshift(trip);
+
+    if (saveData()) {
+      toast(idx >= 0 ? "Trip updated successfully" : "Trip saved successfully", "success");
+      resetTripForm();
+      showPage("trips");
+    }
+  }
+
+  function editTrip(id) {
+    const t = trips.find(x => x.id === id);
+    if (!t) return;
+    showPage("newtrip");
+    $("editTripId").value = t.id;
+    $("tripFormTitle").textContent = "Edit Trip";
+    $("tripDate").value = t.date;
+    $("vehicleNo").value = t.vehicle;
+    $("driverName").value = t.driver || "";
+    $("driverPhone").value = t.driverPhone || "";
+    $("partyName").value = t.party || "";
+    $("loadingPoint").value = t.loading || "";
+    $("destination").value = t.destination;
+    $("tripStatus").value = t.status;
+    $("weightMT").value = t.weight;
+    $("partyRate").value = t.partyRate;
+    $("vehicleFreight").value = t.freight;
+    $("otherExpense").value = t.otherExpense || 0;
+    $("tripNotes").value = t.notes || "";
+    calculateTrip();
+  }
+
+  async function deleteTrip(id) {
+    const t = trips.find(x => x.id === id);
+    if (!t) return;
+    const ok = await confirm("Delete Trip?", `Delete trip for vehicle ${t.vehicle}? This cannot be undone.`);
+    if (!ok) return;
+    trips = trips.filter(x => x.id !== id);
+    if (saveData()) {
+      toast("Trip deleted", "success");
+      renderTrips();
+      renderDashboard();
+      renderReports();
+    }
+  }
+
+  // ---------- Renderers ----------
+  function statusClass(s) {
+    if (s === "Delivered") return "done";
+    if (s === "Payment Pending") return "pending";
+    if (s === "In Transit") return "transit";
+    return "";
+  }
+
+  function renderTrips() {
+    const search = ($("tripSearch")?.value || "").toLowerCase().trim();
+    const status = $("tripStatusFilter")?.value || "";
+    const filtered = trips.filter(t => {
+      const hay = [t.id, t.vehicle, t.driver, t.destination, DEST[t.destination], t.party].join(" ").toLowerCase();
+      return hay.includes(search) && (!status || t.status === status);
+    });
+
+    const tbody = $("tripRows");
+    if (!filtered.length) {
+      tbody.innerHTML = "";
+      $("tripEmpty").style.display = "block";
+      return;
+    }
+    $("tripEmpty").style.display = "none";
+    tbody.innerHTML = filtered.map(t => `
+      <tr data-id="${escapeHtml(t.id)}">
+        <td>${escapeHtml(t.date)}</td>
+        <td>${escapeHtml(t.id)}</td>
+        <td>${escapeHtml(t.vehicle)}</td>
+        <td>${escapeHtml(t.driver || "—")}</td>
+        <td>${escapeHtml(DEST[t.destination] || t.destination)}</td>
+        <td>${num(t.weight).toFixed(2)}</td>
+        <td>${cash(t.billing)}</td>
+        <td>${cash(t.freight)}</td>
+        <td class="${t.profit >= 0 ? "profit" : "loss"}">${cash(t.profit)}</td>
+        <td><span class="status ${statusClass(t.status)}">${escapeHtml(t.status)}</span></td>
+        <td>
+          <button class="btn btn-sm btn-edit">Edit</button>
+          <button class="btn btn-sm btn-danger btn-delete">Delete</button>
+        </td>
+      </tr>`).join("");
+  }
+
+  function renderDashboard() {
+    $("statTrips").textContent = trips.length;
+    $("statBilling").textContent = cash(trips.reduce((s, t) => s + num(t.billing), 0));
+    $("statFreight").textContent = cash(trips.reduce((s, t) => s + num(t.freight), 0));
+    $("statProfit").textContent = cash(trips.reduce((s, t) => s + num(t.profit), 0));
+
+    const rows = [...trips].sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 8);
+    const tbody = $("recentTrips");
+    if (!rows.length) {
+      tbody.innerHTML = `<tr><td colspan="7" class="empty">No trips recorded yet</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = rows.map(t => `
+      <tr>
+        <td>${escapeHtml(t.date)}</td>
+        <td>${escapeHtml(t.id)}</td>
+        <td>${escapeHtml(t.vehicle)}</td>
+        <td>${escapeHtml(DEST[t.destination] || t.destination)}</td>
+        <td>${cash(t.billing)}</td>
+        <td class="${t.profit >= 0 ? "profit" : "loss"}">${cash(t.profit)}</td>
+        <td><span class="status ${statusClass(t.status)}">${escapeHtml(t.status)}</span></td>
+      </tr>`).join("");
+  }
+
+  function renderRates() {
+    $("rateRows").innerHTML = Object.keys(DEFAULT_RATES).map(k => `
+      <tr>
+        <td>${escapeHtml(DEST[k])}</td>
+        <td>${cash(rates[k])} / MT</td>
+        <td><button class="btn btn-sm" data-rate="${k}">Edit</button></td>
+      </tr>`).join("");
+  }
+
+  function renderReports() {
+    $("reportMT").textContent = trips.reduce((s, t) => s + num(t.weight), 0).toFixed(2) + " MT";
+    $("reportRevenue").textContent = cash(trips.reduce((s, t) => s + num(t.billing), 0));
+    $("reportCost").textContent = cash(trips.reduce((s, t) => s + num(t.cost), 0));
+    $("reportMargin").textContent = cash(trips.reduce((s, t) => s + num(t.profit), 0));
+
+    $("reportDestinationRows").innerHTML = Object.keys(DEFAULT_RATES).map(k => {
+      const list = trips.filter(t => t.destination === k);
+      return `<tr>
+        <td>${escapeHtml(DEST[k])}</td>
+        <td>${list.length}</td>
+        <td>${list.reduce((s, t) => s + num(t.weight), 0).toFixed(2)}</td>
+        <td>${cash(list.reduce((s, t) => s + num(t.billing), 0))}</td>
+        <td>${cash(list.reduce((s, t) => s + num(t.freight), 0))}</td>
+        <td>${cash(list.reduce((s, t) => s + num(t.profit), 0))}</td>
+      </tr>`;
+    }).join("");
+  }
+
+  function renderInvoice() {
+    const party = $("invoiceParty").value || company.party;
+    const from = $("invoiceFrom").value;
+    const to = $("invoiceTo").value;
+    const rows = trips.filter(t =>
+      t.party === party &&
+      t.status === "Delivered" &&
+      (!from || t.date >= from) &&
+      (!to || t.date <= to)
+    );
+
+    $("invoiceCompanyName").textContent = company.name;
+    $("invoiceAddress").textContent = company.address;
+    $("invoiceGST").textContent = "GSTIN: " + company.gst;
+    $("invoiceBillTo").textContent = party;
+    $("invoiceDate").textContent = today();
+
+    const tbody = $("invoiceRows");
+    if (!rows.length) {
+      tbody.innerHTML = `<tr><td colspan="7">No delivered trips found for this party and date range.</td></tr>`;
+    } else {
+      tbody.innerHTML = rows.map(t => `
+        <tr>
+          <td>${escapeHtml(t.date)}</td>
+          <td>${escapeHtml(t.id)}</td>
+          <td>${escapeHtml(t.vehicle)}</td>
+          <td>${escapeHtml(DEST[t.destination] || t.destination)}</td>
+          <td>${num(t.weight).toFixed(2)}</td>
+          <td>${cash(t.partyRate)}</td>
+          <td>${cash(t.billing)}</td>
+        </tr>`).join("");
+    }
+    $("invoiceTotalMT").textContent = rows.reduce((s, t) => s + num(t.weight), 0).toFixed(2);
+    $("invoiceTotalAmount").textContent = cash(rows.reduce((s, t) => s + num(t.billing), 0));
+  }
+
+  function updateBilty() {
+    const map = {
+      biltyNo: "pBiltyNo", biltyDate: "pBiltyDate", biltyVehicle: "pBiltyVehicle",
+      biltyDriver: "pBiltyDriver", biltyConsignor: "pConsignor", biltyConsignee: "pConsignee",
+      biltyDestination: "pBiltyDestination", biltyMaterial: "pBiltyMaterial", biltyWeight: "pBiltyWeight"
+    };
+    Object.entries(map).forEach(([src, dest]) => {
+      $(dest).textContent = $(src).value || "____________";
+    });
+  }
+
+  // ---------- Export / Backup ----------
+  function downloadFile(content, name, type) {
+    const url = URL.createObjectURL(new Blob([content], { type }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  function exportCSV() {
+    const header = ["Date","Trip ID","Vehicle","Driver","Party","Loading","Destination","MT","Rate","Billing","Freight","Other Expense","Margin","Status","Notes"];
+    const rows = trips.map(t => [
+      t.date, t.id, t.vehicle, t.driver, t.party, t.loading,
+      DEST[t.destination] || t.destination, t.weight, t.partyRate,
+      t.billing, t.freight, t.otherExpense, t.profit, t.status, t.notes
+    ]);
+    const cell = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    downloadFile("\uFEFF" + [header, ...rows].map(r => r.map(cell).join(",")).join("\r\n"),
+      `JRC_Trip_Register_${today()}.csv`, "text/csv;charset=utf-8");
+    toast("CSV exported", "success");
+  }
+
+  function downloadBackup() {
+    downloadFile(JSON.stringify({ version: 2, trips, rates, company }, null, 2),
+      `JRC_TMS_Backup_${today()}.json`, "application/json");
+    toast("Backup downloaded", "success");
+  }
+
+  async function restoreBackup() {
+    const file = $("backupFile").files[0];
+    if (!file) {
+      toast("Choose a JSON backup file first", "error");
+      return;
+    }
+    const ok = await confirm("Restore Backup?", "This will replace all current data. Continue?");
+    if (!ok) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        if (!Array.isArray(data.trips) || !data.rates || !data.company) throw new Error("Invalid");
+        trips = data.trips;
+        rates = { ...DEFAULT_RATES, ...data.rates };
+        company = { ...company, ...data.company };
+        if (saveData()) {
+          renderDashboard();
+          renderTrips();
+          renderRates();
+          renderReports();
+          loadSettingsForm();
+          toast("Backup restored successfully", "success");
+        }
+      } catch (e) {
+        toast("Invalid backup file", "error");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  // ---------- Settings ----------
+  function loadSettingsForm() {
+    $("companyName").value = company.name;
+    $("companyGST").value = company.gst;
+    $("companyPhone").value = company.phone;
+    $("companyAddress").value = company.address;
+    $("defaultParty").value = company.party;
+    $("defaultLoading").value = company.loading;
+  }
+
+  function saveSettings(e) {
+    e.preventDefault();
+    company = {
+      name: $("companyName").value.trim(),
+      gst: $("companyGST").value.trim(),
+      phone: $("companyPhone").value.trim(),
+      address: $("companyAddress").value.trim(),
+      party: $("defaultParty").value.trim(),
+      loading: $("defaultLoading").value.trim()
+    };
+    if (saveData()) {
+      renderInvoice();
+      toast("Company settings saved", "success");
+    }
+  }
+
+  function updateBackupSummary() {
+    if ($("backupTripCount")) $("backupTripCount").textContent = trips.length;
+    if ($("backupRateCount")) $("backupRateCount").textContent = Object.keys(rates).length;
+  }
+
+  // ---------- Init & Events ----------
+  function init() {
+    loadData();
+
+    // Navigation
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.addEventListener("click", () => showPage(btn.dataset.page));
+    });
+    document.querySelectorAll("[data-goto]").forEach(btn => {
+      btn.addEventListener("click", () => showPage(btn.dataset.goto));
+    });
+
+    // Trip form
+    $("tripForm").addEventListener("submit", saveTrip);
+    ["weightMT", "partyRate", "vehicleFreight", "otherExpense"].forEach(id => {
+      $(id).addEventListener("input", calculateTrip);
+    });
+    $("destination").addEventListener("change", () => {
+      const d = $("destination").value;
+      $("partyRate").value = (d in rates) ? rates[d] : "";
+      calculateTrip();
+    });
+
+    // Search / filter
+    $("tripSearch").addEventListener("input", renderTrips);
+    $("tripStatusFilter").addEventListener("change", renderTrips);
+
+    // Table actions (event delegation)
+    $("tripRows").addEventListener("click", e => {
+      const row = e.target.closest("tr[data-id]");
+      if (!row) return;
+      const id = row.dataset.id;
+      if (e.target.classList.contains("btn-edit")) editTrip(id);
+      if (e.target.classList.contains("btn-delete")) deleteTrip(id);
+    });
+
+    // Rates
+    $("rateForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const k = $("rateDestination").value;
+      const v = num($("rateValue").value);
+      if (!(k in DEFAULT_RATES) || v < 0) {
+        toast("Invalid rate", "error");
+        return;
+      }
+      rates[k] = v;
+      if (saveData()) {
+        renderRates();
+        toast("Rate updated", "success");
+      }
+    });
+    $("rateRows").addEventListener("click", e => {
+      const btn = e.target.closest("[data-rate]");
+      if (btn) {
+        $("rateDestination").value = btn.dataset.rate;
+        $("rateValue").value = rates[btn.dataset.rate];
+      }
+    });
+
+    // Invoice / Bilty / Reports / Backup / Settings
+    $("btnGenerateInvoice").addEventListener("click", renderInvoice);
+    $("btnUpdateBilty").addEventListener("click", updateBilty);
+    $("btnExportCSV").addEventListener("click", exportCSV);
+    $("btnDownloadBackup").addEventListener("click", downloadBackup);
+    $("btnRestoreBackup").addEventListener("click", restoreBackup);
+    $("settingsForm").addEventListener("submit", saveSettings);
+
+    // Defaults
+    $("tripDate").value = today();
+    $("biltyDate").value = today();
+    $("partyName").value = company.party;
+    $("loadingPoint").value = company.loading;
+    loadSettingsForm();
+    renderDashboard();
+    renderTrips();
+    renderRates();
+    renderReports();
+    renderInvoice();
     updateBackupSummary();
-    return true;
-  }catch(e){alert("Could not save data. Export a backup and check browser storage.");return false;}
-}
-
-function showPage(name){
-  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
-  const page=$("page-"+name);
-  if(page)page.classList.remove("hidden");
-  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===name));
-  if(name==="dashboard")renderDashboard();
-  if(name==="trips")renderTrips();
-  if(name==="rates")renderRates();
-  if(name==="reports")renderReports();
-  if(name==="invoice")renderInvoice();
-  if(name==="settings")loadSettings();
-  if(name==="backup")updateBackupSummary();
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-document.querySelectorAll(".nav-btn").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
-
-function calculateTrip(){
-  const destination=$("destination").value;
-  const weight=num($("weightMT").value);
-  const rate=$("partyRate").value===""?num(rates[destination]):num($("partyRate").value);
-  const freight=num($("vehicleFreight").value);
-  const expense=num($("otherExpense").value);
-  const billing=weight*rate;
-  const cost=freight+expense;
-  const profit=billing-cost;
-  $("calcBilling").textContent=cash(billing);
-  $("calcCost").textContent=cash(cost);
-  $("calcProfit").textContent=cash(profit);
-  $("calcProfit").className=profit>=0?"profit":"loss";
-}
-["weightMT","partyRate","vehicleFreight","otherExpense"].forEach(id=>$(id).addEventListener("input",calculateTrip));
-$("destination").addEventListener("change",()=>{
-  const d=$("destination").value;
-  $("partyRate").value=Object.hasOwn(rates,d)?rates[d]:"";
-  calculateTrip();
-});
-
-function resetTripForm(){
-  $("tripForm").reset();
-  $("editTripId").value="";
-  $("tripFormTitle").textContent="Create New Trip";
-  $("tripDate").value=today();
-  $("partyName").value=company.party;
-  $("loadingPoint").value=company.loading;
-  $("weightMT").value="11";
-  $("otherExpense").value="0";
-  calculateTrip();
-}
-$("tripForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const id=$("editTripId").value||"JRC-"+Date.now();
-  const destination=$("destination").value;
-  const weight=num($("weightMT").value);
-  const partyRate=num($("partyRate").value);
-  const freight=num($("vehicleFreight").value);
-  const otherExpense=num($("otherExpense").value);
-  if(!destination||weight<=0||partyRate<0||freight<0||otherExpense<0){
-    alert("Please enter valid trip details.");return;
+    calculateTrip();
   }
-  const trip={
-    id,date:$("tripDate").value,
-    vehicle:$("vehicleNo").value.trim().toUpperCase(),
-    driver:$("driverName").value.trim(),
-    driverPhone:$("driverPhone").value.trim(),
-    party:$("partyName").value.trim(),
-    loading:$("loadingPoint").value.trim(),
-    destination,weight,partyRate,freight,otherExpense,
-    status:$("tripStatus").value,
-    notes:$("tripNotes").value.trim(),
-    billing:weight*partyRate,
-    cost:freight+otherExpense,
-    profit:weight*partyRate-freight-otherExpense
-  };
-  if(!trip.vehicle||!trip.date){alert("Date and vehicle number are required.");return;}
-  const index=trips.findIndex(t=>t.id===id);
-  if(index>=0)trips[index]=trip;else trips.unshift(trip);
-  if(saveData()){
-    alert(index>=0?"Trip updated successfully.":"Trip saved successfully.");
-    resetTripForm();renderDashboard();showPage("trips");
-  }
-});
 
-function editTrip(id){
-  const t=trips.find(x=>x.id===id);if(!t)return;
-  showPage("newtrip");
-  $("editTripId").value=t.id;$("tripFormTitle").textContent="Edit Trip";
-  $("tripDate").value=t.date;$("vehicleNo").value=t.vehicle;
-  $("driverName").value=t.driver;$("driverPhone").value=t.driverPhone;
-  $("partyName").value=t.party;$("loadingPoint").value=t.loading;
-  $("destination").value=t.destination;$("tripStatus").value=t.status;
-  $("weightMT").value=t.weight;$("partyRate").value=t.partyRate;
-  $("vehicleFreight").value=t.freight;$("otherExpense").value=t.otherExpense;
-  $("tripNotes").value=t.notes;calculateTrip();
-}
-function deleteTrip(id){
-  const t=trips.find(x=>x.id===id);if(!t)return;
-  if(!confirm("Delete trip "+t.vehicle+"?"))return;
-  trips=trips.filter(x=>x.id!==id);
-  if(saveData()){renderTrips();renderDashboard();renderReports();}
-}
-function statusClass(s){return s==="Delivered"?"done":s==="Payment Pending"?"pending":"";}
+  // Public API for inline handlers that remain
+  return { resetTripForm, init };
+})();
 
-function renderTrips(){
-  const search=($("tripSearch")?.value||"").toLowerCase().trim();
-  const status=$("tripStatusFilter")?.value||"";
-  const filtered=trips.filter(t=>{
-    const hay=[t.id,t.vehicle,t.driver,t.destination,DEST[t.destination],t.party].join(" ").toLowerCase();
-    return hay.includes(search)&&(!status||t.status===status);
-  });
-  $("tripRows").innerHTML=filtered.map(t=>`
-    <tr>
-      <td>${safe(t.date)}</td><td>${safe(t.id)}</td><td>${safe(t.vehicle)}</td>
-      <td>${safe(t.driver)}</td><td>${safe(DEST[t.destination]||t.destination)}</td>
-      <td>${num(t.weight).toFixed(2)}</td><td>${cash(t.billing)}</td>
-      <td>${cash(t.freight)}</td><td class="${t.profit>=0?"profit":"loss"}">${cash(t.profit)}</td>
-      <td><span class="status ${statusClass(t.status)}">${safe(t.status)}</span></td>
-      <td><button class="btn btn-small" onclick="editTrip('${safe(t.id)}')">Edit</button>
-      <button class="btn btn-small btn-danger" onclick="deleteTrip('${safe(t.id)}')">Delete</button></td>
-    </tr>`).join("");
-  $("tripEmpty").classList.toggle("hidden",filtered.length>0);
-}
-function renderDashboard(){
-  $("statTrips").textContent=trips.length;
-  $("statBilling").textContent=cash(trips.reduce((s,t)=>s+num(t.billing),0));
-  $("statFreight").textContent=cash(trips.reduce((s,t)=>s+num(t.freight),0));
-  $("statProfit").textContent=cash(trips.reduce((s,t)=>s+num(t.profit),0));
-  const rows=[...trips].sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,8);
-  $("recentTrips").innerHTML=rows.map(t=>`
-    <tr><td>${safe(t.date)}</td><td>${safe(t.id)}</td><td>${safe(t.vehicle)}</td>
-    <td>${safe(DEST[t.destination]||t.destination)}</td><td>${cash(t.billing)}</td>
-    <td class="${t.profit>=0?"profit":"loss"}">${cash(t.profit)}</td>
-    <td><span class="status ${statusClass(t.status)}">${safe(t.status)}</span></td></tr>`).join("");
-  if(!rows.length)$("recentTrips").innerHTML='<tr><td colspan="7" class="empty">No trips recorded yet.</td></tr>';
-}
-function renderRates(){
-  $("rateRows").innerHTML=Object.keys(DEFAULT_RATES).map(k=>`
-    <tr><td>${safe(DEST[k])}</td><td>${cash(rates[k])} / MT</td>
-    <td><button class="btn btn-small" onclick="selectRate('${k}')">Edit</button></td></tr>`).join("");
-}
-function selectRate(k){$("rateDestination").value=k;$("rateValue").value=rates[k];}
-$("rateForm").addEventListener("submit",e=>{
-  e.preventDefault();const k=$("rateDestination").value;const v=num($("rateValue").value);
-  if(!Object.hasOwn(DEFAULT_RATES,k)||v<0){alert("Invalid rate.");return;}
-  rates[k]=v;if(saveData()){renderRates();alert("Rate updated.");}
-});
-function renderReports(){
-  $("reportMT").textContent=trips.reduce((s,t)=>s+num(t.weight),0).toFixed(2)+" MT";
-  $("reportRevenue").textContent=cash(trips.reduce((s,t)=>s+num(t.billing),0));
-  $("reportCost").textContent=cash(trips.reduce((s,t)=>s+num(t.cost),0));
-  $("reportMargin").textContent=cash(trips.reduce((s,t)=>s+num(t.profit),0));
-  $("reportDestinationRows").innerHTML=Object.keys(DEFAULT_RATES).map(k=>{
-    const a=trips.filter(t=>t.destination===k);
-    return `<tr><td>${safe(DEST[k])}</td><td>${a.length}</td>
-    <td>${a.reduce((s,t)=>s+num(t.weight),0).toFixed(2)}</td>
-    <td>${cash(a.reduce((s,t)=>s+num(t.billing),0))}</td>
-    <td>${cash(a.reduce((s,t)=>s+num(t.freight),0))}</td>
-    <td>${cash(a.reduce((s,t)=>s+num(t.profit),0))}</td></tr>`;
-  }).join("");
-}
-function renderInvoice(){
-  const party=$("invoiceParty").value||company.party;
-  const from=$("invoiceFrom").value,to=$("invoiceTo").value;
-  const rows=trips.filter(t=>t.party===party&&t.status==="Delivered"&&(!from||t.date>=from)&&(!to||t.date<=to));
-  $("invoiceCompanyName").textContent=company.name;
-  $("invoiceAddress").textContent=company.address;
-  $("invoiceGST").textContent="GSTIN: "+company.gst;
-  $("invoiceBillTo").textContent=party;$("invoiceDate").textContent=today();
-  $("invoiceRows").innerHTML=rows.map(t=>`<tr><td>${safe(t.date)}</td><td>${safe(t.id)}</td>
-  <td>${safe(t.vehicle)}</td><td>${safe(DEST[t.destination]||t.destination)}</td>
-  <td>${num(t.weight).toFixed(2)}</td><td>${cash(t.partyRate)}</td><td>${cash(t.billing)}</td></tr>`).join("");
-  if(!rows.length)$("invoiceRows").innerHTML='<tr><td colspan="7">No delivered trips found for this party and date range.</td></tr>';
-  $("invoiceTotalMT").textContent=rows.reduce((s,t)=>s+num(t.weight),0).toFixed(2);
-  $("invoiceTotalAmount").textContent=cash(rows.reduce((s,t)=>s+num(t.billing),0));
-}
-function updateBilty(){
-  const map={biltyNo:"pBiltyNo",biltyDate:"pBiltyDate",biltyVehicle:"pBiltyVehicle",biltyDriver:"pBiltyDriver",biltyConsignor:"pConsignor",biltyConsignee:"pConsignee",biltyDestination:"pBiltyDestination",biltyMaterial:"pBiltyMaterial",biltyWeight:"pBiltyWeight"};
-  Object.entries(map).forEach(([a,b])=>$(b).textContent=$(a).value||"____________");
-}
-function downloadFile(content,name,type){
-  const url=URL.createObjectURL(new Blob([content],{type}));
-  const a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
-}
-function exportCSV(){
-  const header=["Date","Trip ID","Vehicle","Driver","Party","Loading","Destination","MT","Rate","Billing","Freight","Other Expense","Margin","Status","Notes"];
-  const rows=trips.map(t=>[t.date,t.id,t.vehicle,t.driver,t.party,t.loading,DEST[t.destination]||t.destination,t.weight,t.partyRate,t.billing,t.freight,t.otherExpense,t.profit,t.status,t.notes]);
-  const cell=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
-  downloadFile("\uFEFF"+[header,...rows].map(r=>r.map(cell).join(",")).join("\r\n"),"JRC_Trip_Register.csv","text/csv;charset=utf-8");
-}
-function downloadBackup(){
-  downloadFile(JSON.stringify({version:1,trips,rates,company},null,2),"JRC_TMS_Backup_"+today()+".json","application/json");
-}
-function restoreBackup(){
-  const file=$("backupFile").files[0];if(!file){alert("Choose a JSON backup first.");return;}
-  if(!confirm("This will replace the current saved data. Continue?"))return;
-  const reader=new FileReader();
-  reader.onload=()=>{
-    try{
-      const data=JSON.parse(reader.result);
-      if(!Array.isArray(data.trips)||!data.rates||!data.company)throw new Error("Invalid backup");
-      trips=data.trips;rates={...DEFAULT_RATES,...data.rates};company={...company,...data.company};
-      if(saveData()){renderDashboard();renderTrips();renderRates();renderReports();loadSettings();alert("Backup restored.");}
-    }catch(e){alert("Invalid backup file.");}
-  };
-  reader.readAsText(file);
-}
-function loadSettings(){
-  $("companyName").value=company.name;$("companyGST").value=company.gst;
-  $("companyPhone").value=company.phone;$("companyAddress").value=company.address;
-  $("defaultParty").value=company.party;$("defaultLoading").value=company.loading;
-}
-$("settingsForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  company={name:$("companyName").value.trim(),gst:$("companyGST").value.trim(),phone:$("companyPhone").value.trim(),address:$("companyAddress").value.trim(),party:$("defaultParty").value.trim(),loading:$("defaultLoading").value.trim()};
-  if(saveData()){renderInvoice();alert("Company settings saved.");}
-});
-function updateBackupSummary(){
-  if($("backupTripCount"))$("backupTripCount").textContent=trips.length;
-  if($("backupRateCount"))$("backupRateCount").textContent=Object.keys(rates).length;
-}
-function init(){
-  loadData();
-  $("tripDate").value=today();$("biltyDate").value=today();
-  $("partyName").value=company.party;$("loadingPoint").value=company.loading;
-  loadSettings();renderDashboard();renderTrips();renderRates();renderReports();renderInvoice();updateBackupSummary();calculateTrip();
-}
-init();
+document.addEventListener("DOMContentLoaded", App.init);
 </script>
 </body>
 </html>
