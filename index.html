@@ -1,950 +1,1410 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-<meta name="theme-color" content="#0f1f38">
-<title>JRC Global Logistics | Enterprise TMS</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-:root{
-  --navy: #0d1e38;
-  --navy-light: #162c4e;
-  --blue: #1d58bd;
-  --blue-soft: #eef4ff;
-  --ink: #132035;
-  --muted: #62748e;
-  --line: #dbe4ef;
-  --bg: #f3f6fa;
-  --card-bg: #ffffff;
-  --green: #117a48;
-  --green-soft: #e6f6ee;
-  --red: #c22215;
-  --red-soft: #fdeeee;
-  --amber: #b46b02;
-  --amber-soft: #fef5e7;
-  --radius: 12px;
-  --shadow: 0 4px 20px rgba(13,30,56,0.06);
-}
-
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);font-size:14px;line-height:1.45;padding-bottom:50px}
-
-/* HEADER */
-header{background:linear-gradient(135deg, var(--navy), #173763);color:#fff;padding:20px 16px 18px;position:relative}
-.brandrow{display:flex;align-items:center;gap:12px;max-width:1160px;margin:0 auto}
-.brandmark{width:46px;height:46px;flex:0 0 46px;background:linear-gradient(135deg,#f59e0b,#d97706);color:var(--navy);border-radius:12px;display:grid;place-items:center;font-size:19px;font-weight:900;letter-spacing:-1px;box-shadow:0 4px 10px rgba(0,0,0,0.15)}
-header h1{font-size:20px;font-weight:800;margin:0;letter-spacing:-.3px}
-header p{margin:4px 0 0;color:#cddaf0;font-size:12px}
-
-/* NAVIGATION (iOS horizontal swipe friendly) */
-nav{display:flex;gap:8px;overflow-x:auto;padding:10px 14px;background:#fff;position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line);scrollbar-width:none;box-shadow:0 2px 10px rgba(0,0,0,0.04)}
-nav::-webkit-scrollbar{display:none}
-nav button{white-space:nowrap;border:none;background:#f0f4fa;color:#475b75;padding:9px 14px;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:0.2s}
-nav button.active{background:var(--navy);color:#fff;box-shadow:0 3px 8px rgba(13,30,56,0.25)}
-
-/* MAIN CONTAINER */
-main{max-width:1160px;margin:0 auto;padding:16px 12px}
-.view{display:none}.view.active{display:block}
-.card{background:var(--card-bg);border:1px solid #e2eaf4;border-radius:var(--radius);padding:18px 16px;margin-bottom:16px;box-shadow:var(--shadow)}
-.card h2{margin:0 0 14px;font-size:17px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:8px}
-
-/* FORM FIELDS */
-.grid{display:grid;grid-template-columns:1fr;gap:12px}
-.field{display:flex;flex-direction:column}
-.field label{font-size:11.5px;font-weight:750;margin-bottom:5px;color:#2c3e55;text-transform:uppercase;letter-spacing:.3px}
-.field input, .field select, .field textarea{width:100%;padding:11px 12px;border:1.5px solid #d1dce9;border-radius:9px;background:#fff;color:var(--ink);font:inherit;font-size:15px;min-height:45px;transition:0.2s}
-.field input:focus, .field select:focus, .field textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(29,88,189,0.12)}
-.field textarea{min-height:75px;resize:vertical}
-.full{grid-column:1/-1}
-
-/* HIGHLIGHT BOX FOR HZL CALCULATION */
-.calc-box{background:var(--amber-soft);border:1.5px solid #f8d7a4;border-radius:10px;padding:14px;margin-bottom:14px}
-.calc-box h3{margin:0 0 10px;font-size:13.5px;color:#874900;display:flex;align-items:center;gap:6px}
-
-/* BUTTONS */
-.btn{border:none;border-radius:9px;background:var(--navy);color:#fff;padding:11px 16px;font-weight:750;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:43px}
-.btn.blue{background:var(--blue)}
-.btn.green{background:var(--green)}
-.btn.secondary{background:#edf2f8;color:#263e5e;border:1px solid #d4e0ee}
-.btn.danger{background:var(--red-soft);color:var(--red);border:1px solid #fad2cf}
-.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-
-/* STAT CARDS */
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.stat{background:#f8fafc;border:1px solid #e3eaf3;border-radius:10px;padding:12px}
-.stat small{display:block;color:var(--muted);font-size:11px;font-weight:700;margin-bottom:4px;text-transform:uppercase}
-.stat strong{display:block;color:var(--navy);font-size:19px;font-weight:800}
-
-/* LIST CARDS */
-.listitem{border:1px solid #e1e9f4;padding:13px;border-radius:10px;margin-top:10px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.02)}
-.listitem strong{display:block;margin-bottom:5px;font-size:15px;color:var(--navy)}
-.meta{font-size:12.5px;color:#495b73;line-height:1.6}
-.pill{display:inline-block;border-radius:6px;padding:3px 7px;font-size:11px;font-weight:750}
-.pill.ok{background:var(--green-soft);color:var(--green)}
-.pill.warn{background:var(--amber-soft);color:var(--amber)}
-.pill.bad{background:var(--red-soft);color:var(--red)}
-.pill.info{background:var(--blue-soft);color:var(--blue)}
-
-/* TABLE STYLING */
-.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
-table{border-collapse:collapse;width:100%;font-size:12px;background:#fff}
-th,td{border-bottom:1px solid var(--line);padding:9px 11px;text-align:left;white-space:nowrap}
-th{background:#f4f7fb;color:#435772;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.3px}
-.search input{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:9px;font:inherit;font-size:14px}
-.hint{font-size:11.5px;color:var(--muted);margin-top:6px}
-.empty{color:var(--muted);padding:20px;text-align:center;font-size:13px}
-.hidden{display:none!important}
-
-@media(min-width:640px){
-  .grid{grid-template-columns:repeat(2,1fr)}
-  .stats{grid-template-columns:repeat(4,1fr)}
-  header h1{font-size:24px}
-}
-@media(min-width:960px){
-  .grid{grid-template-columns:repeat(3,1fr)}
-}
-
-/* ==================== A4 ENTERPRISE PRINT ENGINE ==================== */
-@media print{
-  html,body{background:#fff!important;margin:0!important;padding:0!important;width:100%!important}
-  body *{visibility:hidden!important}
-  #printArea, #printArea *{visibility:visible!important}
-  #printArea{position:absolute!important;left:0!important;top:0!important;width:100%!important;margin:0!important;padding:8mm!important;background:#fff!important}
-  .no-print{display:none!important}
-}
-.bilty-box{border:1.5px solid #1a2f4c;font-family:Arial,sans-serif;font-size:8.5pt;color:#111;line-height:1.25}
-.bilty-header{display:flex;justify-content:space-between;border-bottom:1.5px solid #1a2f4c;padding:8px 10px;background:#f8fafc}
-.bilty-header h1{margin:0;font-size:16pt;color:#0d1e38;font-weight:900}
-.bilty-sub{font-size:8pt;color:#33445b;margin-top:2px}
-.bilty-badge{text-align:right}
-.bilty-badge strong{display:block;font-size:10.5pt;color:#0d1e38}
-.bilty-table{width:100%;border-collapse:collapse;margin:0;table-layout:fixed}
-.bilty-table th, .bilty-table td{border:1px solid #8ba0b8;padding:4.5px 6px;vertical-align:middle;overflow-wrap:anywhere}
-.bilty-table th{background:#eaeff6;font-size:7.5pt;font-weight:800;color:#183254;text-transform:uppercase}
-.bilty-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.bilty-grid-2 table:first-child{border-right:none}
-.bilty-bottom{display:grid;grid-template-columns:1.5fr 1fr;gap:6px;border-top:1px solid #8ba0b8;padding:6px;background:#fbfcfe}
-.bilty-sign{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;border-top:1.5px solid #1a2f4c;padding:26px 8px 6px;text-align:center;font-size:7.5pt;font-weight:700}
-.bilty-sign div{border-top:1px solid #475a73;padding-top:4px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JRC Global Logistics - Transport Management System</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @media print {
+      body * { visibility: hidden !important; }
+      #printArea, #printArea * { visibility: visible !important; }
+      #printArea {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 10px !important;
+      }
+      .no-print { display: none !important; }
+    }
+    .bilty-border { border: 1.5px solid #1e293b; }
+    .bilty-cell { border: 1px solid #334155; }
+  </style>
 </head>
-<body>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen">
 
-<header>
-  <div class="brandrow">
-    <div class="brandmark">JRC</div>
-    <div>
-      <h1>JRC GLOBAL LOGISTICS</h1>
-      <p>Dariba, Railmagra, Rajsamand (Raj.) &middot; GSTIN: 08EVLPA0794M1Z3 &middot; Mo: 9896393477</p>
+  <!-- TOP NAVIGATION BAR -->
+  <header class="bg-indigo-950 text-white shadow-lg sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center space-x-3">
+        <div class="bg-amber-500 text-indigo-950 p-2.5 rounded-lg font-black text-xl tracking-wider">
+          JRC
+        </div>
+        <div>
+          <h1 class="text-lg font-bold tracking-wide">JRC GLOBAL LOGISTICS</h1>
+          <p class="text-xs text-slate-300">GSTIN: 08EVLPA0794M1Z3 | Dariba, Rajsamand</p>
+        </div>
+      </div>
+      
+      <!-- Nav Tabs -->
+      <nav class="flex flex-wrap items-center gap-1.5 text-sm">
+        <button onclick="switchTab('dashboard')" id="tab-dashboard" class="nav-btn px-3 py-1.5 rounded-md font-medium bg-amber-500 text-indigo-950">
+          <i class="fa-solid fa-chart-pie mr-1.5"></i> Dashboard
+        </button>
+        <button onclick="switchTab('new-trip')" id="tab-new-trip" class="nav-btn px-3 py-1.5 rounded-md font-medium text-slate-200 hover:bg-indigo-900">
+          <i class="fa-solid fa-plus-circle mr-1.5"></i> New Trip Entry
+        </button>
+        <button onclick="switchTab('trips-list')" id="tab-trips-list" class="nav-btn px-3 py-1.5 rounded-md font-medium text-slate-200 hover:bg-indigo-900">
+          <i class="fa-solid fa-truck-moving mr-1.5"></i> Trip Register
+        </button>
+        <button onclick="switchTab('rate-master')" id="tab-rate-master" class="nav-btn px-3 py-1.5 rounded-md font-medium text-slate-200 hover:bg-indigo-900">
+          <i class="fa-solid fa-tags mr-1.5"></i> Rate Master
+        </button>
+        <button onclick="switchTab('settings')" id="tab-settings" class="nav-btn px-3 py-1.5 rounded-md font-medium text-slate-200 hover:bg-indigo-900">
+          <i class="fa-solid fa-gear mr-1.5"></i> Settings / Backup
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 py-6">
+
+    <!-- ==================== 1. DASHBOARD VIEW ==================== -->
+    <div id="view-dashboard" class="space-y-6">
+      <!-- KPI Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-xs text-slate-500 uppercase font-semibold">Total Trips / Delivered MT</div>
+          <div class="text-2xl font-bold text-slate-800 mt-1" id="dashTotalTrips">0 Trips</div>
+          <div class="text-sm font-medium text-indigo-600 mt-0.5" id="dashTotalWeight">0.000 MT</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-xs text-slate-500 uppercase font-semibold">Party Billing (MRPL)</div>
+          <div class="text-2xl font-bold text-emerald-700 mt-1" id="dashPartyBilling">₹0.00</div>
+          <div class="text-xs text-slate-500 mt-0.5" id="dashPartyPending">Pending: ₹0.00</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-xs text-slate-500 uppercase font-semibold">Vehicle Owner Freight</div>
+          <div class="text-2xl font-bold text-slate-800 mt-1" id="dashOwnerFreight">₹0.00</div>
+          <div class="text-xs text-rose-600 font-medium mt-0.5" id="dashOwnerBalance">Due: ₹0.00</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-xs text-slate-500 uppercase font-semibold">Net Gross Margin</div>
+          <div class="text-2xl font-bold text-blue-700 mt-1" id="dashGrossMargin">₹0.00</div>
+          <div class="text-xs text-slate-500 mt-0.5">(Party excl. Tax - Owner - Exp)</div>
+        </div>
+      </div>
+
+      <!-- Quick Action / Demo Notice -->
+      <div class="flex flex-wrap justify-between items-center bg-blue-50 border border-blue-200 p-4 rounded-xl text-sm">
+        <div class="flex items-center space-x-2 text-blue-900">
+          <i class="fa-solid fa-circle-info text-blue-600 text-lg"></i>
+          <span><strong>Automatic Party Rates Configured:</strong> MRPL Bhilwara Loading to 5 HZL Smelters (Agucha, S.K., R.D., Zawar, Kayad).</span>
+        </div>
+        <div class="flex space-x-2 mt-2 sm:mt-0">
+          <button onclick="loadSampleDemoData()" class="bg-white hover:bg-slate-50 text-indigo-900 border border-indigo-300 px-3 py-1.5 rounded-lg text-xs font-semibold shadow-sm">
+            <i class="fa-solid fa-flask mr-1"></i> Load Demo Trips
+          </button>
+          <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-sm">
+            <i class="fa-solid fa-file-excel mr-1"></i> Export to Excel (CSV)
+          </button>
+        </div>
+      </div>
+
+      <!-- Destination Breakdown Table -->
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <h3 class="font-bold text-slate-800 text-base mb-3 flex items-center">
+          <i class="fa-solid fa-location-dot text-amber-500 mr-2"></i> Destination-wise Performance & Rates
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
+              <tr>
+                <th class="py-2.5 px-3">Destination Plant</th>
+                <th class="py-2.5 px-3">Agreed Billing Rate</th>
+                <th class="py-2.5 px-3">Total Trips</th>
+                <th class="py-2.5 px-3">Total MT Delivered</th>
+                <th class="py-2.5 px-3">Total Billed</th>
+              </tr>
+            </thead>
+            <tbody id="dashDestinationBody" class="divide-y divide-slate-100">
+              <!-- Dynamically rendered -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 2. NEW TRIP ENTRY FORM ==================== -->
+    <div id="view-new-trip" class="hidden">
+      <form id="tripForm" onsubmit="saveTrip(event)" class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-200 pb-4">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900">Single-Window Trip Entry</h2>
+            <p class="text-xs text-slate-500">Enter trip details once. Bilty, party invoice, owner freight, and profit will calculate automatically.</p>
+          </div>
+          <span class="bg-amber-100 text-amber-800 text-xs px-3 py-1 rounded-full font-bold" id="formTripIdBadge">Trip #Auto</span>
+        </div>
+
+        <!-- 1. Route & Party Details -->
+        <div>
+          <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-wider mb-3">1. Route & Consignment Information</h4>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Trip Date *</label>
+              <input type="date" id="tripDate" required class="w-full p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Bilty / LR Number *</label>
+              <input type="text" id="lrNumber" required placeholder="e.g. JRC/2425/001" class="w-full p-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Billing Party (Consignor)</label>
+              <input type="text" id="partyName" value="MRPL, Bhilwara" required class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-sm font-semibold">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Loading Location</label>
+              <input type="text" id="loadingLocation" value="MRPL, Bhilwara" required class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-sm">
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Destination & Automatic Rate Fetch -->
+        <div class="p-4 bg-amber-50 rounded-xl border border-amber-200">
+          <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-3">2. Delivery Destination & Weight Calculation</h4>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-amber-950 mb-1">HZL Delivery Destination *</label>
+              <select id="destinationSelect" onchange="onDestinationChange()" required class="w-full p-2 bg-white border border-amber-300 rounded-lg text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-amber-500">
+                <!-- Populated from Rate Master -->
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-amber-950 mb-1">Actual Delivered Weight (MT) *</label>
+              <input type="number" step="0.001" id="actualWeightMT" oninput="calculatePartyBilling()" required placeholder="e.g. 13.260" class="w-full p-2 bg-white border border-amber-300 rounded-lg text-sm font-bold text-slate-900">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-amber-950 mb-1">Party Rate per MT (Auto-Fetched)</label>
+              <div class="relative">
+                <span class="absolute left-3 top-2 text-slate-400 text-sm">₹</span>
+                <input type="number" step="0.01" id="partyRatePMT" oninput="calculatePartyBilling()" readonly class="w-full p-2 pl-7 bg-amber-100 border border-amber-300 rounded-lg text-sm font-bold text-amber-950">
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-amber-950 mb-1">Calculated Party Freight (Taxable)</label>
+              <div class="text-lg font-black text-emerald-800 p-2 bg-white rounded-lg border border-amber-300 text-right" id="partyCalculatedFreight">
+                ₹0.00
+              </div>
+            </div>
+          </div>
+
+          <!-- GST Settings for this trip -->
+          <div class="mt-4 pt-3 border-t border-amber-200 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div>
+              <label class="block font-medium text-slate-700 mb-1">GTA GST Treatment</label>
+              <select id="gstTreatment" onchange="calculatePartyBilling()" class="w-full p-2 bg-white border border-slate-300 rounded-lg text-xs">
+                <option value="RCM">RCM - 0% (Tax paid by Recipient/HZL/MRPL)</option>
+                <option value="FC_5">Forward Charge - 5% (Without ITC)</option>
+                <option value="FC_12">Forward Charge - 12% (With ITC)</option>
+                <option value="EXEMPT">Exempt / Non-Taxable</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-medium text-slate-700 mb-1">Other Adjustments / Toll (₹)</label>
+              <input type="number" step="0.01" id="billAdjustments" oninput="calculatePartyBilling()" value="0" class="w-full p-2 bg-white border border-slate-300 rounded-lg text-xs">
+            </div>
+            <div class="bg-white p-2 rounded-lg border border-amber-300">
+              <span class="text-slate-500 block">Total Final Party Invoice:</span>
+              <span class="text-sm font-black text-indigo-950" id="finalPartyBillAmount">₹0.00</span>
+              <span class="text-[10px] text-amber-700 block mt-0.5">*Verify GTA tax rate with your accountant.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Vehicle & Driver Details -->
+        <div>
+          <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-wider mb-3">3. Vehicle & Transport Details</h4>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Vehicle Registration No. *</label>
+              <input type="text" id="vehicleNo" required placeholder="e.g. RJ06GB1234" class="w-full p-2 border border-slate-300 rounded-lg text-sm uppercase">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Vehicle Owner / Transporter Name</label>
+              <input type="text" id="ownerName" placeholder="Owner/Fleet Operator" class="w-full p-2 border border-slate-300 rounded-lg text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Owner Contact Number</label>
+              <input type="tel" id="ownerPhone" placeholder="10-digit mobile" class="w-full p-2 border border-slate-300 rounded-lg text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Driver Name & Mobile</label>
+              <input type="text" id="driverDetails" placeholder="Driver Name (Mobile)" class="w-full p-2 border border-slate-300 rounded-lg text-sm">
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Material & Consignment Documents -->
+        <div>
+          <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-wider mb-3">4. Material & E-Way Bill Details</h4>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Material / Product Description</label>
+              <input type="text" id="materialDesc" value="Industrial Goods / Resin / Smelter Material" class="w-full p-2 border border-slate-300 rounded-lg text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">No. of Packages / Bags</label>
+              <input type="number" id="packageCount" placeholder="e.g. 40" class="w-full p-2 border border-slate-300 rounded-lg text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">E-Way Bill Number</label>
+              <input type="text" id="ewayBillNo" placeholder="12-digit E-Way Bill" class="w-full p-2 border border-slate-300 rounded-lg text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Party Invoice / Ref No.</label>
+              <input type="text" id="partyInvRef" placeholder="e.g. S1/2526/001" class="w-full p-2 border border-slate-300 rounded-lg text-sm">
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Vehicle Owner Freight Ledger & Margin Calculation -->
+        <div class="p-4 bg-slate-50 rounded-xl border border-slate-300">
+          <div class="flex justify-between items-center mb-2">
+            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">5. Vehicle-Owner Agreed Freight (Lump-sum Per Vehicle)</h4>
+            <span class="text-[11px] font-semibold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+              *Never calculated per MT rate
+            </span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-800 mb-1">Agreed Owner Freight (₹ Per Trip) *</label>
+              <input type="number" step="0.01" id="ownerAgreedFreight" oninput="calculateMargin()" required placeholder="e.g. 11000" class="w-full p-2 bg-white border border-slate-300 rounded-lg text-sm font-bold text-slate-900">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Owner Advance Paid (₹)</label>
+              <input type="number" step="0.01" id="ownerAdvance" oninput="calculateMargin()" value="0" class="w-full p-2 bg-white border border-slate-300 rounded-lg text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Owner Balance Payable (₹)</label>
+              <input type="number" step="0.01" id="ownerBalance" readonly class="w-full p-2 bg-slate-100 border border-slate-300 rounded-lg text-sm font-bold text-rose-700">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Other Trip Expenses / Toll (₹)</label>
+              <input type="number" step="0.01" id="tripExpenses" oninput="calculateMargin()" value="0" class="w-full p-2 bg-white border border-slate-300 rounded-lg text-sm">
+            </div>
+          </div>
+
+          <!-- Real-Time Trip Margin Calculation -->
+          <div class="mt-4 p-3 bg-white rounded-lg border border-slate-200 flex flex-wrap justify-between items-center">
+            <div class="text-xs text-slate-600">
+              Trip Profit Formula: <span class="font-semibold text-slate-800">Party Freight (Excl Tax)</span> − <span class="font-semibold text-slate-800">Owner Freight</span> − <span class="font-semibold text-slate-800">Expenses</span>
+            </div>
+            <div class="flex items-center space-x-2 mt-2 sm:mt-0">
+              <span class="text-xs font-bold text-slate-500 uppercase">Estimated Trip Margin:</span>
+              <span id="calculatedMargin" class="text-base font-black text-emerald-700 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-200">₹0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Remarks & Submission -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">Document Status & Remarks</label>
+            <input type="text" id="tripRemarks" placeholder="e.g. POD received, physical copy pending" class="w-full p-2 border border-slate-300 rounded-lg text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1">Trip Status</label>
+            <select id="tripStatus" class="w-full p-2 border border-slate-300 rounded-lg text-sm font-medium">
+              <option value="Completed">Completed / Delivered</option>
+              <option value="In-Transit">In-Transit</option>
+              <option value="Billed">Billed to MRPL</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-3 pt-3 border-t border-slate-200">
+          <button type="button" onclick="resetTripForm()" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg text-sm hover:bg-slate-50">Clear Form</button>
+          <button type="submit" class="px-6 py-2 bg-indigo-950 hover:bg-indigo-900 text-white rounded-lg text-sm font-bold shadow-md">
+            <i class="fa-solid fa-floppy-disk mr-2"></i> Save Trip Record
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ==================== 3. TRIPS LIST & REGISTER ==================== -->
+    <div id="view-trips-list" class="hidden space-y-4">
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap justify-between items-center gap-3">
+        <div class="flex items-center space-x-2 flex-1 min-w-[240px]">
+          <div class="relative w-full">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
+            <input type="text" id="tripSearchInput" oninput="filterTripsTable()" placeholder="Search vehicle, LR No, party, or destination..." class="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <select id="filterDestination" onchange="filterTripsTable()" class="p-2 border border-slate-300 rounded-lg text-sm">
+            <option value="">All Destinations</option>
+            <option value="Rampura Agucha">Rampura Agucha</option>
+            <option value="S.K.">S.K.</option>
+            <option value="R.D.">R.D.</option>
+            <option value="Zawar">Zawar</option>
+            <option value="Kayad">Kayad</option>
+          </select>
+          <button onclick="switchTab('new-trip')" class="bg-indigo-950 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-900">
+            <i class="fa-solid fa-plus mr-1"></i> Add Trip
+          </button>
+        </div>
+      </div>
+
+      <!-- Trips Table -->
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-100 text-slate-700 font-bold uppercase border-b border-slate-200">
+              <tr>
+                <th class="py-3 px-3">Date / LR No</th>
+                <th class="py-3 px-3">Vehicle</th>
+                <th class="py-3 px-3">Destination</th>
+                <th class="py-3 px-3 text-right">Weight (MT)</th>
+                <th class="py-3 px-3 text-right">Party Rate</th>
+                <th class="py-3 px-3 text-right">Party Freight</th>
+                <th class="py-3 px-3 text-right">Owner Freight</th>
+                <th class="py-3 px-3 text-right">Margin</th>
+                <th class="py-3 px-3 text-center">Documents</th>
+                <th class="py-3 px-3 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody id="tripsTableBody" class="divide-y divide-slate-100">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 4. RATE MASTER VIEW ==================== -->
+    <div id="view-rate-master" class="hidden space-y-4">
+      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">Permanent Destination Rate Master (Agreed Party Rates)</h3>
+            <p class="text-xs text-slate-500">Agreed per-MT rates for billing MRPL, Bhilwara for deliveries to Hindustan Zinc Limited (HZL) plants.</p>
+          </div>
+          <button onclick="resetDefaultRates()" class="text-xs text-indigo-700 underline hover:text-indigo-900">Reset to Defaults</button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
+              <tr>
+                <th class="py-3 px-4">#</th>
+                <th class="py-3 px-4">Delivery Plant Destination</th>
+                <th class="py-3 px-4">Agreed Rate (₹ Per MT)</th>
+                <th class="py-3 px-4">Loading Location</th>
+                <th class="py-3 px-4">Action</th>
+              </tr>
+            </thead>
+            <tbody id="rateMasterTableBody" class="divide-y divide-slate-100">
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 5. SETTINGS / BACKUP VIEW ==================== -->
+    <div id="view-settings" class="hidden space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Business Details -->
+        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+          <h3 class="font-bold text-slate-900 text-base">Transport Business Profile</h3>
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="block font-medium text-slate-600">Company Name</label>
+              <input type="text" id="cfgBusinessName" value="JRC Global Logistics" class="w-full p-2 border rounded-md font-bold mt-1">
+            </div>
+            <div>
+              <label class="block font-medium text-slate-600">GSTIN</label>
+              <input type="text" id="cfgGSTIN" value="08EVLPA0794M1Z3" class="w-full p-2 border rounded-md font-mono mt-1">
+            </div>
+            <div>
+              <label class="block font-medium text-slate-600">Registered Address</label>
+              <textarea id="cfgAddress" rows="2" class="w-full p-2 border rounded-md mt-1">H.N. 162, Sansera Road, Dariba, Railmagra, Rajsamand, Rajasthan – 313211</textarea>
+            </div>
+            <div>
+              <label class="block font-medium text-slate-600">Contact / Helpline</label>
+              <input type="text" id="cfgContact" value="9896393477" class="w-full p-2 border rounded-md mt-1">
+            </div>
+            <div>
+              <label class="block font-medium text-slate-600">Bank Details for Party Invoice</label>
+              <textarea id="cfgBankDetails" rows="2" class="w-full p-2 border rounded-md mt-1">Bank: State Bank of India | A/C No: 12345678901 | IFSC: SBIN0001234 | Branch: Dariba</textarea>
+            </div>
+            <button onclick="saveProfileSettings()" class="bg-indigo-950 text-white px-4 py-2 rounded-lg text-xs font-bold">Update Profile</button>
+          </div>
+        </div>
+
+        <!-- Data Backup & Restore -->
+        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+          <h3 class="font-bold text-slate-900 text-base">Database Backup & Safety</h3>
+          <p class="text-xs text-slate-500">Your trips are saved securely inside your browser's persistent storage. You can download a backup file to keep on your phone or Google Drive.</p>
+          
+          <div class="space-y-3 pt-2">
+            <button onclick="downloadJSONBackup()" class="w-full bg-slate-800 text-white p-2.5 rounded-lg text-xs font-semibold hover:bg-slate-900 flex items-center justify-center">
+              <i class="fa-solid fa-download mr-2"></i> Download Complete Backup (JSON File)
+            </button>
+
+            <div class="border-t border-slate-200 pt-3">
+              <label class="block text-xs font-medium text-slate-700 mb-1">Restore From Backup File</label>
+              <input type="file" id="backupFileInput" accept=".json" onchange="restoreJSONBackup(event)" class="text-xs text-slate-500">
+            </div>
+
+            <div class="border-t border-slate-200 pt-3">
+              <button onclick="clearAllData()" class="text-rose-600 hover:text-rose-800 text-xs font-medium">
+                <i class="fa-solid fa-trash mr-1"></i> Erase All Records (Factory Reset)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==================== 6. MODAL: PRINTABLE BILTY (CJ DARCL INSPIRED) ==================== -->
+  <div id="biltyModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-3 overflow-y-auto">
+    <div class="bg-white w-full max-w-4xl rounded-xl shadow-2xl p-4 my-6">
+      <div class="flex justify-between items-center no-print mb-4 border-b pb-2">
+        <div class="flex items-center space-x-2">
+          <span class="font-bold text-slate-800">Professional Consignment Note (Bilty)</span>
+          <select id="biltyCopySelect" onchange="updateBiltyCopyName()" class="text-xs border border-slate-300 rounded px-2 py-1">
+            <option value="CONSIGNOR COPY">Consignor Copy</option>
+            <option value="CONSIGNEE COPY">Consignee Copy</option>
+            <option value="TRANSPORTER / DRIVER COPY">Transporter Copy</option>
+            <option value="RECORD COPY">Record Copy</option>
+          </select>
+        </div>
+        <div class="flex space-x-2">
+          <button onclick="window.print()" class="bg-indigo-950 text-white px-3 py-1.5 rounded-lg text-xs font-bold">
+            <i class="fa-solid fa-print mr-1"></i> Print / Save PDF
+          </button>
+          <button onclick="closeModal('biltyModal')" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold">Close</button>
+        </div>
+      </div>
+
+      <!-- PRINTABLE AREA (A4 STRUCTURED BOXED LAYOUT) -->
+      <div id="biltyPrintContainer" class="p-4 bg-white text-slate-900 text-xs">
+        <!-- Rendered by JavaScript -->
+      </div>
     </div>
   </div>
-</header>
 
-<nav id="nav">
-  <button class="active" data-view="dashboard"><i class="fa-solid fa-chart-pie"></i> Dashboard</button>
-  <button data-view="trips"><i class="fa-solid fa-plus-circle"></i> New Trip / Bilty</button>
-  <button data-view="trip-register"><i class="fa-solid fa-truck-moving"></i> Trip Register</button>
-  <button data-view="payments"><i class="fa-solid fa-money-bill-transfer"></i> Payments</button>
-  <button data-view="rate-master"><i class="fa-solid fa-tags"></i> Rate Master</button>
-  <button data-view="settings"><i class="fa-solid fa-gear"></i> Firm & Backup</button>
-</nav>
-
-<main>
-
-  <!-- 1. DASHBOARD -->
-  <section class="view active" id="dashboard">
-    <div class="stats" id="dashStats"></div>
-    <div class="card" style="margin-top:14px">
-      <h2><i class="fa-solid fa-clock-rotate-left text-blue"></i> Recent Trips</h2>
-      <div id="recentTripsList"></div>
-    </div>
-    <div class="card">
-      <h2><i class="fa-solid fa-wallet text-amber"></i> Outstanding & Dues</h2>
-      <div id="paymentSummary"></div>
-    </div>
-  </section>
-
-  <!-- 2. NEW TRIP ENTRY FORM (SINGLE WINDOW AUTO-BILLING) -->
-  <section class="view" id="trips">
-    <div class="card">
-      <h2 id="tripFormTitle"><i class="fa-solid fa-clipboard-list"></i> New Trip Entry</h2>
-      <form id="tripForm">
-        <input type="hidden" id="tripId">
-
-        <!-- Route & Party Info -->
-        <div class="grid">
-          <div class="field">
-            <label for="tripDate">Trip Date *</label>
-            <input type="date" id="tripDate" required>
-          </div>
-          <div class="field">
-            <label for="biltyNo">Bilty / LR No.</label>
-            <input id="biltyNo" placeholder="Leave empty for auto-generate">
-          </div>
-          <div class="field">
-            <label for="partyName">Billing Party (Consignor)</label>
-            <input id="partyName" value="MRPL, Bhilwara" required>
-          </div>
-          <div class="field">
-            <label for="fromLocation">Loading Location</label>
-            <input id="fromLocation" value="MRPL, Bhilwara" required>
-          </div>
+  <!-- ==================== 7. MODAL: PRINTABLE PARTY INVOICE & COVERING LETTER ==================== -->
+  <div id="invoiceModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-3 overflow-y-auto">
+    <div class="bg-white w-full max-w-4xl rounded-xl shadow-2xl p-4 my-6">
+      <div class="flex justify-between items-center no-print mb-4 border-b pb-2">
+        <div class="flex items-center space-x-2">
+          <span class="font-bold text-slate-800">Professional Transport Freight Invoice</span>
+          <span class="text-xs text-slate-500">(Includes Covering Letter Format)</span>
         </div>
-
-        <!-- HZL Destination & Party Auto-Billing Master -->
-        <div class="calc-box" style="margin-top:12px">
-          <h3><i class="fa-solid fa-calculator"></i> HZL Delivery & Automatic Party Rate</h3>
-          <div class="grid">
-            <div class="field">
-              <label for="destinationSelect">Select HZL Delivery Destination *</label>
-              <select id="destinationSelect" onchange="onDestinationChange()" required>
-                <option value="">-- Choose HZL Plant --</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="weight">Delivered Weight (MT) *</label>
-              <input id="weight" type="number" step="0.001" min="0" placeholder="e.g. 13.260" required oninput="calculateBilling()">
-            </div>
-            <div class="field">
-              <label for="partyRatePMT">Agreed Party Rate (₹ / MT)</label>
-              <input id="partyRatePMT" type="number" step="0.01" readonly style="background:#fff2dc;font-weight:bold" oninput="calculateBilling()">
-            </div>
-            <div class="field">
-              <label for="partyFreightCalculated">Party Freight Amount (₹)</label>
-              <input id="partyFreightCalculated" type="number" step="0.01" readonly style="background:#eaf7ee;font-weight:900;color:var(--green)">
-            </div>
-            <div class="field">
-              <label for="gstTreatment">GTA GST Treatment</label>
-              <select id="gstTreatment" onchange="calculateBilling()">
-                <option value="RCM">RCM - 0% (Tax paid by Consignor/Consignee)</option>
-                <option value="FC_5">Forward Charge - 5%</option>
-                <option value="FC_12">Forward Charge - 12%</option>
-                <option value="EXEMPT">Exempt</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="otherBillAdjustments">Other Adjustments / Toll (₹)</label>
-              <input id="otherBillAdjustments" type="number" step="0.01" value="0" oninput="calculateBilling()">
-            </div>
-          </div>
+        <div class="flex space-x-2">
+          <button onclick="window.print()" class="bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold">
+            <i class="fa-solid fa-print mr-1"></i> Print / Save PDF
+          </button>
+          <button onclick="closeModal('invoiceModal')" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold">Close</button>
         </div>
-
-        <!-- Vehicle Owner Freight (Agreed Lump Sum Per Trip) -->
-        <div style="background:#f1f5fa;border:1px solid #d7e2ee;border-radius:10px;padding:14px;margin-bottom:14px">
-          <h3 style="margin:0 0 10px;font-size:13.5px;color:var(--navy)"><i class="fa-solid fa-truck"></i> Vehicle Owner Freight (Agreed Per Vehicle)</h3>
-          <div class="grid">
-            <div class="field">
-              <label for="vehicleNo">Vehicle Registration No. *</label>
-              <input id="vehicleNo" placeholder="RJ06 GB 1234" required style="text-transform:uppercase">
-            </div>
-            <div class="field">
-              <label for="ownerAgreedFreight">Agreed Owner Freight (₹ Per Trip) *</label>
-              <input id="ownerAgreedFreight" type="number" step="0.01" required placeholder="Lump-sum per vehicle" oninput="calculateProfit()">
-            </div>
-            <div class="field">
-              <label for="ownerAdvance">Owner Advance Paid (₹)</label>
-              <input id="ownerAdvance" type="number" step="0.01" value="0" oninput="calculateProfit()">
-            </div>
-            <div class="field">
-              <label for="otherTripCost">Other Trip Expenses (₹)</label>
-              <input id="otherTripCost" type="number" step="0.01" value="0" oninput="calculateProfit()">
-            </div>
-          </div>
-        </div>
-
-        <!-- Driver & Consignment Details -->
-        <div class="grid">
-          <div class="field"><label for="driverName">Driver Name</label><input id="driverName" placeholder="Driver name"></div>
-          <div class="field"><label for="driverPhone">Driver Mobile</label><input id="driverPhone" inputmode="tel" placeholder="10-digit mobile"></div>
-          <div class="field"><label for="material">Material Description</label><input id="material" value="Industrial Goods / Resin"></div>
-          <div class="field"><label for="packageCount">No. of Packages</label><input id="packageCount" placeholder="e.g. 4005 Box"></div>
-          <div class="field"><label for="ewayBillNo">E-Way Bill No.</label><input id="ewayBillNo" placeholder="12-digit E-Way Bill"></div>
-          <div class="field"><label for="invoiceNo">Party Invoice Ref</label><input id="invoiceNo" placeholder="e.g. S1/2526/001"></div>
-          <div class="field"><label for="tripStatus">Trip Status</label>
-            <select id="tripStatus">
-              <option>Completed</option>
-              <option>In Transit</option>
-              <option>Billed to MRPL</option>
-              <option>Unloading Pending</option>
-            </select>
-          </div>
-          <div class="field full"><label for="tripNotes">Remarks / Instructions</label><textarea id="tripNotes" placeholder="Detention, loading slips, remarks..."></textarea></div>
-        </div>
-
-        <!-- Profit Live Preview -->
-        <div class="stat" style="margin:14px 0;background:#eef5ff;border-color:#b9d2f7">
-          <small>Trip Margin Preview (Party Freight − Owner Freight − Expenses)</small>
-          <strong id="profitPreview" style="color:var(--blue);font-size:22px">₹0.00</strong>
-        </div>
-
-        <div class="actions">
-          <button class="btn green" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save Trip Record</button>
-          <button class="btn secondary" type="button" id="resetTrip"><i class="fa-solid fa-rotate-left"></i> Clear Form</button>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <!-- 3. TRIP REGISTER -->
-  <section class="view" id="trip-register">
-    <div class="card">
-      <h2><i class="fa-solid fa-list-check"></i> Consignment & Trip Register</h2>
-      <div class="search"><input id="tripSearch" placeholder="Search vehicle, LR No, destination, invoice..."></div>
-      <div id="tripList"></div>
-    </div>
-  </section>
-
-  <!-- 4. PAYMENTS LEDGER -->
-  <section class="view" id="payments">
-    <div class="card">
-      <h2><i class="fa-solid fa-plus"></i> Record Payment / Receipt</h2>
-      <form id="paymentForm">
-        <div class="grid">
-          <div class="field"><label for="payDate">Date *</label><input type="date" id="payDate" required></div>
-          <div class="field"><label for="payType">Transaction Type *</label>
-            <select id="payType">
-              <option value="receipt">Party Payment Received</option>
-              <option value="vehicle">Payment Made to Vehicle Owner</option>
-              <option value="expense">Other Expense</option>
-            </select>
-          </div>
-          <div class="field"><label for="payParty">Party / Vehicle Name *</label><input id="payParty" required placeholder="Name"></div>
-          <div class="field"><label for="payAmount">Amount (₹) *</label><input id="payAmount" type="number" step="0.01" min="0.01" required></div>
-          <div class="field"><label for="payMode">Payment Mode</label>
-            <select id="payMode">
-              <option>Bank Transfer / NEFT</option>
-              <option>UPI</option>
-              <option>Cash</option>
-              <option>Cheque</option>
-            </select>
-          </div>
-          <div class="field"><label for="payRef">UTR / Cheque Ref</label><input id="payRef"></div>
-          <div class="field full"><label for="payNotes">Remarks</label><textarea id="payNotes"></textarea></div>
-        </div>
-        <div class="actions"><button class="btn" type="submit">Save Transaction</button></div>
-      </form>
-    </div>
-    <div class="card">
-      <h2>Payment History</h2>
-      <div id="paymentList"></div>
-    </div>
-  </section>
-
-  <!-- 5. PERMANENT RATE MASTER -->
-  <section class="view" id="rate-master">
-    <div class="card">
-      <h2><i class="fa-solid fa-tags"></i> Agreed Party Billing Rates (HZL Destinations)</h2>
-      <p class="hint">These are agreed per-MT rates for MRPL Bhilwara deliveries. Owner freight is never calculated using these rates.</p>
-      <div class="tablewrap">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>HZL Plant Destination</th>
-              <th>Party Billing Rate (₹ / MT)</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="rateMasterTableBody"></tbody>
-        </table>
       </div>
-      <div class="actions" style="margin-top:12px">
-        <button class="btn secondary" onclick="resetDefaultRates()"><i class="fa-solid fa-arrow-rotate-left"></i> Restore Default 5 HZL Rates</button>
+
+      <!-- INVOICE PRINTABLE AREA -->
+      <div id="invoicePrintContainer" class="p-4 bg-white text-slate-900 text-xs">
+        <!-- Rendered by JavaScript -->
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- 6. SETTINGS & BACKUP -->
-  <section class="view" id="settings">
-    <div class="card">
-      <h2><i class="fa-solid fa-building"></i> Firm Profile & Bank Details</h2>
-      <form id="settingsForm">
-        <div class="grid">
-          <div class="field"><label for="firmName">Company Name</label><input id="firmName" value="JRC Global Logistics"></div>
-          <div class="field"><label for="firmGst">GSTIN</label><input id="firmGst" value="08EVLPA0794M1Z3"></div>
-          <div class="field"><label for="firmPhone">Contact Number</label><input id="firmPhone" value="9896393477"></div>
-          <div class="field full"><label for="firmAddress">Registered Address</label><textarea id="firmAddress">H.N. 162, Sansera Road, Dariba, Railmagra, Rajsamand, Rajasthan – 313211</textarea></div>
-          <div class="field"><label for="bankName">Bank Name</label><input id="bankName" value="State Bank of India"></div>
-          <div class="field"><label for="bankAccount">Bank Account No.</label><input id="bankAccount" value="12345678901"></div>
-          <div class="field"><label for="bankIfsc">IFSC Code</label><input id="bankIfsc" value="SBIN0001234"></div>
-        </div>
-        <div class="actions"><button class="btn" type="submit">Update Details</button></div>
-      </form>
-    </div>
-    <div class="card">
-      <h2><i class="fa-solid fa-database"></i> Safety & Backup</h2>
-      <p class="hint">Your data stays securely on your iPhone. Download a backup file regularly to ensure complete safety.</p>
-      <div class="actions">
-        <button class="btn green" id="exportBackup" type="button"><i class="fa-solid fa-download"></i> Download Full Backup (JSON)</button>
-        <button class="btn secondary" id="exportCsv" type="button"><i class="fa-solid fa-file-excel"></i> Export Trips to CSV (Excel)</button>
-        <label class="btn secondary" for="importBackup"><i class="fa-solid fa-upload"></i> Restore Backup JSON</label>
-        <input class="hidden" type="file" id="importBackup" accept="application/json">
-        <button class="btn danger" id="clearAll" type="button"><i class="fa-solid fa-trash"></i> Delete Local Records</button>
-      </div>
-    </div>
-  </section>
+  <!-- ==================== APPLICATION LOGIC (JAVASCRIPT) ==================== -->
+  <script>
+    // Initial Destination Rates
+    const DEFAULT_RATES = [
+      { id: '1', destination: 'Rampura Agucha', rate: 1058, loading: 'MRPL, Bhilwara' },
+      { id: '2', destination: 'S.K.', rate: 1070, loading: 'MRPL, Bhilwara' },
+      { id: '3', destination: 'R.D.', rate: 1080, loading: 'MRPL, Bhilwara' },
+      { id: '4', destination: 'Zawar', rate: 1510, loading: 'MRPL, Bhilwara' },
+      { id: '5', destination: 'Kayad', rate: 1320, loading: 'MRPL, Bhilwara' }
+    ];
 
-  <!-- PRINT / EXPORT CONTAINER -->
-  <div id="printArea" class="hidden"></div>
+    // LocalStorage Keys
+    const STORAGE_KEY_TRIPS = 'jrc_trips_data_v1';
+    const STORAGE_KEY_RATES = 'jrc_rate_master_v1';
+    const STORAGE_KEY_PROFILE = 'jrc_profile_data_v1';
 
-</main>
+    let trips = [];
+    let rates = [];
+    let profile = {
+      name: 'JRC Global Logistics',
+      gstin: '08EVLPA0794M1Z3',
+      address: 'H.N. 162, Sansera Road, Dariba, Railmagra, Rajsamand, Rajasthan – 313211',
+      contact: '9896393477',
+      bank: 'Bank: State Bank of India | A/C No: 12345678901 | IFSC: SBIN0001234 | Branch: Dariba'
+    };
 
-<script>
-(function(){
-'use strict';
-const STORAGE_KEY = 'jrc_tms_pro_v3';
-const $ = id => document.getElementById(id);
-const today = () => new Date().toISOString().slice(0, 10);
-const money = n => '₹' + (Number(n) || 0).toLocaleString('en-IN', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-
-const DEFAULT_RATES = [
-  { id: '1', destination: 'Rampura Agucha', rate: 1058 },
-  { id: '2', destination: 'S.K.', rate: 1070 },
-  { id: '3', destination: 'R.D.', rate: 1080 },
-  { id: '4', destination: 'Zawar', rate: 1510 },
-  { id: '5', destination: 'Kayad', rate: 1320 }
-];
-
-let db = {
-  trips: [],
-  payments: [],
-  rates: DEFAULT_RATES,
-  settings: {
-    firmName: 'JRC Global Logistics',
-    firmGst: '08EVLPA0794M1Z3',
-    firmPhone: '9896393477',
-    firmAddress: 'H.N. 162, Sansera Road, Dariba, Railmagra, Rajsamand, Rajasthan – 313211',
-    bankName: 'State Bank of India',
-    bankAccount: '12345678901',
-    bankIfsc: 'SBIN0001234'
-  }
-};
-
-function loadData(){
-  try{
-    const d = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-    if(d && typeof d === 'object'){
-      db = { ...db, ...d };
-      if(!db.rates || db.rates.length === 0) db.rates = DEFAULT_RATES;
+    // Format numbers as Indian Currency / Number
+    function formatINR(val) {
+      const num = Number(val) || 0;
+      return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
-  }catch(e){
-    console.error('Data load error', e);
-  }
-}
 
-function saveData(){
-  try{
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-    renderAll();
-  }catch(e){
-    alert('iPhone memory limit reached. Please export a backup.');
-  }
-}
-
-function val(id){ return $(id).value.trim(); }
-function num(id){ return Number($(id).value) || 0; }
-
-// NAVIGATION
-function showTab(viewId){
-  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === viewId));
-  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.view === viewId));
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-document.querySelectorAll('nav button').forEach(btn => btn.addEventListener('click', () => showTab(btn.dataset.view)));
-
-// POPULATE DESTINATIONS
-function populateDestinations(){
-  const select = $('destinationSelect');
-  select.innerHTML = '<option value="">-- Choose HZL Plant --</option>' + 
-    db.rates.map(r => `<option value="${esc(r.destination)}">${esc(r.destination)} (₹${r.rate}/MT)</option>`).join('');
-}
-
-window.onDestinationChange = function(){
-  const dest = $('destinationSelect').value;
-  const match = db.rates.find(r => r.destination === dest);
-  if(match){
-    $('partyRatePMT').value = match.rate;
-  }else{
-    $('partyRatePMT').value = '';
-  }
-  calculateBilling();
-};
-
-window.calculateBilling = function(){
-  const w = num('weight');
-  const r = num('partyRatePMT');
-  const adj = num('otherBillAdjustments');
-  const partyFreight = Math.round((w * r) * 100) / 100;
-  $('partyFreightCalculated').value = partyFreight.toFixed(2);
-  calculateProfit();
-};
-
-window.calculateProfit = function(){
-  const partyFreight = num('partyFreightCalculated');
-  const ownerFreight = num('ownerAgreedFreight');
-  const expenses = num('otherTripCost');
-  const margin = partyFreight - ownerFreight - expenses;
-  const el = $('profitPreview');
-  el.textContent = money(margin);
-  el.style.color = margin >= 0 ? 'var(--blue)' : 'var(--red)';
-};
-
-// AUTO INCREMENT LR
-function getNextBiltyNo(){
-  const count = db.trips.length + 1;
-  return `JRC/${new Date().getFullYear().toString().slice(-2)}${(new Date().getFullYear()+1).toString().slice(-2)}/${String(count).padStart(3, '0')}`;
-}
-
-function resetForm(){
-  $('tripForm').reset();
-  $('tripId').value = '';
-  $('tripDate').value = today();
-  $('partyName').value = 'MRPL, Bhilwara';
-  $('fromLocation').value = 'MRPL, Bhilwara';
-  $('material').value = 'Industrial Goods / Resin';
-  $('biltyNo').value = getNextBiltyNo();
-  $('profitPreview').textContent = '₹0.00';
-  $('tripFormTitle').innerHTML = '<i class="fa-solid fa-clipboard-list"></i> New Trip Entry';
-}
-$('resetTrip').addEventListener('click', resetForm);
-
-// SAVE TRIP FORM
-$('tripForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const id = val('tripId') || uid();
-  const partyFreight = num('partyFreightCalculated');
-  const ownerFreight = num('ownerAgreedFreight');
-  const ownerAdv = num('ownerAdvance');
-  const expenses = num('otherTripCost');
-
-  const tripObj = {
-    id,
-    date: val('tripDate'),
-    biltyNo: val('biltyNo') || getNextBiltyNo(),
-    partyName: val('partyName'),
-    from: val('fromLocation'),
-    to: val('destinationSelect'),
-    weight: num('weight'),
-    partyRatePMT: num('partyRatePMT'),
-    partyFreight: partyFreight,
-    gstTreatment: val('gstTreatment'),
-    adjustments: num('otherBillAdjustments'),
-    vehicleNo: val('vehicleNo').toUpperCase(),
-    ownerFreight: ownerFreight,
-    ownerAdvance: ownerAdv,
-    ownerBalance: ownerFreight - ownerAdv,
-    expenses: expenses,
-    margin: partyFreight - ownerFreight - expenses,
-    driverName: val('driverName'),
-    driverPhone: val('driverPhone'),
-    material: val('material'),
-    packageCount: val('packageCount'),
-    ewayBillNo: val('ewayBillNo'),
-    invoiceNo: val('invoiceNo'),
-    status: val('tripStatus'),
-    notes: val('tripNotes')
-  };
-
-  const existingIdx = db.trips.findIndex(x => x.id === id);
-  if(existingIdx >= 0) db.trips[existingIdx] = tripObj;
-  else db.trips.unshift(tripObj);
-
-  saveData();
-  resetForm();
-  showTab('trip-register');
-  alert(`✅ Trip saved! Bilty No: ${tripObj.biltyNo}`);
-});
-
-// EDIT TRIP
-function editTrip(id){
-  const t = db.trips.find(x => x.id === id);
-  if(!t) return;
-  $('tripId').value = t.id;
-  $('tripDate').value = t.date;
-  $('biltyNo').value = t.biltyNo;
-  $('partyName').value = t.partyName;
-  $('fromLocation').value = t.from;
-  $('destinationSelect').value = t.to;
-  $('weight').value = t.weight;
-  $('partyRatePMT').value = t.partyRatePMT;
-  $('partyFreightCalculated').value = t.partyFreight;
-  $('gstTreatment').value = t.gstTreatment || 'RCM';
-  $('otherBillAdjustments').value = t.adjustments || 0;
-  $('vehicleNo').value = t.vehicleNo;
-  $('ownerAgreedFreight').value = t.ownerFreight;
-  $('ownerAdvance').value = t.ownerAdvance;
-  $('otherTripCost').value = t.expenses;
-  $('driverName').value = t.driverName;
-  $('driverPhone').value = t.driverPhone;
-  $('material').value = t.material;
-  $('packageCount').value = t.packageCount;
-  $('ewayBillNo').value = t.ewayBillNo;
-  $('invoiceNo').value = t.invoiceNo;
-  $('tripStatus').value = t.status;
-  $('tripNotes').value = t.notes;
-
-  calculateProfit();
-  $('tripFormTitle').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Edit Trip';
-  showTab('trips');
-}
-
-function deleteTrip(id){
-  if(!confirm('Are you sure you want to delete this trip?')) return;
-  db.trips = db.trips.filter(x => x.id !== id);
-  saveData();
-}
-
-// RENDER TRIP CARDS
-function renderTrips(){
-  const q = val('tripSearch').toLowerCase();
-  const filtered = db.trips.filter(t => JSON.stringify(t).toLowerCase().includes(q));
-  const container = $('tripList');
-
-  if(filtered.length === 0){
-    container.innerHTML = '<div class="empty">No trips found. Add your first trip above!</div>';
-    return;
-  }
-
-  container.innerHTML = filtered.map(t => `
-    <div class="listitem">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start">
-        <strong>${esc(t.biltyNo)} &middot; ${esc(t.vehicleNo)}</strong>
-        <span class="pill info">${esc(t.to)}</span>
-      </div>
-      <div class="meta">
-        ${esc(t.date)} &middot; Delivered: <b>${esc(t.weight)} MT</b> &times; ₹${esc(t.partyRatePMT)}/MT<br>
-        Party Freight: <b style="color:var(--green)">${money(t.partyFreight)}</b> &middot; Owner Freight: <b>${money(t.ownerFreight)}</b><br>
-        Owner Due: <span style="color:var(--red);font-weight:700">${money(t.ownerBalance)}</span> &middot; Margin: <b style="color:var(--blue)">${money(t.margin)}</b><br>
-        E-Way: ${esc(t.ewayBillNo || '—')} &middot; Status: <span class="pill ok">${esc(t.status)}</span>
-      </div>
-      <div class="actions">
-        <button class="btn blue" onclick="JRC.printBilty('${t.id}')"><i class="fa-solid fa-file-invoice"></i> Bilty (LR)</button>
-        <button class="btn green" onclick="JRC.printInvoice('${t.id}')"><i class="fa-solid fa-receipt"></i> Party Bill</button>
-        <button class="btn secondary" onclick="JRC.editTrip('${t.id}')"><i class="fa-solid fa-pen"></i> Edit</button>
-        <button class="btn danger" onclick="JRC.deleteTrip('${t.id}')"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  `).join('');
-}
-$('tripSearch').addEventListener('input', renderTrips);
-
-// DASHBOARD STATS
-function updateDashboard(){
-  const totalTrips = db.trips.length;
-  const totalMT = db.trips.reduce((a,t) => a + (Number(t.weight) || 0), 0);
-  const totalBilled = db.trips.reduce((a,t) => a + (Number(t.partyFreight) || 0), 0);
-  const totalOwnerFreight = db.trips.reduce((a,t) => a + (Number(t.ownerFreight) || 0), 0);
-  const totalMargin = db.trips.reduce((a,t) => a + (Number(t.margin) || 0), 0);
-  const totalOwnerDue = db.trips.reduce((a,t) => a + (Number(t.ownerBalance) || 0), 0);
-
-  $('dashStats').innerHTML = `
-    <div class="stat"><small>Total Trips</small><strong>${totalTrips}</strong></div>
-    <div class="stat"><small>Total Weight</small><strong>${totalMT.toFixed(3)} MT</strong></div>
-    <div class="stat"><small>Party Billing</small><strong style="color:var(--green)">${money(totalBilled)}</strong></div>
-    <div class="stat"><small>Net Profit Margin</small><strong style="color:var(--blue)">${money(totalMargin)}</strong></div>
-  `;
-
-  $('recentTripsList').innerHTML = db.trips.slice(0, 4).map(t => `
-    <div class="listitem">
-      <strong>${esc(t.biltyNo)} &middot; ${esc(t.vehicleNo)}</strong>
-      <div class="meta">${esc(t.date)} &middot; ${esc(t.to)} &middot; Margin: <b>${money(t.margin)}</b></div>
-    </div>
-  `).join('') || '<div class="empty">No recent trips.</div>';
-
-  $('paymentSummary').innerHTML = `
-    <div class="stats">
-      <div class="stat"><small>Vehicle Owner Balance Due</small><strong style="color:var(--red)">${money(totalOwnerDue)}</strong></div>
-      <div class="stat"><small>Total Vehicle Freight</small><strong>${money(totalOwnerFreight)}</strong></div>
-    </div>
-  `;
-}
-
-// RATE MASTER TABLE
-function renderRateMaster(){
-  const tbody = $('rateMasterTableBody');
-  tbody.innerHTML = db.rates.map((r, i) => `
-    <tr>
-      <td><b>${i+1}</b></td>
-      <td><b>${esc(r.destination)}</b></td>
-      <td>
-        <input type="number" step="1" id="rm_rate_${r.id}" value="${r.rate}" style="width:110px;padding:6px;font-weight:bold">
-      </td>
-      <td>
-        <button class="btn blue" style="min-height:32px;padding:6px 12px;font-size:12px" onclick="updateRateMaster('${r.id}')">Save</button>
-      </td>
-    </tr>
-  `).join('');
-}
-
-window.updateRateMaster = function(id){
-  const val = Number($(`rm_rate_${id}`).value);
-  if(!val || val <= 0){ alert('Enter a valid rate'); return; }
-  const match = db.rates.find(r => r.id === id);
-  if(match){
-    match.rate = val;
-    saveData();
-    populateDestinations();
-    alert(`Rate for ${match.destination} updated to ₹${val}/MT`);
-  }
-};
-
-window.resetDefaultRates = function(){
-  if(!confirm('Reset all 5 rates to agreed defaults?')) return;
-  db.rates = JSON.parse(JSON.stringify(DEFAULT_RATES));
-  saveData();
-  populateDestinations();
-  renderRateMaster();
-  alert('Rates reset to standard values.');
-};
-
-// ==================== CJ DARCL INSPIRED BILTY (LR) ====================
-function printBilty(id){
-  const t = db.trips.find(x => x.id === id);
-  if(!t) return;
-  const f = db.settings;
-
-  const html = `
-    <div class="bilty-box">
-      <div class="bilty-header">
-        <div>
-          <h1>${esc(f.firmName)}</h1>
-          <div class="bilty-sub">${esc(f.firmAddress)}</div>
-          <div class="bilty-sub"><b>GSTIN:</b> ${esc(f.firmGst)} | <b>Mobile:</b> ${esc(f.firmPhone)}</div>
-        </div>
-        <div class="bilty-badge">
-          <strong>CONSIGNMENT NOTE (BILTY)</strong>
-          <span style="font-size:8pt;color:#555">CONSIGNOR / RECORD COPY</span><br>
-          <span style="font-size:9pt;font-weight:800;color:#0d1e38">LR No: ${esc(t.biltyNo)}</span>
-        </div>
-      </div>
-
-      <table class="bilty-table">
-        <tr>
-          <th style="width:15%">Date</th><td>${esc(t.date)}</td>
-          <th style="width:15%">Vehicle No.</th><td><b>${esc(t.vehicleNo)}</b></td>
-          <th style="width:15%">Driver Details</th><td>${esc(t.driverName)} (${esc(t.driverPhone || '—')})</td>
-        </tr>
-        <tr>
-          <th>Loading Station</th><td><b>${esc(t.from)}</b></td>
-          <th>Delivery Station</th><td colspan="3"><b>${esc(t.to)} (Hindustan Zinc Ltd.)</b></td>
-        </tr>
-      </table>
-
-      <div class="bilty-grid-2">
-        <table class="bilty-table">
-          <tr><th colspan="2">Consignor (Billed Party)</th></tr>
-          <tr><td colspan="2"><b>${esc(t.partyName)}</b><br>MRPL Complex, Bhilwara, Rajasthan</td></tr>
-          <tr><th>Invoice Ref</th><td>${esc(t.invoiceNo || '—')}</td></tr>
-        </table>
-        <table class="bilty-table">
-          <tr><th colspan="2">Consignee</th></tr>
-          <tr><td colspan="2"><b>Hindustan Zinc Limited</b><br>${esc(t.to)} Plant / Smelter Complex</td></tr>
-          <tr><th>E-Way Bill No</th><td><b>${esc(t.ewayBillNo || '—')}</b></td></tr>
-        </table>
-      </div>
-
-      <table class="bilty-table" style="margin-top:0">
-        <thead>
-          <tr>
-            <th>Description of Material</th>
-            <th style="text-align:center">Packages</th>
-            <th style="text-align:right">Delivered Weight (MT)</th>
-            <th style="text-align:right">Charged Weight (MT)</th>
-            <th style="text-align:center">Freight Basis</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>${esc(t.material)}</b></td>
-            <td style="text-align:center">${esc(t.packageCount || 'Loose')}</td>
-            <td style="text-align:right"><b>${Number(t.weight).toFixed(3)} MT</b></td>
-            <td style="text-align:right"><b>${Number(t.weight).toFixed(3)} MT</b></td>
-            <td style="text-align:center">Party Billing Rate</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="bilty-bottom">
-        <div style="font-size:7pt;color:#333">
-          <b>Terms & Conditions:</b> Goods carried at owner's risk as per Road Transport Act 2007. The company is not liable for leakage or natural transit loss. Tax payable under <b>Reverse Charge Mechanism (RCM)</b> by recipient.
-        </div>
-        <div style="border-left:1px solid #8ba0b8;padding-left:8px;font-size:8pt">
-          <div>Status: <b>${esc(t.status)}</b></div>
-          <div>Remarks: ${esc(t.notes || 'Goods in sound condition')}</div>
-        </div>
-      </div>
-
-      <div class="bilty-sign">
-        <div>Consignor Signature</div>
-        <div>Loading Supervisor</div>
-        <div>Driver Signature</div>
-        <div>For ${esc(f.firmName)}<br><b>Authorized Signatory</b></div>
-      </div>
-    </div>
-  `;
-
-  executePrint(html);
-}
-
-// ==================== PARTY TAX INVOICE ====================
-function printInvoice(id){
-  const t = db.trips.find(x => x.id === id);
-  if(!t) return;
-  const f = db.settings;
-
-  const html = `
-    <div class="bilty-box">
-      <div class="bilty-header">
-        <div>
-          <h1>${esc(f.firmName)}</h1>
-          <div class="bilty-sub">${esc(f.firmAddress)}</div>
-          <div class="bilty-sub"><b>GSTIN:</b> ${esc(f.firmGst)} | <b>Contact:</b> ${esc(f.firmPhone)}</div>
-        </div>
-        <div class="bilty-badge">
-          <strong>TAX INVOICE / FREIGHT BILL</strong>
-          <span style="font-size:8pt;color:#555">SAC Code: 996511 (GTA Service)</span><br>
-          <span style="font-size:9pt;font-weight:800;color:#0d1e38">Inv Ref: INV/${esc(t.biltyNo.replace(/[^0-9]/g,''))}</span>
-        </div>
-      </div>
-
-      <table class="bilty-table">
-        <tr>
-          <th>Billed To</th><td><b>${esc(t.partyName)}</b></td>
-          <th>Invoice Date</th><td>${esc(t.date)}</td>
-        </tr>
-        <tr>
-          <th>Loading Station</th><td>${esc(t.from)}</td>
-          <th>Delivery Station</th><td><b>${esc(t.to)} (HZL)</b></td>
-        </tr>
-        <tr>
-          <th>Vehicle Number</th><td><b>${esc(t.vehicleNo)}</b></td>
-          <th>Bilty / LR Ref</th><td>${esc(t.biltyNo)}</td>
-        </tr>
-      </table>
-
-      <table class="bilty-table" style="margin-top:6px">
-        <thead>
-          <tr>
-            <th>Service Details</th>
-            <th style="text-align:right">Weight (MT)</th>
-            <th style="text-align:right">Agreed Rate/MT</th>
-            <th style="text-align:right">Freight Amount (₹)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <b>Freight Charges for Material Transportation</b><br>
-              <span style="font-size:7.5pt;color:#555">Goods: ${esc(t.material)} | E-Way Bill: ${esc(t.ewayBillNo || '—')}</span>
-            </td>
-            <td style="text-align:right"><b>${Number(t.weight).toFixed(3)} MT</b></td>
-            <td style="text-align:right">₹${Number(t.partyRatePMT).toFixed(2)}</td>
-            <td style="text-align:right;font-size:10pt"><b>${money(t.partyFreight)}</b></td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th colspan="3" style="text-align:right">GST Treatment (${esc(t.gstTreatment)})</th>
-            <td style="text-align:right">₹0.00 (RCM)</td>
-          </tr>
-          <tr>
-            <th colspan="3" style="text-align:right;font-size:10pt">Total Billed Amount</th>
-            <td style="text-align:right;font-size:11pt;font-weight:900;color:#0d1e38">${money(t.partyFreight)}</td>
-          </tr>
-        </tfoot>
-      </table>
-
-      <div style="padding:8px;background:#f8fafc;border-top:1px solid #8ba0b8;font-size:7.5pt">
-        <b>Bank Account Details for Payment:</b><br>
-        Bank Name: ${esc(f.bankName)} | A/C No: <b>${esc(f.bankAccount)}</b> | IFSC Code: <b>${esc(f.bankIfsc)}</b> | Branch: Dariba
-      </div>
-
-      <div class="bilty-sign" style="margin-top:20px">
-        <div>Party Acknowledgement</div>
-        <div>Checked By</div>
-        <div>Accounts Review</div>
-        <div>For ${esc(f.firmName)}<br><b>Authorized Signatory</b></div>
-      </div>
-    </div>
-  `;
-
-  executePrint(html);
-}
-
-function executePrint(htmlContent){
-  const area = $('printArea');
-  area.innerHTML = htmlContent;
-  area.classList.remove('hidden');
-  
-  setTimeout(() => {
-    window.print();
-    setTimeout(() => { area.classList.add('hidden'); }, 1000);
-  }, 200);
-}
-
-// BACKUP & RESTORE
-$('exportBackup').addEventListener('click', () => {
-  const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `JRC_TMS_Backup_${today()}.json`;
-  a.click();
-});
-
-$('exportCsv').addEventListener('click', () => {
-  if(db.trips.length === 0){ alert('No trip records to export'); return; }
-  let csv = 'Trip Date,LR No,Vehicle No,Party,From,Destination,Weight MT,Party Rate,Party Freight,Owner Freight,Owner Balance,Margin,Status\n';
-  db.trips.forEach(t => {
-    csv += `"${t.date}","${t.biltyNo}","${t.vehicleNo}","${t.partyName}","${t.from}","${t.to}",${t.weight},${t.partyRatePMT},${t.partyFreight},${t.ownerFreight},${t.ownerBalance},${t.margin},"${t.status}"\n`;
-  });
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `JRC_Trips_${today()}.csv`;
-  a.click();
-});
-
-$('importBackup').addEventListener('change', async e => {
-  const f = e.target.files[0];
-  if(!f) return;
-  try{
-    const parsed = JSON.parse(await f.text());
-    if(parsed.trips){
-      db = { ...db, ...parsed };
-      saveData();
-      alert('✅ Backup restored successfully!');
+    function formatDate(dStr) {
+      if (!dStr) return '';
+      const parts = dStr.split('-');
+      if (parts.length === 3) return `${parts[2]}-${parts[1]}-${parts[0]}`;
+      return dStr;
     }
-  }catch(err){
-    alert('Invalid backup file');
-  }
-  e.target.value = '';
-});
 
-$('clearAll').addEventListener('click', () => {
-  if(!confirm('Permanently delete all stored trips and data?')) return;
-  localStorage.removeItem(STORAGE_KEY);
-  db.trips = [];
-  saveData();
-  alert('All data cleared.');
-});
+    // Initialize App
+    window.onload = function() {
+      // 1. Load Rates
+      const storedRates = localStorage.getItem(STORAGE_KEY_RATES);
+      rates = storedRates ? JSON.parse(storedRates) : DEFAULT_RATES;
+      if (!storedRates) localStorage.setItem(STORAGE_KEY_RATES, JSON.stringify(rates));
 
-// INITIAL RENDER
-window.JRC = { printBilty, printInvoice, editTrip, deleteTrip };
-function renderAll(){
-  updateDashboard();
-  renderTrips();
-  renderRateMaster();
-}
+      // 2. Load Profile
+      const storedProf = localStorage.getItem(STORAGE_KEY_PROFILE);
+      if (storedProf) profile = JSON.parse(storedProf);
 
-loadData();
-populateDestinations();
-resetForm();
-renderAll();
-})();
-</script>
+      // 3. Load Trips
+      const storedTrips = localStorage.getItem(STORAGE_KEY_TRIPS);
+      trips = storedTrips ? JSON.parse(storedTrips) : [];
+
+      // Set today's date in form
+      document.getElementById('tripDate').value = new Date().toISOString().split('T')[0];
+      
+      // Render components
+      populateDestinationDropdown();
+      renderRateMasterTable();
+      renderTripsTable();
+      updateDashboard();
+      generateNextLR();
+    };
+
+    // Navigation Tab Switching
+    function switchTab(tabId) {
+      const views = ['dashboard', 'new-trip', 'trips-list', 'rate-master', 'settings'];
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        const btn = document.getElementById(`tab-${v}`);
+        if (v === tabId) {
+          el.classList.remove('hidden');
+          btn.classList.add('bg-amber-500', 'text-indigo-950');
+          btn.classList.remove('text-slate-200');
+        } else {
+          el.classList.add('hidden');
+          btn.classList.remove('bg-amber-500', 'text-indigo-950');
+          btn.classList.add('text-slate-200');
+        }
+      });
+      if (tabId === 'dashboard') updateDashboard();
+    }
+
+    // Populate Destination Dropdown in Form
+    function populateDestinationDropdown() {
+      const select = document.getElementById('destinationSelect');
+      select.innerHTML = '<option value="">-- Select HZL Destination --</option>';
+      rates.forEach(r => {
+        select.innerHTML += `<option value="${r.destination}">${r.destination} (₹${r.rate}/MT)</option>`;
+      });
+    }
+
+    // Triggered when destination selected
+    function onDestinationChange() {
+      const dest = document.getElementById('destinationSelect').value;
+      const matched = rates.find(r => r.destination === dest);
+      const rateInput = document.getElementById('partyRatePMT');
+      if (matched) {
+        rateInput.value = matched.rate;
+      } else {
+        rateInput.value = '';
+      }
+      calculatePartyBilling();
+    }
+
+    // Calculate Party Billing and GST
+    function calculatePartyBilling() {
+      const weight = parseFloat(document.getElementById('actualWeightMT').value) || 0;
+      const rate = parseFloat(document.getElementById('partyRatePMT').value) || 0;
+      const adjustments = parseFloat(document.getElementById('billAdjustments').value) || 0;
+      const gstTreatment = document.getElementById('gstTreatment').value;
+
+      const taxableFreight = Math.round((weight * rate) * 100) / 100;
+      document.getElementById('partyCalculatedFreight').innerText = formatINR(taxableFreight);
+
+      let gstPercent = 0;
+      if (gstTreatment === 'FC_5') gstPercent = 0.05;
+      else if (gstTreatment === 'FC_12') gstPercent = 0.12;
+
+      const taxAmount = (taxableFreight + adjustments) * gstPercent;
+      const finalAmount = Math.round((taxableFreight + adjustments + taxAmount) * 100) / 100;
+      document.getElementById('finalPartyBillAmount').innerText = formatINR(finalAmount);
+
+      calculateMargin();
+    }
+
+    // Calculate Owner Balance and Net Margin
+    function calculateMargin() {
+      const weight = parseFloat(document.getElementById('actualWeightMT').value) || 0;
+      const rate = parseFloat(document.getElementById('partyRatePMT').value) || 0;
+      const taxablePartyFreight = (weight * rate);
+
+      const ownerAgreed = parseFloat(document.getElementById('ownerAgreedFreight').value) || 0;
+      const ownerAdv = parseFloat(document.getElementById('ownerAdvance').value) || 0;
+      const expenses = parseFloat(document.getElementById('tripExpenses').value) || 0;
+
+      // Owner balance
+      const balance = Math.max(0, ownerAgreed - ownerAdv);
+      document.getElementById('ownerBalance').value = balance.toFixed(2);
+
+      // Margin = Taxable Party Freight - Owner Freight - Other Trip Expenses
+      const margin = taxablePartyFreight - ownerAgreed - expenses;
+      const marginEl = document.getElementById('calculatedMargin');
+      marginEl.innerText = formatINR(margin);
+
+      if (margin >= 0) {
+        marginEl.className = "text-base font-black text-emerald-700 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-200";
+      } else {
+        marginEl.className = "text-base font-black text-rose-700 bg-rose-50 px-3 py-1 rounded-lg border border-rose-200";
+      }
+    }
+
+    function generateNextLR() {
+      const nextNum = trips.length + 1;
+      const lrStr = `JRC/2425/${String(nextNum).padStart(3, '0')}`;
+      document.getElementById('lrNumber').value = lrStr;
+      document.getElementById('formTripIdBadge').innerText = `Trip #${nextNum}`;
+    }
+
+    // Save or Add Trip
+    function saveTrip(e) {
+      e.preventDefault();
+      const weight = parseFloat(document.getElementById('actualWeightMT').value) || 0;
+      const rate = parseFloat(document.getElementById('partyRatePMT').value) || 0;
+      const partyFreight = Math.round((weight * rate) * 100) / 100;
+      const adjustments = parseFloat(document.getElementById('billAdjustments').value) || 0;
+      const gstTreatment = document.getElementById('gstTreatment').value;
+      
+      let taxRate = 0;
+      if (gstTreatment === 'FC_5') taxRate = 5;
+      if (gstTreatment === 'FC_12') taxRate = 12;
+      const taxAmount = ((partyFreight + adjustments) * taxRate) / 100;
+      const totalPartyBill = partyFreight + adjustments + taxAmount;
+
+      const ownerFreight = parseFloat(document.getElementById('ownerAgreedFreight').value) || 0;
+      const ownerAdv = parseFloat(document.getElementById('ownerAdvance').value) || 0;
+      const expenses = parseFloat(document.getElementById('tripExpenses').value) || 0;
+      const margin = partyFreight - ownerFreight - expenses;
+
+      const newTrip = {
+        id: 'TRIP-' + Date.now().toString().slice(-6),
+        tripDate: document.getElementById('tripDate').value,
+        lrNumber: document.getElementById('lrNumber').value.trim(),
+        partyName: document.getElementById('partyName').value.trim(),
+        loadingLocation: document.getElementById('loadingLocation').value.trim(),
+        destination: document.getElementById('destinationSelect').value,
+        weightMT: weight,
+        partyRate: rate,
+        partyFreight: partyFreight,
+        adjustments: adjustments,
+        gstTreatment: gstTreatment,
+        taxAmount: taxAmount,
+        totalPartyBill: totalPartyBill,
+        partyPaid: 0,
+        vehicleNo: document.getElementById('vehicleNo').value.trim().toUpperCase(),
+        ownerName: document.getElementById('ownerName').value.trim(),
+        ownerPhone: document.getElementById('ownerPhone').value.trim(),
+        driverDetails: document.getElementById('driverDetails').value.trim(),
+        material: document.getElementById('materialDesc').value.trim(),
+        packageCount: document.getElementById('packageCount').value || '0',
+        ewayBillNo: document.getElementById('ewayBillNo').value.trim(),
+        partyInvRef: document.getElementById('partyInvRef').value.trim(),
+        ownerFreight: ownerFreight,
+        ownerAdvance: ownerAdv,
+        ownerBalance: ownerFreight - ownerAdv,
+        expenses: expenses,
+        margin: margin,
+        tripStatus: document.getElementById('tripStatus').value,
+        remarks: document.getElementById('tripRemarks').value.trim()
+      };
+
+      trips.unshift(newTrip);
+      localStorage.setItem(STORAGE_KEY_TRIPS, JSON.stringify(trips));
+
+      alert(`✅ Trip saved successfully! LR No: ${newTrip.lrNumber} for ${newTrip.destination}`);
+      resetTripForm();
+      renderTripsTable();
+      updateDashboard();
+      switchTab('trips-list');
+    }
+
+    function resetTripForm() {
+      document.getElementById('tripForm').reset();
+      document.getElementById('loadingLocation').value = 'MRPL, Bhilwara';
+      document.getElementById('partyName').value = 'MRPL, Bhilwara';
+      document.getElementById('materialDesc').value = 'Industrial Goods / Resin / Smelter Material';
+      document.getElementById('tripDate').value = new Date().toISOString().split('T')[0];
+      document.getElementById('partyCalculatedFreight').innerText = '₹0.00';
+      document.getElementById('finalPartyBillAmount').innerText = '₹0.00';
+      document.getElementById('calculatedMargin').innerText = '₹0.00';
+      generateNextLR();
+    }
+
+    // Render Trips Register Table
+    function renderTripsTable(records = trips) {
+      const tbody = document.getElementById('tripsTableBody');
+      if (records.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" class="py-6 text-center text-slate-400 font-medium">No trip records found. Click 'New Trip Entry' to add one.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = records.map(t => `
+        <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+          <td class="py-2.5 px-3">
+            <div class="font-bold text-slate-800">${t.lrNumber}</div>
+            <div class="text-[10px] text-slate-500">${formatDate(t.tripDate)}</div>
+          </td>
+          <td class="py-2.5 px-3">
+            <span class="font-mono font-bold bg-slate-100 px-1.5 py-0.5 rounded text-slate-700">${t.vehicleNo}</span>
+            <div class="text-[10px] text-slate-500 truncate max-w-[100px]">${t.driverDetails || 'No Driver'}</div>
+          </td>
+          <td class="py-2.5 px-3">
+            <span class="font-semibold text-indigo-950">${t.destination}</span>
+          </td>
+          <td class="py-2.5 px-3 text-right font-bold text-slate-800">${Number(t.weightMT).toFixed(3)}</td>
+          <td class="py-2.5 px-3 text-right text-slate-600">₹${t.partyRate}</td>
+          <td class="py-2.5 px-3 text-right font-bold text-emerald-700">${formatINR(t.partyFreight)}</td>
+          <td class="py-2.5 px-3 text-right text-slate-700">${formatINR(t.ownerFreight)}</td>
+          <td class="py-2.5 px-3 text-right font-bold ${t.margin >= 0 ? 'text-blue-700' : 'text-rose-600'}">
+            ${formatINR(t.margin)}
+          </td>
+          <td class="py-2.5 px-3 text-center space-x-1">
+            <button onclick="viewBilty('${t.id}')" title="Print Consignment Note" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-900 border border-indigo-200 px-2 py-1 rounded text-[11px] font-semibold">
+              <i class="fa-solid fa-file-lines mr-0.5"></i> LR
+            </button>
+            <button onclick="viewInvoice('${t.id}')" title="Print Party Tax Invoice" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 px-2 py-1 rounded text-[11px] font-semibold">
+              <i class="fa-solid fa-receipt mr-0.5"></i> Bill
+            </button>
+          </td>
+          <td class="py-2.5 px-3 text-center">
+            <button onclick="deleteTrip('${t.id}')" title="Delete Trip" class="text-rose-500 hover:text-rose-700 p-1">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterTripsTable() {
+      const q = document.getElementById('tripSearchInput').value.toLowerCase();
+      const dest = document.getElementById('filterDestination').value;
+      const filtered = trips.filter(t => {
+        const matchesQ = t.vehicleNo.toLowerCase().includes(q) ||
+                         t.lrNumber.toLowerCase().includes(q) ||
+                         t.destination.toLowerCase().includes(q) ||
+                         t.partyName.toLowerCase().includes(q);
+        const matchesDest = !dest || t.destination === dest;
+        return matchesQ && matchesDest;
+      });
+      renderTripsTable(filtered);
+    }
+
+    function deleteTrip(id) {
+      if (!confirm('Are you sure you want to delete this trip record?')) return;
+      trips = trips.filter(t => t.id !== id);
+      localStorage.setItem(STORAGE_KEY_TRIPS, JSON.stringify(trips));
+      renderTripsTable();
+      updateDashboard();
+    }
+
+    // Dashboard Calculations
+    function updateDashboard() {
+      const totalTrips = trips.length;
+      const totalWeight = trips.reduce((acc, t) => acc + (parseFloat(t.weightMT) || 0), 0);
+      const totalBilling = trips.reduce((acc, t) => acc + (parseFloat(t.totalPartyBill) || 0), 0);
+      const totalOwnerFreight = trips.reduce((acc, t) => acc + (parseFloat(t.ownerFreight) || 0), 0);
+      const totalOwnerDue = trips.reduce((acc, t) => acc + (parseFloat(t.ownerBalance) || 0), 0);
+      const totalMargin = trips.reduce((acc, t) => acc + (parseFloat(t.margin) || 0), 0);
+
+      document.getElementById('dashTotalTrips').innerText = `${totalTrips} Trips`;
+      document.getElementById('dashTotalWeight').innerText = `${totalWeight.toFixed(3)} MT`;
+      document.getElementById('dashPartyBilling').innerText = formatINR(totalBilling);
+      document.getElementById('dashPartyPending').innerText = `Total Receivables: ${formatINR(totalBilling)}`;
+      document.getElementById('dashOwnerFreight').innerText = formatINR(totalOwnerFreight);
+      document.getElementById('dashOwnerBalance').innerText = `Owner Due: ${formatINR(totalOwnerDue)}`;
+      document.getElementById('dashGrossMargin').innerText = formatINR(totalMargin);
+
+      // Render Destination Breakdown
+      const destStats = {};
+      rates.forEach(r => {
+        destStats[r.destination] = { rate: r.rate, trips: 0, weight: 0, billed: 0 };
+      });
+
+      trips.forEach(t => {
+        if (!destStats[t.destination]) {
+          destStats[t.destination] = { rate: t.partyRate, trips: 0, weight: 0, billed: 0 };
+        }
+        destStats[t.destination].trips += 1;
+        destStats[t.destination].weight += (parseFloat(t.weightMT) || 0);
+        destStats[t.destination].billed += (parseFloat(t.partyFreight) || 0);
+      });
+
+      const body = document.getElementById('dashDestinationBody');
+      body.innerHTML = Object.keys(destStats).map(d => `
+        <tr class="hover:bg-slate-50 border-b border-slate-100">
+          <td class="py-2.5 px-3 font-semibold text-slate-800">${d}</td>
+          <td class="py-2.5 px-3 text-slate-600 font-mono font-bold">₹${destStats[d].rate}/MT</td>
+          <td class="py-2.5 px-3 text-slate-700">${destStats[d].trips}</td>
+          <td class="py-2.5 px-3 text-slate-700 font-medium">${destStats[d].weight.toFixed(3)} MT</td>
+          <td class="py-2.5 px-3 font-bold text-emerald-700">${formatINR(destStats[d].billed)}</td>
+        </tr>
+      `).join('');
+    }
+
+    // Rate Master Table Functions
+    function renderRateMasterTable() {
+      const tbody = document.getElementById('rateMasterTableBody');
+      tbody.innerHTML = rates.map((r, idx) => `
+        <tr class="border-b border-slate-100 hover:bg-slate-50">
+          <td class="py-3 px-4 font-bold text-slate-500">${idx + 1}</td>
+          <td class="py-3 px-4 font-bold text-indigo-950">${r.destination}</td>
+          <td class="py-3 px-4">
+            <div class="flex items-center space-x-1">
+              <span class="text-slate-400 font-bold">₹</span>
+              <input type="number" id="rm_rate_${r.id}" value="${r.rate}" class="w-28 p-1.5 border border-slate-300 rounded font-bold text-slate-900">
+            </div>
+          </td>
+          <td class="py-3 px-4 text-slate-600">${r.loading}</td>
+          <td class="py-3 px-4">
+            <button onclick="updateRate('${r.id}')" class="bg-indigo-950 hover:bg-indigo-900 text-white px-3 py-1 rounded text-xs font-semibold">Save</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function updateRate(id) {
+      const input = document.getElementById(`rm_rate_${id}`);
+      const val = parseFloat(input.value);
+      if (!val || val <= 0) {
+        alert('Please enter a valid rate');
+        return;
+      }
+      const r = rates.find(x => x.id === id);
+      if (r) {
+        r.rate = val;
+        localStorage.setItem(STORAGE_KEY_RATES, JSON.stringify(rates));
+        alert(`Rate for ${r.destination} updated to ₹${val}/MT`);
+        populateDestinationDropdown();
+        updateDashboard();
+      }
+    }
+
+    function resetDefaultRates() {
+      if (!confirm('Reset all 5 HZL destination rates to initial agreement?')) return;
+      rates = JSON.parse(JSON.stringify(DEFAULT_RATES));
+      localStorage.setItem(STORAGE_KEY_RATES, JSON.stringify(rates));
+      renderRateMasterTable();
+      populateDestinationDropdown();
+      alert('Rates restored to standard agreed values.');
+    }
+
+    // Modal Control
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    // ================= 8. BILTY VIEWER & PRINT ENGINE =================
+    let currentBiltyTrip = null;
+
+    function viewBilty(tripId) {
+      const t = trips.find(x => x.id === tripId);
+      if (!t) return;
+      currentBiltyTrip = t;
+      renderBiltyTemplate(t, 'CONSIGNOR COPY');
+      document.getElementById('biltyModal').classList.remove('hidden');
+    }
+
+    function updateBiltyCopyName() {
+      if (!currentBiltyTrip) return;
+      const copy = document.getElementById('biltyCopySelect').value;
+      renderBiltyTemplate(currentBiltyTrip, copy);
+    }
+
+    function renderBiltyTemplate(t, copyName) {
+      const container = document.getElementById('biltyPrintContainer');
+      container.id = 'printArea';
+
+      container.innerHTML = `
+        <div class="bilty-border p-3 text-slate-900 font-sans leading-tight">
+          <!-- Top Header -->
+          <div class="flex justify-between items-start border-b-2 border-slate-900 pb-2 mb-2">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xl font-black tracking-wider text-indigo-950">${profile.name}</span>
+                <span class="bg-slate-900 text-white text-[10px] px-2 py-0.5 rounded font-mono font-bold">${copyName}</span>
+              </div>
+              <p class="text-[11px] text-slate-700 font-medium">${profile.address}</p>
+              <p class="text-[11px] font-bold text-slate-900">Phone: ${profile.contact} | GSTIN: <span class="font-mono">${profile.gstin}</span></p>
+            </div>
+            <div class="text-right border-l-2 border-slate-900 pl-3">
+              <div class="text-base font-black text-slate-900">CONSIGNMENT NOTE</div>
+              <div class="text-xs font-bold text-slate-800">LR No: <span class="font-mono text-sm">${t.lrNumber}</span></div>
+              <div class="text-xs text-slate-700">Date: <span class="font-semibold">${formatDate(t.tripDate)}</span></div>
+            </div>
+          </div>
+
+          <!-- Route & Vehicle Details Box -->
+          <div class="grid grid-cols-4 bilty-border text-[11px] mb-2 divide-x divide-slate-800">
+            <div class="p-1.5">
+              <span class="text-slate-500 block text-[9px] uppercase font-bold">Loading Station</span>
+              <span class="font-bold text-slate-900">${t.loadingLocation}</span>
+            </div>
+            <div class="p-1.5">
+              <span class="text-slate-500 block text-[9px] uppercase font-bold">Delivery Station</span>
+              <span class="font-bold text-slate-900">${t.destination} (HZL)</span>
+            </div>
+            <div class="p-1.5">
+              <span class="text-slate-500 block text-[9px] uppercase font-bold">Vehicle Number</span>
+              <span class="font-mono font-black text-sm text-slate-900">${t.vehicleNo}</span>
+            </div>
+            <div class="p-1.5">
+              <span class="text-slate-500 block text-[9px] uppercase font-bold">Driver / Contact</span>
+              <span class="font-medium text-slate-900">${t.driverDetails || 'Assigned Driver'}</span>
+            </div>
+          </div>
+
+          <!-- Consignor & Consignee Box -->
+          <div class="grid grid-cols-2 bilty-border text-[11px] mb-2 divide-x divide-slate-800">
+            <div class="p-2">
+              <span class="text-slate-500 block text-[9px] uppercase font-bold mb-0.5">Consignor (Billing Party)</span>
+              <div class="font-bold text-slate-900 text-xs">${t.partyName}</div>
+              <div class="text-slate-700">MRPL Complex, Bhilwara, Rajasthan</div>
+              <div class="mt-1 font-semibold text-slate-800">Party Inv / Ref: ${t.partyInvRef || 'N/A'}</div>
+            </div>
+            <div class="p-2">
+              <span class="text-slate-500 block text-[9px] uppercase font-bold mb-0.5">Consignee Details</span>
+              <div class="font-bold text-slate-900 text-xs">Hindustan Zinc Limited (${t.destination})</div>
+              <div class="text-slate-700">HZL Smelter / Mine Complex, Rajasthan</div>
+              <div class="mt-1 font-semibold text-slate-800">E-Way Bill No: <span class="font-mono">${t.ewayBillNo || 'Provided On Invoice'}</span></div>
+            </div>
+          </div>
+
+          <!-- Goods & Weight Details (CJ DARCL inspired Box layout) -->
+          <table class="w-full bilty-border text-[11px] mb-2 text-left">
+            <thead class="bg-slate-100 border-b border-slate-800 font-bold text-slate-800">
+              <tr>
+                <th class="p-1.5 border-r border-slate-800">Description of Goods</th>
+                <th class="p-1.5 border-r border-slate-800 text-center w-24">No. of Pkgs</th>
+                <th class="p-1.5 border-r border-slate-800 text-right w-32">Actual Weight (MT)</th>
+                <th class="p-1.5 border-r border-slate-800 text-right w-32">Charged Wt (MT)</th>
+                <th class="p-1.5 text-center w-28">Basis</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="divide-x divide-slate-800">
+                <td class="p-2 font-medium">${t.material}</td>
+                <td class="p-2 text-center font-bold">${t.packageCount || 'Loose'}</td>
+                <td class="p-2 text-right font-black text-sm">${Number(t.weightMT).toFixed(3)} MT</td>
+                <td class="p-2 text-right font-black text-sm">${Number(t.weightMT).toFixed(3)} MT</td>
+                <td class="p-2 text-center font-bold">To Be Billed</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- GST / Statutory Disclaimer -->
+          <div class="bilty-border p-2 mb-2 bg-slate-50 text-[10px] text-slate-700 grid grid-cols-3 gap-2 divide-x divide-slate-300">
+            <div class="col-span-2">
+              <span class="font-bold block text-slate-900">GST Responsibility Declaration:</span>
+              <span>Goods Transport Agency service. Tax payable under <strong>Reverse Charge Mechanism (RCM)</strong> by Recipient / Consignor as per Notification No. 13/2017-Central Tax (Rate), unless Forward Charge is invoiced.</span>
+            </div>
+            <div class="pl-2">
+              <span class="font-bold block text-slate-900">Booking Terms:</span>
+              <span>Carriage subject to Terms & Conditions of Road Transport Act, 2007. No liability for natural transit delay.</span>
+            </div>
+          </div>
+
+          <!-- Signature Blocks (CJ Darcl visual layout) -->
+          <div class="grid grid-cols-3 bilty-border text-center text-[10px] divide-x divide-slate-800">
+            <div class="p-4 pt-10">
+              <div class="border-t border-slate-400 pt-1 font-bold text-slate-800">Consignor / Loader Signature</div>
+            </div>
+            <div class="p-4 pt-10">
+              <div class="border-t border-slate-400 pt-1 font-bold text-slate-800">Driver / Vehicle Receiver</div>
+            </div>
+            <div class="p-4 pt-10">
+              <div class="font-bold text-indigo-950">${profile.name}</div>
+              <div class="border-t border-slate-400 pt-1 font-bold text-slate-800">Authorized Signatory</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ================= 9. INVOICE & COVERING LETTER ENGINE =================
+    function viewInvoice(tripId) {
+      const t = trips.find(x => x.id === tripId);
+      if (!t) return;
+      renderInvoiceTemplate(t);
+      document.getElementById('invoiceModal').classList.remove('hidden');
+    }
+
+    function renderInvoiceTemplate(t) {
+      const container = document.getElementById('invoicePrintContainer');
+      container.id = 'printArea';
+
+      const invoiceNo = `INV/${t.lrNumber.replace('JRC/', '')}`;
+
+      container.innerHTML = `
+        <div class="space-y-6 text-slate-900 font-sans">
+          
+          <!-- PART 1: COVERING LETTER (Exact CJ Darcl style) -->
+          <div class="bilty-border p-4 text-[11px] leading-relaxed">
+            <div class="flex justify-between items-start border-b pb-2 mb-3">
+              <div>
+                <h2 class="text-sm font-black uppercase text-indigo-950">${profile.name} - Billing Department</h2>
+                <p class="text-slate-600 font-medium">Dariba Smelter Route Transport Division</p>
+              </div>
+              <div class="text-right">
+                <span class="font-bold">Date:</span> ${formatDate(t.tripDate)}<br>
+                <span class="font-bold">Bill Ref:</span> ${invoiceNo}
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <span class="text-slate-500 font-bold block text-[10px] uppercase">To,</span>
+              <div class="font-bold text-slate-900 text-xs">The Head - Commercial & Logistics</div>
+              <div class="font-semibold text-slate-800">${t.partyName}</div>
+              <div class="text-slate-600">Bhilwara, Rajasthan</div>
+            </div>
+
+            <p class="text-slate-800 mb-3">
+              Dear Sir/Madam,<br>
+              Please find enclosed herewith our freight bill along with acknowledged consignment notes / weight receipts for transport services rendered to Hindustan Zinc Limited (HZL):
+            </p>
+
+            <table class="w-full bilty-border text-[10px] text-left mb-3">
+              <thead class="bg-slate-100 border-b border-slate-800 font-bold">
+                <tr>
+                  <th class="p-1 border-r border-slate-800">LR / GR No</th>
+                  <th class="p-1 border-r border-slate-800">Destination</th>
+                  <th class="p-1 border-r border-slate-800 text-center">Vehicle No</th>
+                  <th class="p-1 border-r border-slate-800 text-right">Delivered MT</th>
+                  <th class="p-1 border-r border-slate-800 text-right">Agreed Rate/MT</th>
+                  <th class="p-1 text-right">Total Amount (₹)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="divide-x divide-slate-800 font-medium">
+                  <td class="p-1 font-bold">${t.lrNumber}</td>
+                  <td class="p-1">${t.destination}</td>
+                  <td class="p-1 text-center font-mono">${t.vehicleNo}</td>
+                  <td class="p-1 text-right font-bold">${Number(t.weightMT).toFixed(3)} MT</td>
+                  <td class="p-1 text-right">₹${t.partyRate}</td>
+                  <td class="p-1 text-right font-black">${formatINR(t.partyFreight)}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="flex justify-between items-end pt-4">
+              <div>
+                <span class="text-[9px] text-slate-500 block">Enclosures: Original LR / GR copy & Weight slips attached.</span>
+              </div>
+              <div class="text-center">
+                <div class="font-bold text-indigo-950">${profile.name}</div>
+                <div class="mt-6 border-t border-slate-400 font-bold text-[10px]">Authorized Signature & Stamp</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PART 2: TAX INVOICE -->
+          <div class="bilty-border p-4 text-[11px] leading-tight">
+            <!-- Header -->
+            <div class="flex justify-between items-start border-b-2 border-slate-900 pb-2 mb-3">
+              <div>
+                <h1 class="text-xl font-black text-indigo-950 tracking-wider">${profile.name}</h1>
+                <p class="text-[10px] text-slate-700">${profile.address}</p>
+                <p class="text-[10px] font-bold">GSTIN: <span class="font-mono text-slate-900">${profile.gstin}</span> | Contact: ${profile.contact}</p>
+              </div>
+              <div class="text-right">
+                <div class="text-base font-black text-slate-900">TAX INVOICE</div>
+                <div class="text-xs font-bold text-slate-800">Invoice No: <span class="font-mono">${invoiceNo}</span></div>
+                <div class="text-xs text-slate-700">Invoice Date: ${formatDate(t.tripDate)}</div>
+              </div>
+            </div>
+
+            <!-- Bill To Box -->
+            <div class="grid grid-cols-2 bilty-border text-[11px] mb-3 divide-x divide-slate-800">
+              <div class="p-2">
+                <span class="text-slate-500 font-bold uppercase text-[9px] block">Billed To (Client / Consignor):</span>
+                <div class="font-bold text-slate-900 text-xs">${t.partyName}</div>
+                <div>Bhilwara, Rajasthan</div>
+                <div class="mt-1">Place of Supply: <span class="font-bold">Rajasthan (08)</span></div>
+              </div>
+              <div class="p-2">
+                <span class="text-slate-500 font-bold uppercase text-[9px] block">Service Information:</span>
+                <div>SAC Code: <span class="font-bold">996511</span> (Goods Transport Agency)</div>
+                <div>Delivery Station: <span class="font-bold">${t.destination} (HZL)</span></div>
+                <div>GST Treatment: <span class="font-bold font-mono">${t.gstTreatment}</span></div>
+              </div>
+            </div>
+
+            <!-- Invoice Item Table -->
+            <table class="w-full bilty-border text-[11px] mb-3 text-left">
+              <thead class="bg-slate-100 border-b border-slate-800 font-bold text-slate-800">
+                <tr>
+                  <th class="p-2 border-r border-slate-800">Service Description</th>
+                  <th class="p-2 border-r border-slate-800 text-center">LR Ref / Vehicle</th>
+                  <th class="p-2 border-r border-slate-800 text-right">Delivered Wt</th>
+                  <th class="p-2 border-r border-slate-800 text-right">Agreed Rate/MT</th>
+                  <th class="p-2 text-right">Taxable Freight (₹)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="divide-x divide-slate-800">
+                  <td class="p-2">
+                    <div class="font-bold text-slate-900">Freight Charges for Road Transportation</div>
+                    <div class="text-[10px] text-slate-500">Route: ${t.loadingLocation} to ${t.destination}</div>
+                  </td>
+                  <td class="p-2 text-center">
+                    <div class="font-bold">${t.lrNumber}</div>
+                    <div class="font-mono text-[10px]">${t.vehicleNo}</div>
+                  </td>
+                  <td class="p-2 text-right font-bold">${Number(t.weightMT).toFixed(3)} MT</td>
+                  <td class="p-2 text-right">₹${t.partyRate}</td>
+                  <td class="p-2 text-right font-black text-sm">${formatINR(t.partyFreight)}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Tax Summary & Bank Details -->
+            <div class="grid grid-cols-2 gap-3 mb-3">
+              <div class="bilty-border p-2 bg-slate-50 text-[10px]">
+                <span class="font-bold text-slate-900 block mb-1">Bank Payment Details:</span>
+                <p class="text-slate-700 leading-snug">${profile.bank}</p>
+                <div class="mt-2 text-[9px] text-slate-500">
+                  *Please verify GTA tax responsibility. RCM applies where tax is payable by registered consignor/consignee.
+                </div>
+              </div>
+
+              <div class="bilty-border p-2 divide-y divide-slate-200 text-xs">
+                <div class="flex justify-between py-1">
+                  <span class="text-slate-600">Taxable Value:</span>
+                  <span class="font-bold">${formatINR(t.partyFreight)}</span>
+                </div>
+                ${t.adjustments ? `
+                <div class="flex justify-between py-1">
+                  <span class="text-slate-600">Other Adjustments:</span>
+                  <span class="font-bold">${formatINR(t.adjustments)}</span>
+                </div>` : ''}
+                <div class="flex justify-between py-1">
+                  <span class="text-slate-600">Applicable GST (${t.gstTreatment}):</span>
+                  <span class="font-bold">${formatINR(t.taxAmount)}</span>
+                </div>
+                <div class="flex justify-between py-1 text-sm bg-slate-100 p-1 font-black text-indigo-950">
+                  <span>Grand Total:</span>
+                  <span>${formatINR(t.totalPartyBill)}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Signatures -->
+            <div class="flex justify-between items-end pt-4 border-t border-slate-300">
+              <div class="text-[9px] text-slate-500 max-w-sm">
+                Declaration: We declare that this invoice shows the actual price of the services described and that all particulars are true and correct.
+              </div>
+              <div class="text-center">
+                <div class="text-xs font-bold text-indigo-950">For ${profile.name}</div>
+                <div class="mt-6 border-t border-slate-400 font-bold text-[10px]">Authorized Signatory</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      `;
+    }
+
+    // ================= 10. DEMO DATA & EXCEL EXPORT =================
+    function loadSampleDemoData() {
+      const sampleTrips = [
+        {
+          id: 'TRIP-1001',
+          tripDate: '2025-04-09',
+          lrNumber: 'JRC/2425/001',
+          partyName: 'MRPL, Bhilwara',
+          loadingLocation: 'MRPL, Bhilwara',
+          destination: 'Rampura Agucha',
+          weightMT: 13.260,
+          partyRate: 1058,
+          partyFreight: 14029.08,
+          adjustments: 0,
+          gstTreatment: 'RCM',
+          taxAmount: 0,
+          totalPartyBill: 14029.08,
+          partyPaid: 0,
+          vehicleNo: 'HR38AD8474',
+          ownerName: 'Mewar Transport Fleet',
+          ownerPhone: '9876543210',
+          driverDetails: 'Ramesh Singh (9829012345)',
+          material: 'Resin Capsule / Industrial Goods',
+          packageCount: '4005',
+          ewayBillNo: '731517639350',
+          partyInvRef: 'S1/2526/BH/00030',
+          ownerFreight: 11000,
+          ownerAdvance: 3000,
+          ownerBalance: 8000,
+          expenses: 250,
+          margin: 2779.08,
+          tripStatus: 'Completed',
+          remarks: 'POD Verified at Agucha Gate'
+        },
+        {
+          id: 'TRIP-1002',
+          tripDate: '2025-04-10',
+          lrNumber: 'JRC/2425/002',
+          partyName: 'MRPL, Bhilwara',
+          loadingLocation: 'MRPL, Bhilwara',
+          destination: 'S.K.',
+          weightMT: 20.450,
+          partyRate: 1070,
+          partyFreight: 21881.50,
+          adjustments: 0,
+          gstTreatment: 'RCM',
+          taxAmount: 0,
+          totalPartyBill: 21881.50,
+          partyPaid: 0,
+          vehicleNo: 'RJ06GB4421',
+          ownerName: 'Rajput Roadways',
+          ownerPhone: '9414001122',
+          driverDetails: 'Shyam Lal (9414234567)',
+          material: 'Smelter Raw Material',
+          packageCount: 'Bulk',
+          ewayBillNo: '731517882201',
+          partyInvRef: 'S1/2526/BH/00035',
+          ownerFreight: 17500,
+          ownerAdvance: 5000,
+          ownerBalance: 12500,
+          expenses: 300,
+          margin: 4081.50,
+          tripStatus: 'Completed',
+          remarks: 'Delivered at Sindesar Khurd'
+        },
+        {
+          id: 'TRIP-1003',
+          tripDate: '2025-04-12',
+          lrNumber: 'JRC/2425/003',
+          partyName: 'MRPL, Bhilwara',
+          loadingLocation: 'MRPL, Bhilwara',
+          destination: 'Zawar',
+          weightMT: 15.000,
+          partyRate: 1510,
+          partyFreight: 22650.00,
+          adjustments: 0,
+          gstTreatment: 'RCM',
+          taxAmount: 0,
+          totalPartyBill: 22650.00,
+          partyPaid: 0,
+          vehicleNo: 'RJ27GC5155',
+          ownerName: 'Dariba Logistics Co',
+          ownerPhone: '9829123456',
+          driverDetails: 'Mukesh Sharma (9829988776)',
+          material: 'Grinding Media & Material',
+          packageCount: '32',
+          ewayBillNo: '731519001244',
+          partyInvRef: 'S1/2526/BH/00041',
+          ownerFreight: 18000,
+          ownerAdvance: 6000,
+          ownerBalance: 12000,
+          expenses: 400,
+          margin: 4250.00,
+          tripStatus: 'Completed',
+          remarks: 'Zawar Mines Delivered'
+        }
+      ];
+
+      trips = sampleTrips;
+      localStorage.setItem(STORAGE_KEY_TRIPS, JSON.stringify(trips));
+      renderTripsTable();
+      updateDashboard();
+      alert('✅ 3 Sample Demo trips loaded! You can view their Bilty (LR) and Bills.');
+    }
+
+    function exportToCSV() {
+      if (trips.length === 0) {
+        alert('No trip records to export.');
+        return;
+      }
+
+      let csv = 'Trip Date,LR Number,Vehicle No,Party Name,Loading,Destination,Delivered MT,Party Rate PMT,Party Freight,Owner Agreed Freight,Owner Advance,Owner Due,Trip Expenses,Trip Margin,Trip Status\n';
+      trips.forEach(t => {
+        csv += `"${t.tripDate}","${t.lrNumber}","${t.vehicleNo}","${t.partyName}","${t.loadingLocation}","${t.destination}",${t.weightMT},${t.partyRate},${t.partyFreight},${t.ownerFreight},${t.ownerAdvance},${t.ownerBalance},${t.expenses},${t.margin},"${t.tripStatus}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `JRC_Trips_Export_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+    }
+
+    function downloadJSONBackup() {
+      const backupData = {
+        profile: profile,
+        rates: rates,
+        trips: trips,
+        backupDate: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `JRC_Logistics_Backup_${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+    }
+
+    function restoreJSONBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data.trips && Array.isArray(data.trips)) {
+            trips = data.trips;
+            localStorage.setItem(STORAGE_KEY_TRIPS, JSON.stringify(trips));
+          }
+          if (data.rates && Array.isArray(data.rates)) {
+            rates = data.rates;
+            localStorage.setItem(STORAGE_KEY_RATES, JSON.stringify(rates));
+          }
+          alert('✅ Backup restored successfully!');
+          window.location.reload();
+        } catch (err) {
+          alert('❌ Invalid backup file format.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function saveProfileSettings() {
+      profile.name = document.getElementById('cfgBusinessName').value.trim();
+      profile.gstin = document.getElementById('cfgGSTIN').value.trim();
+      profile.address = document.getElementById('cfgAddress').value.trim();
+      profile.contact = document.getElementById('cfgContact').value.trim();
+      profile.bank = document.getElementById('cfgBankDetails').value.trim();
+
+      localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(profile));
+      alert('Business profile updated successfully!');
+    }
+
+    function clearAllData() {
+      if (!confirm('⚠️ WARNING: This will delete ALL saved trips and records. Are you sure?')) return;
+      localStorage.removeItem(STORAGE_KEY_TRIPS);
+      trips = [];
+      renderTripsTable();
+      updateDashboard();
+      alert('All records have been cleared.');
+    }
+  </script>
 </body>
 </html>
